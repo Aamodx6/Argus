@@ -93,6 +93,21 @@
         return;
       }
 
+      // Check if target is a Framer-handled SPA route:
+      // Let Framer's internal router handle transitions between all marketing/auth routes
+      // so it plays the native tab-switching animation (crossfade/slide without full page reload).
+      let cleanPath = targetPath.split('?')[0].split('#')[0];
+      if (cleanPath.startsWith('./')) cleanPath = cleanPath.slice(1);
+      const framerRoutes = [
+        '/', '/product', '/sources', '/pricing', '/customers', 
+        '/changelog', '/about', '/careers', '/blog', '/contact', 
+        '/login', '/legal', '/signup'
+      ];
+      if (framerRoutes.includes(cleanPath)) {
+        // Do not block Framer React click handlers!
+        return;
+      }
+
       e.preventDefault();
       e.stopPropagation();
       window.nuanceNavigate(link.href);
