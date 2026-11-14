@@ -1,0 +1,204 @@
+---
+// SourcesMarquee Component: 240+ Connectors Infinite Scrolling Ticker
+const connectorsRow1 = [
+  { name: "Ledgerline", kind: "Billing", color: "#2C3340" },
+  { name: "Northdesk", kind: "Support", color: "#3B342E" },
+  { name: "Quarry", kind: "Warehouse", color: "#20232A" },
+  { name: "Pipewell", kind: "CRM", color: "#383830" },
+  { name: "Tallyhouse", kind: "Accounting", color: "#272B33" },
+  { name: "Eventide", kind: "Product events", color: "#252A36" },
+  { name: "Adrift", kind: "Ad spend", color: "#33373D" },
+  { name: "Sheetwise", kind: "Spreadsheets", color: "#1C1E23" }
+];
+
+const connectorsRow2 = [
+  { name: "Rosterly", kind: "HR", color: "#2E3440" },
+  { name: "Stackhold", kind: "Postgres", color: "#3A3A34" },
+  { name: "Snowflake", kind: "Warehouse", color: "#29B5E8" },
+  { name: "Stripe", kind: "Payments", color: "#635BFF" },
+  { name: "Salesforce", kind: "CRM", color: "#00A1E0" },
+  { name: "HubSpot", kind: "Inbound", color: "#FF7A59" },
+  { name: "Zendesk", kind: "Support", color: "#03363D" },
+  { name: "BigQuery", kind: "Warehouse", color: "#4285F4" }
+];
+---
+
+<section class="sources-strip">
+  <div class="container">
+    <div class="strip-header">
+      <div class="header-left">
+        <span class="section-tag">02 · Connectors</span>
+        <p class="header-sub">Reads from the tools you already pay for. Read-only, from day one.</p>
+      </div>
+      <div class="header-count">
+        <span class="count-num">240+</span>
+        <span class="count-label">connectors, and any SQL or REST source in an afternoon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee Row 1 (Forward) -->
+  <div class="marquee-track-container">
+    <div class="marquee-track forward">
+      {[...connectorsRow1, ...connectorsRow1, ...connectorsRow1].map((c) => (
+        <div class="connector-pill">
+          <div class="connector-icon" style={`background-color: ${c.color};`}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <rect x="1" y="2" width="4" height="3" rx="1" fill="#fff" opacity="0.8" />
+              <rect x="7" y="2" width="4" height="3" rx="1" fill="#fff" opacity="0.8" />
+              <rect x="1" y="7" width="10" height="3" rx="1" fill="#fff" opacity="0.8" />
+            </svg>
+          </div>
+          <span class="connector-name">{c.name}</span>
+          <span class="connector-kind">{c.kind}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Marquee Row 2 (Reverse) -->
+  <div class="marquee-track-container reverse-row">
+    <div class="marquee-track reverse">
+      {[...connectorsRow2, ...connectorsRow2, ...connectorsRow2].map((c) => (
+        <div class="connector-pill">
+          <div class="connector-icon" style={`background-color: ${c.color};`}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="6" cy="6" r="3" fill="#fff" opacity="0.85" />
+            </svg>
+          </div>
+          <span class="connector-name">{c.name}</span>
+          <span class="connector-kind">{c.kind}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sources-strip {
+    padding: 3rem 0;
+    overflow: hidden;
+  }
+
+  .strip-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .strip-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .header-sub {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    max-width: 440px;
+  }
+
+  .header-count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .count-num {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  .count-label {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 240px;
+    line-height: 1.35;
+  }
+
+  /* Marquee infinite animation */
+  .marquee-track-container {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    padding: 0.5rem 0;
+  }
+
+  .reverse-row {
+    margin-top: 0.5rem;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0.85rem;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee-track.forward {
+    animation: marquee-forward 50s linear infinite;
+  }
+
+  .marquee-track.reverse {
+    animation: marquee-reverse 55s linear infinite;
+  }
+
+  .connector-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 1.15rem 0.55rem 0.65rem;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(17, 19, 23, 0.04);
+    white-space: nowrap;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .connector-pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    background: #fff;
+  }
+
+  .connector-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .connector-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .connector-kind {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  @keyframes marquee-forward {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% / 3)); }
+  }
+
+  @keyframes marquee-reverse {
+    0% { transform: translateX(calc(-100% / 3)); }
+    100% { transform: translateX(0); }
+  }
+</style>

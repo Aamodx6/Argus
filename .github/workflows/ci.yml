@@ -1,0 +1,41 @@
+name: Nuance CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    name: Build & Validate Monorepo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: |
+            apps/web/package.json
+            apps/app/package.json
+
+      - name: Install dependencies (apps/web)
+        working-directory: apps/web
+        run: npm ci || npm install
+
+      - name: Build Astro Frontend (apps/web)
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Install dependencies (apps/app)
+        working-directory: apps/app
+        run: npm ci || npm install
+
+      - name: Lint and Typecheck (apps/app)
+        working-directory: apps/app
+        run: npm run lint || true

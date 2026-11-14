@@ -1,0 +1,2 @@
+import{t as e}from"./rolldown-runtime.Bi-D_2cA.mjs";function t(e,t){return{description:`A light, precise template for AI data and analytics SaaS: every source woven into answers you can trace.`,favicon:`../../../framerusercontent.com/assets/w6xhB1HNHWbIWHXZPYWLdAm0i0c.png`,robots:`max-image-preview:large`,socialImage:`../../../framerusercontent.com/assets/AzoEBccU7RxmbToH4vGy9YeIEAA.jpg`,title:`Warpyn · Ask your data in plain English`}}function n(){return(n=e((()=>{})))()}export{t as n,n as t};
+//# sourceMappingURL=siteMetadata.B_tYv_Uc.mjs.map

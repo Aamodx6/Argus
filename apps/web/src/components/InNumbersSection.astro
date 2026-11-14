@@ -1,0 +1,112 @@
+---
+// InNumbersSection Component: Key SaaS impact metrics
+const stats = [
+  {
+    figure: "16×",
+    label: "Faster from question to answer",
+    sub: "Compared to traditional tickets queued to central data teams."
+  },
+  {
+    figure: "47%",
+    label: "Fewer abandoned dashboards",
+    sub: "Teams retire outdated BI reports nobody opened after 90 days."
+  },
+  {
+    figure: "99.98%",
+    label: "Lineage verification uptime",
+    sub: "Continuous automated checks reconciling definitions against rows."
+  },
+  {
+    figure: "0",
+    label: "Raw rows copied or stored",
+    sub: "All queries run directly in-place in your existing warehouse."
+  }
+];
+---
+
+<section class="section-wrapper in-numbers-section" id="numbers">
+  <div class="container">
+    <div class="numbers-header">
+      <span class="section-tag">07 · Impact</span>
+      <h2 class="section-heading">What changes when every figure has a thread.</h2>
+      <p class="section-lede">
+        Averages across 212 companies in their first six months, measured against the manual reporting stacks they ran before.
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      {stats.map((s) => (
+        <div class="stat-card">
+          <div class="stat-figure">{s.figure}</div>
+          <h3 class="stat-label">{s.label}</h3>
+          <p class="stat-sub">{s.sub}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .numbers-header {
+    margin-bottom: 4rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2.25rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    background: #fff;
+  }
+
+  .stat-figure {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .stat-label {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .stat-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+</style>

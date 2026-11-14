@@ -95,23 +95,60 @@ The optional data extension also defines Aurora Serverless v2 with RDS Proxy and
 ## Repository layout
 
 ~~~text
-Nuance/
-â”œâ”€â”€ ai-video-sentiment-saas-main/
-â”‚   â”œâ”€â”€ src/app/                 Pages and API route handlers
-â”‚   â”œâ”€â”€ src/actions/             Registration
-â”‚   â”œâ”€â”€ src/server/              Prisma client and Auth.js
-â”‚   â”œâ”€â”€ src/lib/                 Quotas, feedback signing, Neon helpers
-â”‚   â”œâ”€â”€ prisma/                  PostgreSQL schema and migrations
-â”‚   â””â”€â”€ .env.example             Environment template
-â”œâ”€â”€ ai-video-sentiment-model-main/
-â”‚   â”œâ”€â”€ training/               MELD loader, encoders, trainer
-â”‚   â”œâ”€â”€ deployment/             Handler, serving model, baseline builder
-â”‚   â”œâ”€â”€ monitoring/             CDK, Lambda handlers, SQL, drift tests
-â”‚   â”œâ”€â”€ train_sagemaker.py       Training launcher and artifact promotion
-â”‚   â””â”€â”€ promote_on_complete.py  Artifact promotion recovery helper
-â”œâ”€â”€ neon.ts                     Neon service configuration declarations
-â”œâ”€â”€ ARCH.md                     Architecture notes
-â””â”€â”€ HOSTING.md                  Hosting and endpoint restoration guide
+nuance/
+├── README.md
+├── LICENSE                  (not added yet, owner decides)
+├── THIRD_PARTY_NOTICES.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── CODE_OF_CONDUCT.md
+├── AGENTS.md
+├── CLAUDE.md                (pointer to AGENTS.md)
+├── Makefile
+├── .gitignore
+├── .editorconfig
+├── .gitattributes
+├── .github/
+│   ├── workflows/ci.yml
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+│
+├── apps/
+│   ├── web/                 landing page & Bento console (Astro)
+│   │   ├── src/ (config/site.ts, pages, components)
+│   │   ├── public/
+│   │   └── .env.example
+│   └── app/                 SaaS app backend & dashboard (Next.js)
+│       ├── src/
+│       ├── README.md
+│       └── .env.example
+│
+├── services/
+│   └── inference/           model code (SageMaker ML pipeline)
+│       ├── training/        unchanged layout
+│       ├── deployment/      unchanged layout
+│       ├── monitoring/      unchanged layout
+│       ├── dataset/         gitignored
+│       ├── venv/            gitignored, never recreated
+│       ├── README.md
+│       └── .env.example
+│
+├── packages/
+│   └── contracts/           shared interface between inference and app
+│       ├── inference-response.schema.json
+│       ├── emotions.json
+│       ├── fixtures/        speech, vision_only, empty responses
+│       └── README.md
+│
+├── docs/
+│   ├── architecture/        overview, data, monitoring
+│   ├── guides/              dev setup, hosting, models-and-data
+│   ├── runbooks/
+│   ├── adr/                 short decision records
+│   └── ROADMAP.md           planned items only
+│
+├── scratch/                 gitignored, untouched
+└── claude-seo/              gitignored, untouched
 ~~~
 
 The root Node package supports Neon configuration tooling. Run the web application from the SaaS directory.

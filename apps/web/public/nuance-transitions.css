@@ -1,0 +1,125 @@
+/* Nuance Universal Page Transitions */
+@view-transition {
+  navigation: auto;
+}
+
+html {
+  background-color: #fbfbf9 !important;
+}
+
+body {
+  background-color: #fbfbf9 !important;
+}
+
+/* Base Enter Animation on Page Load */
+body:not(.nuance-transition-ready) {
+  opacity: 0;
+}
+
+body.nuance-transition-ready {
+  animation: nuancePageEnter 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Exit Animation on Page Leave */
+body.nuance-page-leaving {
+  opacity: 0 !important;
+  transform: translate3d(-24px, -10px, 0) !important;
+  transition: opacity 0.32s cubic-bezier(0.65, 0, 0.35, 1), transform 0.32s cubic-bezier(0.65, 0, 0.35, 1) !important;
+  pointer-events: none !important;
+}
+
+@keyframes nuancePageEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(20px, 8px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Native View Transitions (Chromium / Brave) */
+::view-transition-old(root) {
+  animation: 0.32s cubic-bezier(0.65, 0, 0.35, 1) both nuanceViewExit;
+}
+
+::view-transition-new(root) {
+  animation: 0.55s cubic-bezier(0.65, 0, 0.35, 1) both nuanceViewEnter;
+}
+
+@keyframes nuanceViewExit {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-24px, -10px, 0);
+  }
+}
+
+@keyframes nuanceViewEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(20px, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Top Shimmer Progress Bar */
+#nuance-page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, #ff4b1f, #ff7a50);
+  z-index: 999999;
+  pointer-events: none;
+  transition: width 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.2s ease;
+  opacity: 0;
+}
+
+#nuance-page-progress.active {
+  opacity: 1;
+  width: 70%;
+}
+
+#nuance-page-progress.finishing {
+  opacity: 1;
+  width: 100%;
+}
+
+/* Prevent Framer form submit buttons from shrinking, warping, or wrapping text */
+button[type="submit"],
+.framer-1rlus6e,
+.framer-14v1qha-container button,
+.framer-vobpJ {
+  min-width: 220px !important;
+  height: 50px !important;
+  padding: 0 28px !important;
+  white-space: nowrap !important;
+  background-color: rgb(17, 19, 23) !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.15s ease, opacity 0.15s ease !important;
+}
+
+button[type="submit"]:hover,
+.framer-1rlus6e:hover {
+  background-color: rgb(255, 75, 31) !important;
+}
+
+button[type="submit"] *,
+.framer-1rlus6e * {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+}

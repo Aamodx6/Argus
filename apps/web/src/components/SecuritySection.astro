@@ -1,0 +1,171 @@
+---
+// SecuritySection Component: Data privacy, zero-data copy & row-level permissions
+const pillars = [
+  {
+    num: "01",
+    title: "Read-only by default",
+    desc: "Every connector asks for the narrowest read scope the source offers. Raw rows stay where they are; Warpyn stores query plans and the answers you save."
+  },
+  {
+    num: "02",
+    title: "Row-level permissions",
+    desc: "Permissions follow your sources. If someone cannot see a row in the CRM or warehouse, the thread from that row never reaches their generated answer."
+  },
+  {
+    num: "03",
+    title: "Private VPC deployment",
+    desc: "Deploy Warpyn inside your own cloud tenant (AWS, GCP, Azure). Keep enterprise data inside your regulatory boundary with SOC2 Type II and HIPAA compliance."
+  }
+];
+---
+
+<section class="section-wrapper security-section" id="security">
+  <div class="container">
+    <div class="security-card-main">
+      <div class="sec-top">
+        <span class="section-tag-dark">09 · Security</span>
+        <h2 class="sec-heading">Permissions travel with the thread.</h2>
+        <p class="sec-lede">
+          Warpyn reads with the access you give it and nothing more. If a person cannot see a row in the source, the thread from that row never reaches their answer.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        {pillars.map((p) => (
+          <div class="pillar-box">
+            <span class="pillar-num">{p.num}</span>
+            <h3 class="pillar-title">{p.title}</h3>
+            <p class="pillar-desc">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="compliance-badges">
+        <span class="c-badge">SOC2 Type II</span>
+        <span class="c-badge">HIPAA Compliant</span>
+        <span class="c-badge">GDPR / EU Data Residency</span>
+        <span class="c-badge">Zero Data Ingestion</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .security-card-main {
+    background: var(--bg-dark);
+    color: var(--text-inverted);
+    border-radius: 2rem;
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .security-card-main {
+      padding: 4.5rem;
+    }
+  }
+
+  .sec-top {
+    max-width: 680px;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-tag-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-inverted-muted);
+    margin-bottom: 1rem;
+  }
+
+  .section-tag-dark::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background-color: var(--accent);
+  }
+
+  .sec-heading {
+    color: var(--text-inverted);
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 768px) {
+    .sec-heading {
+      font-size: 3rem;
+    }
+  }
+
+  .sec-lede {
+    color: var(--text-inverted-muted);
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pillar-box {
+    border-top: 1px solid var(--border-dark);
+    padding-top: 1.5rem;
+  }
+
+  .pillar-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.85rem;
+  }
+
+  .pillar-title {
+    font-size: 1.25rem;
+    color: var(--text-inverted);
+    margin-bottom: 0.65rem;
+  }
+
+  .pillar-desc {
+    color: var(--text-inverted-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .compliance-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-dark);
+  }
+
+  .c-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(244, 243, 239, 0.08);
+    color: var(--text-inverted);
+    border: 1px solid rgba(244, 243, 239, 0.12);
+  }
+</style>

@@ -1,9 +1,25 @@
-# Dependencies
+# Node dependencies
 node_modules/
-.pnp
-.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Python environments & cache
+# Next.js build output
+.next/
+out/
+
+# Astro build output
+dist/
+.astro/
+
+# Environment files
+.env.local
+.env.*.local
+.env.vercel
+!.env.example
+
+# Python virtual environment & caches (services/inference)
 venv/
 .venv/
 env/
@@ -11,79 +27,31 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-/lib/
-/lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+.pytest_cache/
 
-# Next.js & Web builds
-.next/
-out/
-next-env.d.ts
-*.tsbuildinfo
-.vercel
-
-# Databases
-*.sqlite
-*.sqlite-journal
-*.sqlite3
-*.db
-
-# Logs & Metrics
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-tensorboard_logs/
-**/runs/
-*.tfevents.*
-
-# Datasets & raw media
-**/dataset/MELD.Raw/
-**/dataset/dev/*
-!**/dataset/dev/.gitkeep
-**/dataset/test/*
-!**/dataset/test/.gitkeep
-**/dataset/train/*
-!**/dataset/train/.gitkeep
-
-# Model weights & archives
-**/deployment/model/*
-!**/deployment/model/.gitkeep
-**/deployment/model_normalized/*
-!**/deployment/model_normalized/.gitkeep
-*.tar.gz
-*.pth
+# Datasets and model checkpoints
+dataset/
+**/dataset/
+*.ckpt
 *.pt
-*.bin
+*.pth
 *.onnx
-*.safetensors
 
-# Environment variables & secrets
-.env*
-*.env*
-!.env.example
+# Scratch & Claude SEO (gitignored per project specification)
+scratch/
+claude-seo/
 
-*.pem
-*.key
-
-# OS & Editor
+# OS metadata
 .DS_Store
 Thumbs.db
-.idea/
+Desktop.ini
+
+# IDE & Editor folders
 .vscode/
+.idea/
 *.swp
-.neon
+*.swo
+
+# Temporary and test artifacts
+*.log
+.turbo/

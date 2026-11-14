@@ -1,0 +1,84 @@
+{
+  "version": "2.4.0",
+  "emotions": [
+    {
+      "id": "joy",
+      "label": "Joy",
+      "emoji": "😄",
+      "valence": "positive",
+      "color": "#ff4b1f",
+      "description": "Expressed happiness, delight, smiling facial action units (AU6, AU12) or positive prosody."
+    },
+    {
+      "id": "surprise",
+      "label": "Surprise",
+      "emoji": "😲",
+      "valence": "neutral",
+      "color": "#f59e0b",
+      "description": "Eyebrow raise, eye widening (AU1, AU2, AU5), sudden pitch shift."
+    },
+    {
+      "id": "neutral",
+      "label": "Neutral",
+      "emoji": "😐",
+      "valence": "neutral",
+      "color": "#838896",
+      "description": "Baseline facial expression and conversational prosody without strong affective inflection."
+    },
+    {
+      "id": "fear",
+      "label": "Fear",
+      "emoji": "😨",
+      "valence": "negative",
+      "color": "#8b5cf6",
+      "description": "Raised and pulled together brows (AU1, AU4), tense mouth, speech hesitation."
+    },
+    {
+      "id": "sadness",
+      "label": "Sadness",
+      "emoji": "😢",
+      "valence": "negative",
+      "color": "#3b82f6",
+      "description": "Inner corners of eyebrows raised (AU1), downturned lip corners (AU15), lowered pitch tone."
+    },
+    {
+      "id": "disgust",
+      "label": "Disgust",
+      "emoji": "🤢",
+      "valence": "negative",
+      "color": "#10b981",
+      "description": "Nose wrinkling (AU9), upper lip raised (AU10)."
+    },
+    {
+      "id": "anger",
+      "label": "Anger",
+      "emoji": "😡",
+      "valence": "negative",
+      "color": "#ef4444",
+      "description": "Lowered and drawn together brows (AU4), tight lips, increased vocal intensity."
+    }
+  ],
+  "sentiments": [
+    {
+      "id": "positive",
+      "label": "Positive",
+      "emoji": "😄",
+      "color": "#10b981",
+      "description": "Affirmative, cooperative, or constructive multimodal cues."
+    },
+    {
+      "id": "neutral",
+      "label": "Neutral",
+      "emoji": "😐",
+      "color": "#838896",
+      "description": "Objective, informational, or matter-of-fact communication."
+    },
+    {
+      "id": "negative",
+      "label": "Negative",
+      "emoji": "😡",
+      "color": "#ef4444",
+      "description": "Critical, adversarial, or distressing multimodal cues."
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://nuance.ai/schemas/inference-response.schema.json",
+  "title": "InferenceResponse",
+  "description": "Standard schema for Nuance multimodal video sentiment and emotion analysis responses.",
+  "type": "object",
+  "required": ["analysis"],
+  "properties": {
+    "account_policy": {
+      "type": "string",
+      "enum": ["active", "rate_limited", "warning", "suspended"],
+      "default": "active"
+    },
+    "analysis": {
+      "type": "object",
+      "required": ["utterances"],
+      "properties": {
+        "utterances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Utterance"
+          }
+        },
+        "overall": {
+          "type": "object",
+          "properties": {
+            "topEmotion": { "$ref": "#/definitions/ConfidenceScore" },
+            "topSentiment": { "$ref": "#/definitions/ConfidenceScore" },
+            "durationSeconds": { "type": "number" },
+            "framesProcessed": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "requestId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "modelEndpoint": { "type": "string" },
+        "latencyMs": { "type": "number" },
+        "region": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "Utterance": {
+      "type": "object",
+      "required": ["start_time", "end_time", "text", "emotions", "sentiments"],
+      "properties": {
+        "start_time": { "type": "number", "minimum": 0 },
+        "end_time": { "type": "number", "minimum": 0 },
+        "text": { "type": "string" },
+        "emotions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ConfidenceScore" }
+        },
+        "sentiments": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ConfidenceScore" }
+        }
+      }
+    },
+    "ConfidenceScore": {
+      "type": "object",
+      "required": ["label", "confidence"],
+      "properties": {
+        "label": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,299 @@
+---
+// LineageSection Component: Pull any thread back to the row it came from
+---
+
+<section class="section-wrapper lineage-section" id="lineage">
+  <div class="container">
+    <div class="lineage-header">
+      <span class="section-tag">03 · Lineage</span>
+      <h2 class="section-heading">Pull any thread back to the row it came from.</h2>
+      <p class="section-lede">
+        An answer is only as good as the rows under it. Hover a line of the cloth and Warpyn lights the thread back through the reed to its source, the exact record and every step in between.
+      </p>
+    </div>
+
+    <!-- Lineage Interactive Explorer -->
+    <div class="lineage-explorer">
+      <!-- Left: The Answer Woven -->
+      <div class="explorer-card answer-card">
+        <div class="card-kicker">Woven Answer</div>
+        <div class="answer-figure-row">
+          <span class="figure-main">+38%</span>
+          <span class="figure-context">Nordics ARR Q3</span>
+        </div>
+        <p class="answer-narrative">
+          Nordics led growth at +38%, driven by 41 new mid-market accounts added between July and September.
+        </p>
+
+        <div class="step-lineage-flow">
+          <div class="flow-node active">
+            <span class="flow-num">1</span>
+            <div class="flow-desc">
+              <strong>Glossary Definition</strong>
+              <span>net_arr_eur (confirmed by CFO 12 Aug)</span>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-node">
+            <span class="flow-num">2</span>
+            <div class="flow-desc">
+              <strong>Query Plan</strong>
+              <span>JOIN crm.accounts ON billing.invoices.customer_id</span>
+            </div>
+          </div>
+          <div class="flow-connector"></div>
+          <div class="flow-node">
+            <span class="flow-num">3</span>
+            <div class="flow-desc">
+              <strong>Source Row Verification</strong>
+              <span>41 rows matched across Stripe & Salesforce</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Direct Row Inspector -->
+      <div class="explorer-card rows-inspector">
+        <div class="card-kicker">Row-Level Lineage</div>
+        
+        <div class="table-container">
+          <table class="lineage-table">
+            <thead>
+              <tr>
+                <th>Account</th>
+                <th>Region</th>
+                <th>Plan</th>
+                <th>Invoice</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="bold">NordicLogix AB</td>
+                <td><span class="pill-tag">SE</span></td>
+                <td>Enterprise</td>
+                <td class="mono">inv_9841f</td>
+                <td class="mono green">€14,200</td>
+              </tr>
+              <tr>
+                <td class="bold">Helsinki Media Oy</td>
+                <td><span class="pill-tag">FI</span></td>
+                <td>Growth</td>
+                <td class="mono">inv_9842a</td>
+                <td class="mono green">€8,400</td>
+              </tr>
+              <tr>
+                <td class="bold">Fjord Maritime AS</td>
+                <td><span class="pill-tag">NO</span></td>
+                <td>Enterprise</td>
+                <td class="mono">inv_9843c</td>
+                <td class="mono green">€22,500</td>
+              </tr>
+              <tr>
+                <td class="bold">Dansk Retail ApS</td>
+                <td><span class="pill-tag">DK</span></td>
+                <td>Growth</td>
+                <td class="mono">inv_9844e</td>
+                <td class="mono green">€9,100</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="audit-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span>Auditable query plan stored · Raw data remains in your VPC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lineage-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .lineage-explorer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 992px) {
+    .lineage-explorer {
+      grid-template-columns: 1fr 1.25fr;
+    }
+  }
+
+  .explorer-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-subtle);
+    margin-bottom: 1.5rem;
+  }
+
+  .answer-figure-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .figure-main {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .figure-context {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .answer-narrative {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 2rem;
+  }
+
+  /* Flow nodes */
+  .step-lineage-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+  }
+
+  .flow-node.active {
+    border-color: var(--accent);
+    background: #fff;
+  }
+
+  .flow-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-tag);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .flow-node.active .flow-num {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .flow-desc strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+  }
+
+  .flow-desc span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .flow-connector {
+    width: 2px;
+    height: 12px;
+    background: var(--border-strong);
+    margin-left: 1.7rem;
+  }
+
+  /* Table */
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 1.75rem;
+  }
+
+  .lineage-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: left;
+  }
+
+  .lineage-table th {
+    padding: 0.75rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-subtle);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .lineage-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(17, 19, 23, 0.05);
+    color: var(--text-primary);
+  }
+
+  .lineage-table td.bold {
+    font-weight: 500;
+  }
+
+  .lineage-table td.mono {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+
+  .lineage-table td.green {
+    color: #1a7f37;
+    font-weight: 500;
+  }
+
+  .pill-tag {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: var(--bg-tag);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .audit-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(17, 19, 23, 0.04);
+  }
+</style>

@@ -1,0 +1,39 @@
+{
+  "account_policy": "active",
+  "analysis": {
+    "utterances": [
+      {
+        "start_time": 0.0,
+        "end_time": 4.5,
+        "text": "[Silent video - Facial expression only]",
+        "emotions": [
+          { "label": "neutral", "confidence": 0.72 },
+          { "label": "surprise", "confidence": 0.16 },
+          { "label": "joy", "confidence": 0.08 },
+          { "label": "fear", "confidence": 0.02 },
+          { "label": "sadness", "confidence": 0.01 },
+          { "label": "disgust", "confidence": 0.005 },
+          { "label": "anger", "confidence": 0.005 }
+        ],
+        "sentiments": [
+          { "label": "neutral", "confidence": 0.82 },
+          { "label": "positive", "confidence": 0.14 },
+          { "label": "negative", "confidence": 0.04 }
+        ]
+      }
+    ],
+    "overall": {
+      "topEmotion": { "label": "neutral", "confidence": 0.72 },
+      "topSentiment": { "label": "neutral", "confidence": 0.82 },
+      "durationSeconds": 4.5,
+      "framesProcessed": 135
+    }
+  },
+  "meta": {
+    "requestId": "req_demo_vision_002",
+    "timestamp": "2026-11-15T00:00:00.000Z",
+    "modelEndpoint": "sagemaker-multimodal-sentiment-v2",
+    "latencyMs": 140,
+    "region": "ap-southeast-2"
+  }
+}

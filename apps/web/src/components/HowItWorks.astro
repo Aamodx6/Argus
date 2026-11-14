@@ -1,0 +1,214 @@
+---
+// HowItWorks Component: 3-step workflow (Connect, Map, Ask)
+const steps = [
+  {
+    num: "01",
+    tag: "Connect",
+    title: "Read-only connectors for the whole stack.",
+    desc: "240+ sources, from your warehouse and production replica to billing, CRM, support and the spreadsheets finance swears by. Each connector asks for the narrowest scope the tool allows.",
+    points: [
+      { title: "Minutes, not sprints", text: "OAuth or a service account; most teams connect four sources in the first call." },
+      { title: "Nothing copied", text: "Warpyn queries in place and stores query plans and saved answers only." },
+      { title: "Schema-aware", text: "Column descriptions and dbt docs are read so answers use your team's names." }
+    ],
+    image: "/images/Wsz0LxzRWrmlCDAKAQv0lawiJHU.jpg",
+    alt: "Eight loose bundles of data threads leaving their source tags"
+  },
+  {
+    num: "02",
+    tag: "Map",
+    title: "Agree what revenue means, once.",
+    desc: "The glossary holds about thirty definitions: revenue, active account, churn, expansion. Each is plain English with the SQL underneath, owned by a named person. Change one and every answer that depends on it re-weaves.",
+    points: [
+      { title: "One customer key", text: "Every source is matched to the same account, with a review queue for anything uncertain." },
+      { title: "Owned definitions", text: "Each term has an owner and a history, so nobody argues about which 'active' was used." },
+      { title: "Visible in answers", text: "Every figure lists the definitions it used, right under the number." }
+    ],
+    image: "/images/kw62QQCN9mAizJ1BA44ptiy2AU.jpg",
+    alt: "Source records combed into threads that run through the reed"
+  },
+  {
+    num: "03",
+    tag: "Ask",
+    title: "Ask the way you would ask a colleague.",
+    desc: "Type a question, get the figure first and the reason underneath. Follow up in the same thread: by region, since March, excluding trials. Save anything worth asking again and have it delivered on Monday at 08:00.",
+    points: [
+      { title: "Plain English", text: "No SQL, no dashboard to find, no ticket to the data team." },
+      { title: "Follow-ups", text: "Each answer keeps its context, so the next question can be three words long." },
+      { title: "Scheduled answers", text: "Email or Slack, with a note when the figure moves more than usual." }
+    ],
+    image: "/images/HxBA2y7pvbuwHF2DJxEktHTM.jpg",
+    alt: "The answer woven into cloth: a figure and a chart"
+  }
+];
+---
+
+<section class="section-wrapper how-it-works-section" id="how-it-works">
+  <div class="container">
+    <div class="hiw-header">
+      <span class="section-tag">04 · How it works</span>
+      <h2 class="section-heading">From ninety tabs to one answer, in three steps.</h2>
+      <p class="section-lede">
+        No new dashboards to maintain and no copy of your data to babysit. Warpyn reads what you already have and keeps every figure traceable.
+      </p>
+    </div>
+
+    <div class="steps-container">
+      {steps.map((step) => (
+        <div class="step-card">
+          <div class="step-content">
+            <div class="step-top-meta">
+              <span class="step-index">{step.num}</span>
+              <span class="step-pill">{step.tag}</span>
+            </div>
+            
+            <h3 class="step-title">{step.title}</h3>
+            <p class="step-desc">{step.desc}</p>
+
+            <div class="step-points-grid">
+              {step.points.map((pt) => (
+                <div class="point-box">
+                  <h4 class="point-title">{pt.title}</h4>
+                  <p class="point-text">{pt.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="step-visual">
+            <img src={step.image} alt={step.alt} loading="lazy" class="step-img" />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hiw-header {
+    margin-bottom: 4rem;
+  }
+
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .step-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 1.75rem;
+    padding: 2.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 992px) {
+    .step-card {
+      grid-template-columns: 1.15fr 1fr;
+      padding: 3.5rem;
+      gap: 3.5rem;
+    }
+  }
+
+  .step-top-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-index {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .step-pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    background: var(--bg-tag);
+    border-radius: 999px;
+    color: var(--text-primary);
+  }
+
+  .step-title {
+    font-size: 1.85rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 768px) {
+    .step-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .step-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .step-points-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .step-points-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .point-box {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .point-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .point-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .step-visual {
+    position: relative;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: #e1ded9;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .step-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 4 / 3;
+    transition: transform 0.3s ease;
+  }
+
+  .step-card:hover .step-img {
+    transform: scale(1.02);
+  }
+</style>
