@@ -1,15 +1,19 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { loadEnv } from 'vite';
+import { publicOrigin } from './src/lib/routes.mjs';
 
 // https://astro.build/config
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'PUBLIC_');
+const apiTarget = publicOrigin(env.PUBLIC_API_URL) || 'http://localhost:3000';
 export default defineConfig({
-  site: 'https://warpyn.example.com',
-  integrations: [sitemap()],
+  site: publicOrigin(env.PUBLIC_SITE_URL) || 'http://localhost:4321',
+  integrations: [sitemap({ filter: (page) => !/\/(app|dashboard|console|login|signup)\/?$/.test(new URL(page).pathname) })],
   vite: {
     server: {
       proxy: {
         '/api': {
-          target: 'http://localhost:3000',
+          target: apiTarget,
           changeOrigin: true,
         },
       },

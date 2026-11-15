@@ -1,0 +1,23 @@
+{
+  "host_hourly_usd": "1.8312000000",
+  "host_minute_usd": "0.0305200000",
+  "host_daily_usd": "43.9488000000",
+  "host_730h_usd": "1336.7760000000",
+  "remaining_credit_gpu_hours": "17.37658366098733071210135430",
+  "retained_s3_monthly_usd": "0.3822663821745663881301879882",
+  "studio_monthly_usd": "0.6720000000",
+  "logs_storage_proxy_monthly_usd": "0.0002567203491926193237304687500",
+  "current_carrying_730h_usd": "1337.830523102523759007453918",
+  "without_gpu_carrying_monthly_usd": "1.054523102523759007453918",
+  "monitoring_scenario_monthly_usd": "100.0613718328794517517089844",
+  "production_scenario_excluding_gpu_usd": "240254.8221968328794517517090",
+  "optional_core_idle_floor_730h_usd": "264.74300000000",
+  "audio_extra_standard_pass_contingency_usd": "72000.00000000000",
+  "all_available_gross_usd": "113.5016250001",
+  "all_available_credits_usd": "-113.5016250462",
+  "measured_invocations_24h": "19.0",
+  "csv_daily_rows": 446,
+  "ce_pages": 3,
+  "s3_current_gib": "15.03284278698265552520751953",
+  "s3_multipart_gib": "0.2578125"
+}

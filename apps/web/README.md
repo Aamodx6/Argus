@@ -1,87 +1,44 @@
-# Warpyn · Astro Web Application
+# Nuance website and browser console
 
-A clean, blazing-fast, 100% pre-rendered replication of the **Warpyn** data analytics website built with **Astro**.
+`apps/web` contains the Astro 7 static marketing pages, JSON-login views and video console. Marketing pages use imported Framer HTML and local runtime assets; authentication uses a shared native form. The unused component-based template and duplicate image directory have been removed. The remaining Framer bundles are needed for marketing-page hydration; do not delete them merely because they have no TypeScript importers.
 
----
+## Local development
 
-## 🚀 Key Advantages Over the Raw Framer Export
+Run `npm ci`, copy `.env.example` to `.env.local`, and run `npm run dev`. Start `apps/app` separately on port 3000. Astro serves port 4321. Its development `/api` proxy targets `PUBLIC_API_URL`, defaulting to localhost:3000. All API authorization remains on the Next.js backend.
 
-1. **Zero JS by Default**: Ships pure static semantic HTML and scoped CSS. No 2MB React/Framer runtime bundles.
-2. **Pre-rendered SEO**: Fixes the blank `<div id="main"></div>` issue on subpages (`/product` and `/pricing`). Search engines index 100% of the content on First Paint.
-3. **100/100 Core Web Vitals**: Instant TTFB (<100ms), First Contentful Paint (<0.3s), and zero Cumulative Layout Shift (CLS).
-4. **Clean & Modular**: Human-readable components without machine-generated CSS hashes.
-5. **No Watermarks or Telemetry**: Removed Framer badges and tracking scripts.
+| Build-time variable | Purpose |
+| --- | --- |
+| `PUBLIC_SITE_URL` | Marketing origin used by canonical URLs and sitemap; set the real HTTPS origin for production |
+| `PUBLIC_API_URL` | Backend HTTP(S) origin, without a path; empty means same-origin `/api` requests and requires a reverse proxy in production |
+| `PUBLIC_REQUIRE_MODERATION` | Defaults to guarded uploads; only `0` selects the legacy client flow; must match the backend policy |
 
----
+These values are public and baked into the static build. Put secrets only in the backend. The static host and `astro preview` do not acquire the development API proxy automatically. Set the deployed backend origin or configure a production `/api` reverse proxy. The backend must allow the browser origin and required preflight headers.
 
-## 📁 Project Structure
+## Routes
 
-```text
-warpyn-astro/
-├── public/
-│   ├── favicon.png               # Brand icon
-│   └── images/                   # All 52 optimized image assets
-├── src/
-│   ├── styles/
-│   │   └── global.css            # Design tokens, typography & utilities
-│   ├── layouts/
-│   │   └── BaseLayout.astro      # Global layout, OpenGraph, JSON-LD schema
-│   ├── components/
-│   │   ├── Navbar.astro          # Responsive header & mobile drawer
-│   │   ├── HeroLoom.astro        # Interactive canvas simulation + question pill
-│   │   ├── SourcesMarquee.astro  # 240+ connectors infinite CSS ticker
-│   │   ├── LineageSection.astro  # Trace a thread & row-level lineage table
-│   │   ├── HowItWorks.astro      # 3-step sticky workflow (Connect, Map, Ask)
-│   │   ├── PlainEnglishSection.astro # Interactive tabs with +38%, 4.2H, 112%, 6/14
-│   │   ├── PulseSection.astro    # Smart anomaly alert preview & snagged thread
-│   │   ├── InNumbersSection.astro# SaaS impact stats (16x faster, 47% fewer dashboards)
-│   │   ├── CustomerStories.astro # Harrow & Pike, Brightwater, Kitefin, Lumbra
-│   │   ├── SecuritySection.astro # SOC2, row-level permissions, private VPC
-│   │   ├── PricingSection.astro  # Starter, Growth, Enterprise with monthly/annual switch
-│   │   ├── FAQSection.astro      # 6 expandable Q&A accordions
-│   │   ├── CTASection.astro      # High-conversion bottom banner
-│   │   └── Footer.astro          # Wordmark, link columns, 99.98% live status
-│   └── pages/
-│       ├── index.astro           # Home page (/)
-│       ├── product.astro         # Full Product architecture deep-dive (/product)
-│       └── pricing.astro         # Side-by-side plan comparison table (/pricing)
-├── astro.config.mjs              # Astro configuration + sitemap integration
-├── package.json
-└── tsconfig.json
-```
+| Route | Behavior |
+| --- | --- |
+| `/`, `/product`, `/sources`, `/customers`, `/pricing`, `/changelog` | Marketing pages |
+| `/contact` | Working account-creation form |
+| `/signup` | Static redirect to `/contact` |
+| `/login` | JSON login, storing the returned product key for the console |
+| `/console` | Browser workspace; authenticated API key required for real requests |
+| `/app`, `/dashboard` | Static redirects to `/console` |
 
----
+Static redirects are generated as redirect HTML with a meta refresh. A host can configure HTTP redirects for faster transitions. Template links to implemented pages are normalized; unimplemented template destinations are disabled rather than sent to the upstream template site. Navigation uses real page loads so authentication and console scripts initialize consistently.
 
-## 🛠️ How to Run & Develop
+Pricing and changelog use an empty marketing shell before their exported components render. Pricing must not reuse the home-page HTML, which previously flashed the marquee during navigation. Branding is also corrected after hydration, and the header retains a visible Sign in action. Authentication keeps the reference layout's form and side cards while using native validated fields.
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+The Astro login flow uses a product API key. It does not create the separate Auth.js cookie session used by the retained Next.js login/dashboard pages. The API authorizes every request regardless of browser UI state.
 
-2. **Start the local development server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:4321` in your browser.
+## Analysis behavior
 
-3. **Build for production**:
-   ```bash
-   npm run build
-   ```
-   Outputs pre-rendered static HTML to the `dist/` directory.
+Guarded mode uses `/api/async-inference/uploads`, the returned signed multipart S3 form, `/api/async-inference/jobs`, and status polling. Legacy mode is explicit and remains blocked if server moderation is enabled. A request failure is shown as an error and never converted into sample predictions. The sample button uses saved example data and makes no inference request.
 
-4. **Preview the production build**:
-   ```bash
-   npm run preview
-   ```
+The GPU endpoint is currently removed for cost control, and the optional async infrastructure has not been deployed. An unavailable backend should return an error; a successful static build does not demonstrate live inference.
 
----
+## Verification
 
-## 🚢 One-Click Deployment
+Run `npm test` for origin, navigation and upload-flow regressions, then `npm run build`. `ASTRO_TELEMETRY_DISABLED=1` avoids writing telemetry preferences outside the workspace in restricted environments. `npm run preview` serves the generated static site.
 
-This project can be deployed instantly to any static host:
-
-- **Vercel**: Push to GitHub and import the `warpyn-astro` folder in Vercel. Preset: `Astro`.
-- **Netlify**: Set build command to `npm run build` and publish directory to `dist`.
-- **Cloudflare Pages**: Set build command to `npm run build` and output directory to `dist`.
+See [routing and dead-code review](../../docs/reports/routing-and-dead-code-review-2026-11-15.md) for checked routes, removed files and remaining limitations. Original template attribution is retained in [third-party notices](../../THIRD_PARTY_NOTICES.md).

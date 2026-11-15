@@ -1,0 +1,38 @@
+month,service,record_type,unblended_cost_usd,estimated
+2026-10,AWS CloudShell,Usage,0,False
+2026-10,AWS Data Transfer,Credit,-0.0036799288,False
+2026-10,AWS Glue,Usage,0,False
+2026-10,AWS Key Management Service,Usage,0,False
+2026-10,AWS Secrets Manager,Credit,-0.00002,False
+2026-10,AWS Secrets Manager,Usage,0.00002,False
+2026-10,AWS Service Catalog,Usage,0,False
+2026-10,EC2 - Other,Credit,-0.0057831542,False
+2026-10,EC2 - Other,Usage,0.0094630058,False
+2026-10,Amazon Elastic Compute Cloud - Compute,Credit,-0.0782113901,False
+2026-10,Amazon Elastic Compute Cloud - Compute,Usage,0.0782113901,False
+2026-10,Amazon SageMaker,Credit,-24.5537020903,False
+2026-10,Amazon SageMaker,Usage,24.55370209,False
+2026-10,Amazon Simple Notification Service,Usage,0,False
+2026-10,Amazon Simple Queue Service,Usage,0,False
+2026-10,Amazon Simple Storage Service,Credit,-0.2244237192,False
+2026-10,Amazon Simple Storage Service,Usage,0.2244237952,False
+2026-10,Amazon Virtual Private Cloud,Credit,-0.003558335,False
+2026-10,Amazon Virtual Private Cloud,Usage,0.003558335,False
+2026-10,AmazonCloudWatch,Credit,-0.04794,False
+2026-10,AmazonCloudWatch,Usage,0.04794,False
+2026-10,Tax,Tax,0,False
+2026-11,AWS Data Transfer,Credit,-0.0000406003,True
+2026-11,AWS Glue,Usage,0,True
+2026-11,AWS Key Management Service,Usage,0,True
+2026-11,AWS Lambda,Usage,0,True
+2026-11,Amazon API Gateway,Credit,-0.00000129,True
+2026-11,Amazon API Gateway,Usage,0.00000129,True
+2026-11,Amazon SageMaker,Credit,-88.361079671,True
+2026-11,Amazon SageMaker,Usage,88.3610796708,True
+2026-11,Amazon Simple Notification Service,Usage,0,True
+2026-11,Amazon Simple Queue Service,Usage,0,True
+2026-11,Amazon Simple Storage Service,Credit,-0.1888090473,True
+2026-11,Amazon Simple Storage Service,Usage,0.1888496475,True
+2026-11,AmazonCloudWatch,Credit,-0.03437582,True
+2026-11,AmazonCloudWatch,Usage,0.0343757757,True
+2026-11,Tax,Tax,0,True

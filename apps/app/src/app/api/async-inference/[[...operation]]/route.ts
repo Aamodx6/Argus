@@ -8,9 +8,6 @@ type Context = { params: Promise<{ operation?: string[] }> };
 
 async function proxy(request: Request, context: Context) {
   const root = process.env.AWS_JOBS_API_URL;
-  if (!root) {
-    return NextResponse.json({ error: "Async inference is not configured" }, { status: 503 });
-  }
   const { operation = [] } = await context.params;
   const [name, id] = operation;
   const submit = request.method === "POST" && operation.length === 1 &&
@@ -24,6 +21,9 @@ async function proxy(request: Request, context: Context) {
   const token = request.headers.get("authorization")?.match(/^Bearer ([A-Za-z0-9_-]{32,128})$/i)?.[1];
   if (!token) {
     return NextResponse.json({ error: "API key required" }, { status: 401 });
+  }
+  if (!root) {
+    return NextResponse.json({ error: "Async inference is not configured" }, { status: 503 });
   }
   const url = new URL(operation.join("/"), root.replace(/\/?$/, "/"));
   const body = submit ? await request.text() : undefined;

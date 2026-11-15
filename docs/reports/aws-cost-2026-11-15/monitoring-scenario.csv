@@ -1,0 +1,18 @@
+component,quantity,unit,monthly_usd,average_usd_per_wall_minute,assumption
+CloudWatch log ingestion,106.729567050933837890625,GiB,71.50880992412567138671875000,0.001655296526021427578396267361,1800-byte request event plus 5% 2200-byte vector; two log copies; before free allowance
+CloudWatch log storage,106.729567050933837890625,GiB-month,3.522075712680816650390625000,0.00008152953038613001505533854167,30-day steady-state retention; conservative uncompressed volume proxy
+CloudWatch custom metrics,40,metric-month,12.00,0.0002777777777777777777777777778,One endpoint/version; illustrative 40 series
+CloudWatch metric alarms,15,metric-month,1.50,0.00003472222222222222222222222222,15 standard one-metric alarms
+CloudWatch composite alarms,2,alarm-month,1.00,0.00002314814814814814814814814815,Two composite alarms
+CloudWatch dashboard,1,dashboard-month,3,0.00006944444444444444444444444444,One custom dashboard before free allowance; global list rate
+Firehose ingestion,53.3647835254669189453125,GiB,1.974496990442276000976562500,0.00004570594885283046298556857639,Batched CW subscription payload nominal upper input proxy; rounding/compression require measurement
+Firehose decompression,53.3647835254669189453125,GiB,0.2214638516306877136230468750,0.000005126478047006660037570529514,Conditional extra if native decompression is enabled; current Lambda does decompression itself
+Monitoring S3 storage,15,GiB-month,0.3750000000,0.000008680555555555555555555555556,"15 GiB compressed logs/capture estimate; metadata payload, no video copy"
+Monitoring S3 PUT/LIST,100000,requests,0.5500000000,0.00001273148148148148148148148148,Budget 100k requests
+Monitoring S3 GET,1000000,requests,0.4400000000,0.00001018518518518518518518518519,Budget 1m requests
+Normalize/drift/accuracy Lambda,16620.00,GB-second,0.337288554000,0.000007807605416666666666666666667,300k transform batches at 100ms/512MiB plus 720 drift runs 2s/1GiB and accuracy 1s/256MiB
+Feedback DynamoDB write units,1200000.00,WRU,0.852000000000,0.00001972222222222222222222222222,1% feedback participation; two transactional writes of <=1KiB each
+Feedback DynamoDB reads,120960,RRU,0.0172368000,3.990E-7,720 hourly runs *168 counters; one RRU each
+Feedback DynamoDB storage/PITR,1,GiB-month each,0.5130000000,0.0000118750,1GiB before storage allowance plus PITR
+Athena queries,0.25,TiB scanned,1.250000000000,0.00002893518518518518518518518519,Partition-filtered 0.25TiB budget
+Monitoring miscellaneous events/catalog,1,allowance,1,0.00002314814814814814814814814815,"Explicit budget allowance for schedules, SNS, Glue catalog"

@@ -1,5 +1,7 @@
 "use client";
 
+import { marketingHome } from "~/lib/brand";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -59,7 +61,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-[#fbfbf9] text-[#111111] font-sans antialiased selection:bg-orange-500 selection:text-white">
       {/* Top Navbar */}
       <nav className="flex h-20 items-center justify-between border-b border-black/[0.06] px-6 sm:px-12 max-w-7xl mx-auto">
-        <Link href="http://localhost:4321/" className="flex items-center gap-3 group">
+        <Link href={marketingHome} className="flex items-center gap-3 group">
           <div className="w-8 h-8 rounded-lg bg-[#111111] flex items-center justify-center text-white font-semibold text-xs tracking-wider">
             NU
           </div>

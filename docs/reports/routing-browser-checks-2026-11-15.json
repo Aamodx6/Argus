@@ -1,0 +1,75 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "finalPath": "/",
+      "forms": 0,
+      "title": "Nuance · Aspect sentiment for video"
+    },
+    {
+      "path": "/product",
+      "status": 200,
+      "finalPath": "/product",
+      "forms": 0,
+      "title": "Product · Nuance"
+    },
+    {
+      "path": "/pricing",
+      "status": 200,
+      "finalPath": "/pricing",
+      "forms": 0,
+      "title": "Pricing · Nuance"
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "finalPath": "/contact",
+      "forms": 1,
+      "title": "Create account · Nuance"
+    },
+    {
+      "path": "/login",
+      "status": 200,
+      "finalPath": "/login",
+      "forms": 1,
+      "title": "Sign in · Nuance"
+    },
+    {
+      "path": "/signup",
+      "status": 200,
+      "finalPath": "/contact",
+      "forms": 1,
+      "title": "Create account · Nuance"
+    },
+    {
+      "path": "/console",
+      "status": 200,
+      "finalPath": "/console",
+      "forms": 0,
+      "title": "Nuance · Multimodal Sentiment Console"
+    },
+    {
+      "path": "/app",
+      "status": 200,
+      "finalPath": "/console",
+      "forms": 0,
+      "title": "Nuance · Multimodal Sentiment Console"
+    },
+    {
+      "path": "/dashboard",
+      "status": 200,
+      "finalPath": "/console",
+      "forms": 0,
+      "title": "Nuance · Multimodal Sentiment Console"
+    }
+  ],
+  "checks": [
+    "All nine pages rendered without script errors or missing local assets; aliases reached their destinations",
+    "Marketing navigation uses real local pages",
+    "Login form submits once and reaches console using mocked credentials",
+    "Guarded browser upload completes with mocked API/S3 and transcript text is escaped",
+    "Upload failure is displayed without substituting sample predictions",
+    "Signup rejects mismatched confirmation locally, then submits matching fields and reaches login with mocked success"
+  ]
+}

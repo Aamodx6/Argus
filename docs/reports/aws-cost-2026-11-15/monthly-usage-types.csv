@@ -1,0 +1,149 @@
+month,service,usage_type,unblended_cost_usd,usage_quantity,usage_unit
+2026-10,AWS CloudShell,APS2-DataTransfer-Regional-Bytes,0,0.0000087768,GB
+2026-10,AWS CloudShell,APS2-DataTransfer-xAZ-In-Bytes,0,0.0018546851,GB
+2026-10,AWS CloudShell,APS2-DataTransfer-xAZ-Out-Bytes,0,0.01022971,GB
+2026-10,AWS Glue,APS2-Catalog-Request,0,68,Requests
+2026-10,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,352,Requests
+2026-10,AWS Secrets Manager,APS2-AWSSecretsManagerAPIRequest,0.000020,4,API Requests
+2026-10,AWS Service Catalog,APS2-SC-API-Calls,0,1,API Calls
+2026-10,Amazon Elastic Compute Cloud - Compute,APS2-BoxUsage:c7i-flex.large,0.0782113901,0.706389,Hrs
+2026-10,Amazon Elastic Compute Cloud - Compute,APS2-CloudFront-In-Bytes,0,0.0000180285,GB
+2026-10,Amazon Elastic Compute Cloud - Compute,APS2-CloudFront-Out-Bytes,0,0.0000024475,GB
+2026-10,Amazon Elastic Compute Cloud - Compute,APS2-DataTransfer-In-Bytes,0,1.676E-7,GB
+2026-10,Amazon Elastic Compute Cloud - Compute,APS2-DataTransfer-Out-Bytes,0,4.47E-7,GB
+2026-10,Amazon SageMaker,APS2-Studio:CodeEditor-ml.c5.large,1.8927260669,14.23102306,Hrs
+2026-10,Amazon SageMaker,APS2-Studio:CodeEditor-ml.t3.medium,0.7850039747,12.46038055,Hrs
+2026-10,Amazon SageMaker,APS2-Studio:JupyterLab-ml.t3.medium,0.4520939328,7.17609417,Hrs
+2026-10,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.5471775976,4.0712618837,GB-Month
+2026-10,Amazon SageMaker,APS2-Train:ml.g5.xlarge,20.8767005180,12.76862417,Hrs
+2026-10,Amazon Simple Notification Service,APS2-Requests-Tier1,0,3,Requests
+2026-10,Amazon Simple Queue Service,APS2-Requests-Tier1,0,3,Requests
+2026-10,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.0001311202,GB
+2026-10,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0013828053,GB
+2026-10,Amazon Simple Storage Service,APS2-Requests-Annotation-Tier1,0.000011,2,Requests
+2026-10,Amazon Simple Storage Service,APS2-Requests-Tier1,0.1007325,18315,Requests
+2026-10,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00708972,16113,Requests
+2026-10,Amazon Simple Storage Service,APS2-Requests-Tier8,0.00006,2,Requests
+2026-10,Amazon Simple Storage Service,APS2-Tables-Requests-Tier1,0.0000055,1,Requests
+2026-10,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.1163295991,4.653183946,GB-Month
+2026-10,Amazon Simple Storage Service,APS3-DataTransfer-In-Bytes,0,2.8E-7,GB
+2026-10,Amazon Simple Storage Service,APS3-DataTransfer-Out-Bytes,0,0.0000012543,GB
+2026-10,Amazon Simple Storage Service,APS3-Requests-Tier1,0.000015,3,Requests
+2026-10,Amazon Simple Storage Service,DataTransfer-In-Bytes,0,1.471E-7,GB
+2026-10,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.00000929,GB
+2026-10,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.045698906,Bucket-Mo
+2026-10,Amazon Simple Storage Service,Requests-Tier1,0.000170,34,Requests
+2026-10,Amazon Simple Storage Service,Requests-Tier2,4E-7,1,Requests
+2026-10,Amazon Simple Storage Service,USE1-APS2-AWS-In-Bytes,0,1.471E-7,GB
+2026-10,Amazon Simple Storage Service,USE1-APS2-AWS-Out-Bytes,7.61E-8,0.0000038081,GB
+2026-10,Amazon Simple Storage Service,USW2-DataTransfer-Out-Bytes,0,0.000001,GB
+2026-10,Amazon Simple Storage Service,USW2-Requests-Tier1,0.00001,2,Requests
+2026-10,Amazon Virtual Private Cloud,APS2-PublicIPv4:InUseAddress,0.003558335,0.711667,Hrs
+2026-10,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.04794,4794,Metrics
+2026-10,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.0940860199,Metrics
+2026-10,AmazonCloudWatch,APS2-CW:Requests,0,761,Requests
+2026-10,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0007981922,GB
+2026-10,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0002119014,GB-Month
+2026-10,EC2 - Other,APS2-APS1-AWS-In-Bytes,0,21.0186086372,GB
+2026-10,EC2 - Other,APS2-APS1-AWS-Out-Bytes,0.0036798517,0.0375495069,GB
+2026-10,EC2 - Other,APS2-DataTransfer-Regional-Bytes,0,0.00001656,GB
+2026-10,EC2 - Other,APS2-EBS:VolumeUsage.gp3,0.0057831541,0.0602411888,GB-Month
+2026-10,EC2 - Other,APS2-EBSOptimized:c7i-flex.large,0,0.706389,Hrs
+2026-10,Tax,APS2-APS1-AWS-In-Bytes,0,0,
+2026-10,Tax,APS2-APS1-AWS-Out-Bytes,0,0,
+2026-10,Tax,APS2-AWSSecretsManagerAPIRequest,0,0,
+2026-10,Tax,APS2-BoxUsage:c7i-flex.large,0,0,
+2026-10,Tax,APS2-CW:GMD-Metrics,0,0,
+2026-10,Tax,APS2-CW:MetricMonitorUsage,0,0,
+2026-10,Tax,APS2-CW:Requests,0,0,
+2026-10,Tax,APS2-Catalog-Request,0,0,
+2026-10,Tax,APS2-CloudFront-In-Bytes,0,0,
+2026-10,Tax,APS2-CloudFront-Out-Bytes,0,0,
+2026-10,Tax,APS2-DataProcessing-Bytes,0,0,
+2026-10,Tax,APS2-DataTransfer-In-Bytes,0,0,
+2026-10,Tax,APS2-DataTransfer-Out-Bytes,0,0,
+2026-10,Tax,APS2-DataTransfer-Regional-Bytes,0,0,
+2026-10,Tax,APS2-DataTransfer-xAZ-In-Bytes,0,0,
+2026-10,Tax,APS2-DataTransfer-xAZ-Out-Bytes,0,0,
+2026-10,Tax,APS2-EBS:VolumeUsage.gp3,0,0,
+2026-10,Tax,APS2-EBSOptimized:c7i-flex.large,0,0,
+2026-10,Tax,APS2-PublicIPv4:InUseAddress,0,0,
+2026-10,Tax,APS2-Requests-Annotation-Tier1,0,0,
+2026-10,Tax,APS2-Requests-Tier1,0,0,
+2026-10,Tax,APS2-Requests-Tier2,0,0,
+2026-10,Tax,APS2-Requests-Tier8,0,0,
+2026-10,Tax,APS2-SC-API-Calls,0,0,
+2026-10,Tax,APS2-Studio:CodeEditor-ml.c5.large,0,0,
+2026-10,Tax,APS2-Studio:CodeEditor-ml.t3.medium,0,0,
+2026-10,Tax,APS2-Studio:JupyterLab-ml.t3.medium,0,0,
+2026-10,Tax,APS2-Studio:VolumeUsage.gp3,0,0,
+2026-10,Tax,APS2-Tables-Requests-Tier1,0,0,
+2026-10,Tax,APS2-TimedStorage-ByteHrs,0,0,
+2026-10,Tax,APS2-Train:ml.g5.xlarge,0,0,
+2026-10,Tax,APS3-DataTransfer-In-Bytes,0,0,
+2026-10,Tax,APS3-DataTransfer-Out-Bytes,0,0,
+2026-10,Tax,APS3-Requests-Tier1,0,0,
+2026-10,Tax,DataTransfer-In-Bytes,0,0,
+2026-10,Tax,DataTransfer-Out-Bytes,0,0,
+2026-10,Tax,Global-Bucket-Hrs-FreeTier,0,0,
+2026-10,Tax,Requests-Tier1,0,0,
+2026-10,Tax,Requests-Tier2,0,0,
+2026-10,Tax,USE1-APS2-AWS-In-Bytes,0,0,
+2026-10,Tax,USE1-APS2-AWS-Out-Bytes,0,0,
+2026-10,Tax,USW2-DataTransfer-Out-Bytes,0,0,
+2026-10,Tax,USW2-Requests-Tier1,0,0,
+2026-10,Tax,ap-southeast-2-KMS-Requests,0,0,
+2026-11,AWS Glue,APS2-Catalog-Request,0,31,Requests
+2026-11,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,747,Requests
+2026-11,AWS Lambda,APS2-Lambda-GB-Second,0,0.0135,Lambda-GB-Second
+2026-11,AWS Lambda,APS2-Request,0,1,Requests
+2026-11,Amazon API Gateway,APS2-ApiGatewayHttpRequest,0.00000129,1,Requests
+2026-11,Amazon API Gateway,APS2-DataTransfer-Out-Bytes,0,1.676E-7,GB
+2026-11,Amazon SageMaker,APS2-Host:ml.g5.xlarge,43.3298600035,23.66200306,Hrs
+2026-11,Amazon SageMaker,APS2-Hst:Data-Bytes-In,7.51E-8,0.0000046966,GB
+2026-11,Amazon SageMaker,APS2-Hst:Data-Bytes-Out,3.197E-7,0.0000199825,GB
+2026-11,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.3033331397,2.2569429865,GB-Month
+2026-11,Amazon SageMaker,APS2-Train:ml.g5.xlarge,44.7278861328,27.35650528,Hrs
+2026-11,Amazon Simple Notification Service,APS2-Requests-Tier1,0,1,Requests
+2026-11,Amazon Simple Queue Service,APS2-Requests-Tier1,0,1,Requests
+2026-11,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,2.7995047084,GB
+2026-11,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,3.4527339668,GB
+2026-11,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0246345,4479,Requests
+2026-11,Amazon Simple Storage Service,APS2-Requests-Tier2,0.02848252,64733,Requests
+2026-11,Amazon Simple Storage Service,APS2-Requests-Tier8,0.00003,1,Requests
+2026-11,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.1355920272,5.4236810666,GB-Month
+2026-11,Amazon Simple Storage Service,APS2-USE1-AWS-Out-Bytes,0.0000406003,0.0004142899,GB
+2026-11,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.0000052164,GB
+2026-11,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0180555557,Bucket-Mo
+2026-11,Amazon Simple Storage Service,Requests-Tier1,0.000070,14,Requests
+2026-11,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.3791664278,Metrics
+2026-11,AmazonCloudWatch,APS2-CW:OTEL:Bytes:AWS,0.0343757757,0.0687515514,GigaBytes
+2026-11,AmazonCloudWatch,APS2-CW:Requests,0,3186,Requests
+2026-11,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0066330627,GB
+2026-11,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0003523292,GB-Month
+2026-11,AmazonCloudWatch,APS2-VendedLog-Bytes,0,5.3E-7,GB
+2026-11,Tax,APS2-ApiGatewayHttpRequest,0,0,
+2026-11,Tax,APS2-CW:MetricMonitorUsage,0,0,
+2026-11,Tax,APS2-CW:OTEL:Bytes:AWS,0,0,
+2026-11,Tax,APS2-CW:Requests,0,0,
+2026-11,Tax,APS2-Catalog-Request,0,0,
+2026-11,Tax,APS2-DataProcessing-Bytes,0,0,
+2026-11,Tax,APS2-DataTransfer-In-Bytes,0,0,
+2026-11,Tax,APS2-DataTransfer-Out-Bytes,0,0,
+2026-11,Tax,APS2-Host:ml.g5.xlarge,0,0,
+2026-11,Tax,APS2-Hst:Data-Bytes-In,0,0,
+2026-11,Tax,APS2-Hst:Data-Bytes-Out,0,0,
+2026-11,Tax,APS2-Lambda-GB-Second,0,0,
+2026-11,Tax,APS2-Request,0,0,
+2026-11,Tax,APS2-Requests-Tier1,0,0,
+2026-11,Tax,APS2-Requests-Tier2,0,0,
+2026-11,Tax,APS2-Requests-Tier8,0,0,
+2026-11,Tax,APS2-Studio:VolumeUsage.gp3,0,0,
+2026-11,Tax,APS2-TimedStorage-ByteHrs,0,0,
+2026-11,Tax,APS2-Train:ml.g5.xlarge,0,0,
+2026-11,Tax,APS2-USE1-AWS-Out-Bytes,0,0,
+2026-11,Tax,APS2-VendedLog-Bytes,0,0,
+2026-11,Tax,DataTransfer-Out-Bytes,0,0,
+2026-11,Tax,Global-Bucket-Hrs-FreeTier,0,0,
+2026-11,Tax,Requests-Tier1,0,0,
+2026-11,Tax,ap-southeast-2-KMS-Requests,0,0,

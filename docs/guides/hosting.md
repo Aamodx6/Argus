@@ -17,6 +17,8 @@ For the lowest-cost private presentation, run the frontend locally with SQLite a
 
 ## Restore the real-time demo
 
+**Latest status, 15 November 2026:** the endpoint was removed with approval after the cost audit, and zero remaining endpoints were verified. Its model archive and serving configuration were preserved. Live analysis requires recreation. The [cost-reduction record](../reports/aws-cost-reductions-2026-11-15.md) contains the verified changes, remaining idle costs and restore steps. Check current status before recreating an endpoint another team member may already have restored.
+
 The real-time endpoint was deleted on 14 November 2026 after the browser demo passed. Live inference requires restoring the endpoint or deploying the async path. The configuration, model registration, and S3 archive were verified after deletion.
 
 The saved deployment uses `sentiment-analysis-endpoint-media-compat` and the model `sentiment-analysis-model-media-compat` in **console dot dream**, Sydney. The serving archive is `s3://aspect-sentiment-lab/inference/sentiment-analysis-model-media-compat/model.tar.gz`.

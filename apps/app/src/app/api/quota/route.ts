@@ -1,89 +1,36 @@
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 
+const headers = { "Cache-Control": "no-store" };
+
 export async function GET(req: Request) {
+  const secretKey = req.headers.get("authorization")?.match(/^Bearer ([A-Za-z0-9_-]{32,128})$/i)?.[1];
+  if (!secretKey) {
+    return NextResponse.json({ error: "API key required" }, { status: 401, headers });
+  }
   try {
-    const authHeader = req.headers.get("Authorization");
-    const secretKey = authHeader?.replace(/^Bearer\s+/i, "") ?? new URL(req.url).searchParams.get("secretKey");
-
-    if (secretKey) {
-      const quota = await db.apiQuota.findUnique({
-        where: { secretKey },
-        include: { user: { select: { id: true, name: true, email: true } } },
-      });
-
-      if (quota) {
-        return NextResponse.json({
-          success: true,
-          quota: {
-            secretKey: quota.secretKey,
-            requestsUsed: quota.requestsUsed,
-            maxRequests: quota.maxRequests,
-            lastResetDate: quota.lastResetDate,
-          },
-          user: quota.user,
-        }, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-          },
-        });
-      }
-    }
-
-    // Default or first active quota if no key provided
-    const firstQuota = await db.apiQuota.findFirst({
+    const quota = await db.apiQuota.findUnique({
+      where: { secretKey },
       include: { user: { select: { id: true, name: true, email: true } } },
     });
-
-    if (firstQuota) {
-      return NextResponse.json({
-        success: true,
-        quota: {
-          secretKey: firstQuota.secretKey,
-          requestsUsed: firstQuota.requestsUsed,
-          maxRequests: firstQuota.maxRequests,
-          lastResetDate: firstQuota.lastResetDate,
-        },
-        user: firstQuota.user,
-      }, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      });
+    if (!quota) {
+      return NextResponse.json({ error: "Invalid API key" }, { status: 401, headers });
     }
-
-    return NextResponse.json({ error: "No quota found" }, {
-      status: 404,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    return NextResponse.json({
+      success: true,
+      quota: {
+        secretKey: quota.secretKey,
+        requestsUsed: quota.requestsUsed,
+        maxRequests: quota.maxRequests,
+        lastResetDate: quota.lastResetDate,
       },
-    });
-  } catch (err) {
-    console.error("Quota API error:", err);
-    return NextResponse.json({ error: "Internal server error" }, {
-      status: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    });
+      user: quota.user,
+    }, { headers });
+  } catch {
+    return NextResponse.json({ error: "Quota unavailable" }, { status: 503, headers });
   }
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    },
-  });
+  return new NextResponse(null, { status: 204 });
 }

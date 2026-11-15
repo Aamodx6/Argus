@@ -1,0 +1,447 @@
+date_utc,service,usage_type,unblended_cost_usd,usage_quantity,usage_unit,estimated,credits_refunds_excluded
+2026-10-07,AWS CloudShell,APS2-DataTransfer-Regional-Bytes,0,0.0000087768,GB,False,True
+2026-10-07,AWS CloudShell,APS2-DataTransfer-xAZ-In-Bytes,0,0.0018546851,GB,False,True
+2026-10-07,AWS CloudShell,APS2-DataTransfer-xAZ-Out-Bytes,0,0.01022971,GB,False,True
+2026-10-07,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-07,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,1,Requests,False,True
+2026-10-07,AWS Secrets Manager,APS2-AWSSecretsManagerAPIRequest,0.000005,1,API Requests,False,True
+2026-10-07,AWS Service Catalog,APS2-SC-API-Calls,0,1,API Calls,False,True
+2026-10-07,Amazon SageMaker,APS2-Studio:CodeEditor-ml.c5.large,0.9950338847,7.48145778,Hrs,False,True
+2026-10-07,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0072894058,0.0542366499,GB-Month,False,True
+2026-10-07,Amazon Simple Notification Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-07,Amazon Simple Queue Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-07,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,7.791E-7,GB,False,True
+2026-10-07,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,6.286E-7,GB,False,True
+2026-10-07,Amazon Simple Storage Service,APS2-Requests-Tier1,0.000011,2,Requests,False,True
+2026-10-07,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000264,6,Requests,False,True
+2026-10-07,Amazon Simple Storage Service,DataTransfer-In-Bytes,0,1.471E-7,GB,False,True
+2026-10-07,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-07,Amazon Simple Storage Service,Requests-Tier1,0.00002,4,Requests,False,True
+2026-10-07,Amazon Simple Storage Service,USE1-APS2-AWS-Out-Bytes,1.36E-8,6.817E-7,GB,False,True
+2026-10-07,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.00564,564,Metrics,False,True
+2026-10-07,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.00002629,GB,False,True
+2026-10-07,Tax,APS2-APS1-AWS-In-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-APS1-AWS-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-AWSSecretsManagerAPIRequest,0,0,,False,True
+2026-10-07,Tax,APS2-BoxUsage:c7i-flex.large,0,0,,False,True
+2026-10-07,Tax,APS2-CW:GMD-Metrics,0,0,,False,True
+2026-10-07,Tax,APS2-CW:MetricMonitorUsage,0,0,,False,True
+2026-10-07,Tax,APS2-CW:Requests,0,0,,False,True
+2026-10-07,Tax,APS2-Catalog-Request,0,0,,False,True
+2026-10-07,Tax,APS2-CloudFront-In-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-CloudFront-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataProcessing-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataTransfer-In-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataTransfer-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataTransfer-Regional-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataTransfer-xAZ-In-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-DataTransfer-xAZ-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,APS2-EBS:VolumeUsage.gp3,0,0,,False,True
+2026-10-07,Tax,APS2-EBSOptimized:c7i-flex.large,0,0,,False,True
+2026-10-07,Tax,APS2-PublicIPv4:InUseAddress,0,0,,False,True
+2026-10-07,Tax,APS2-Requests-Annotation-Tier1,0,0,,False,True
+2026-10-07,Tax,APS2-Requests-Tier1,0,0,,False,True
+2026-10-07,Tax,APS2-Requests-Tier2,0,0,,False,True
+2026-10-07,Tax,APS2-Requests-Tier8,0,0,,False,True
+2026-10-07,Tax,APS2-SC-API-Calls,0,0,,False,True
+2026-10-07,Tax,APS2-Studio:CodeEditor-ml.c5.large,0,0,,False,True
+2026-10-07,Tax,APS2-Studio:CodeEditor-ml.t3.medium,0,0,,False,True
+2026-10-07,Tax,APS2-Studio:JupyterLab-ml.t3.medium,0,0,,False,True
+2026-10-07,Tax,APS2-Studio:VolumeUsage.gp3,0,0,,False,True
+2026-10-07,Tax,APS2-Tables-Requests-Tier1,0,0,,False,True
+2026-10-07,Tax,APS2-TimedStorage-ByteHrs,0,0,,False,True
+2026-10-07,Tax,APS2-Train:ml.g5.xlarge,0,0,,False,True
+2026-10-07,Tax,APS3-DataTransfer-In-Bytes,0,0,,False,True
+2026-10-07,Tax,APS3-DataTransfer-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,APS3-Requests-Tier1,0,0,,False,True
+2026-10-07,Tax,DataTransfer-In-Bytes,0,0,,False,True
+2026-10-07,Tax,DataTransfer-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,Global-Bucket-Hrs-FreeTier,0,0,,False,True
+2026-10-07,Tax,Requests-Tier1,0,0,,False,True
+2026-10-07,Tax,Requests-Tier2,0,0,,False,True
+2026-10-07,Tax,USE1-APS2-AWS-In-Bytes,0,0,,False,True
+2026-10-07,Tax,USE1-APS2-AWS-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,USW2-DataTransfer-Out-Bytes,0,0,,False,True
+2026-10-07,Tax,USW2-Requests-Tier1,0,0,,False,True
+2026-10-07,Tax,ap-southeast-2-KMS-Requests,0,0,,False,True
+2026-10-08,AWS Glue,APS2-Catalog-Request,0,3,Requests,False,True
+2026-10-08,AWS Secrets Manager,APS2-AWSSecretsManagerAPIRequest,0.000005,1,API Requests,False,True
+2026-10-08,Amazon SageMaker,APS2-Studio:CodeEditor-ml.c5.large,0.8976921822,6.74956528,Hrs,False,True
+2026-10-08,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0213967515,0.1592020198,GB-Month,False,True
+2026-10-08,Amazon Simple Notification Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-08,Amazon Simple Queue Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0000128582,GB,False,True
+2026-10-08,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0028655,521,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000924,21,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,APS2-Tables-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.00000239,GB,False,True
+2026-10-08,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-08,Amazon Simple Storage Service,Requests-Tier1,0.00004,8,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,Requests-Tier2,4E-7,1,Requests,False,True
+2026-10-08,Amazon Simple Storage Service,USE1-APS2-AWS-Out-Bytes,1.36E-8,6.817E-7,GB,False,True
+2026-10-08,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.00846,846,Metrics,False,True
+2026-10-08,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0000108276,GB,False,True
+2026-10-08,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,3.6E-7,GB-Month,False,True
+2026-10-09,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-09,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,1,Requests,False,True
+2026-10-09,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-09,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024629765,0.09851906,GB-Month,False,True
+2026-10-09,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-09,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,5.7E-7,GB-Month,False,True
+2026-10-10,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-10,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-10,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024629765,0.09851906,GB-Month,False,True
+2026-10-10,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-10,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,5.7E-7,GB-Month,False,True
+2026-10-11,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-11,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-11,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024629765,0.09851906,GB-Month,False,True
+2026-10-11,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-11,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,5.7E-7,GB-Month,False,True
+2026-10-12,AWS Glue,APS2-Catalog-Request,0,4,Requests,False,True
+2026-10-12,AWS Secrets Manager,APS2-AWSSecretsManagerAPIRequest,0.000005,1,API Requests,False,True
+2026-10-12,Amazon SageMaker,APS2-Studio:JupyterLab-ml.t3.medium,0.0623544075,0.9897525,Hrs,False,True
+2026-10-12,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-12,Amazon Simple Storage Service,APS2-Requests-Tier2,8.8E-7,2,Requests,False,True
+2026-10-12,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024629765,0.09851906,GB-Month,False,True
+2026-10-12,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-12,Amazon Simple Storage Service,Requests-Tier1,0.00001,2,Requests,False,True
+2026-10-12,Amazon Simple Storage Service,USE1-APS2-AWS-Out-Bytes,1.18E-8,5.932E-7,GB,False,True
+2026-10-12,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.00282,282,Metrics,False,True
+2026-10-12,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.00007834,GB,False,True
+2026-10-12,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,5.7E-7,GB-Month,False,True
+2026-10-13,AWS Glue,APS2-Catalog-Request,0,12,Requests,False,True
+2026-10-13,Amazon SageMaker,APS2-Studio:CodeEditor-ml.t3.medium,0.2610740998,4.14403333,Hrs,False,True
+2026-10-13,Amazon SageMaker,APS2-Studio:JupyterLab-ml.t3.medium,0.3045309404,4.83382445,Hrs,False,True
+2026-10-13,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0255264052,0.1899286098,GB-Month,False,True
+2026-10-13,Amazon Simple Notification Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-13,Amazon Simple Queue Service,APS2-Requests-Tier1,0,1,Requests,False,True
+2026-10-13,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0001265,23,Requests,False,True
+2026-10-13,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00001012,23,Requests,False,True
+2026-10-13,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024629765,0.09851906,GB-Month,False,True
+2026-10-13,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-13,Amazon Simple Storage Service,Requests-Tier1,0.000025,5,Requests,False,True
+2026-10-13,Amazon Simple Storage Service,USE1-APS2-AWS-In-Bytes,0,1.471E-7,GB,False,True
+2026-10-13,Amazon Simple Storage Service,USE1-APS2-AWS-Out-Bytes,3.71E-8,0.0000018515,GB,False,True
+2026-10-13,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.02256,2256,Metrics,False,True
+2026-10-13,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0003017504,GB,False,True
+2026-10-13,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.00000181,GB-Month,False,True
+2026-10-14,AWS Glue,APS2-Catalog-Request,0,6,Requests,False,True
+2026-10-14,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,1,Requests,False,True
+2026-10-14,Amazon SageMaker,APS2-Studio:CodeEditor-ml.t3.medium,0.5239298749,8.31634722,Hrs,False,True
+2026-10-14,Amazon SageMaker,APS2-Studio:JupyterLab-ml.t3.medium,0.0852085849,1.35251722,Hrs,False,True
+2026-10-14,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0377437939,0.2808317997,GB-Month,False,True
+2026-10-14,Amazon Simple Storage Service,APS2-Requests-Tier1,0.00044,80,Requests,False,True
+2026-10-14,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000176,4,Requests,False,True
+2026-10-14,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0024799937,0.099199746,GB-Month,False,True
+2026-10-14,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-14,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.00564,564,Metrics,False,True
+2026-10-14,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0001554769,GB,False,True
+2026-10-14,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.00000671,GB-Month,False,True
+2026-10-15,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-15,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-15,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-15,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-15,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-16,AWS Glue,APS2-Catalog-Request,0,3,Requests,False,True
+2026-10-16,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-16,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-16,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-16,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-16,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-17,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-17,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-17,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-17,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000176,4,Requests,False,True
+2026-10-17,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-17,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-17,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-18,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-18,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-18,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-18,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-18,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-19,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-19,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0216728612,0.1612564085,GB-Month,False,True
+2026-10-19,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-19,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-19,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-19,AmazonCloudWatch,APS2-CW:GMD-Metrics,0.00282,282,Metrics,False,True
+2026-10-19,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-20,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-20,AWS Secrets Manager,APS2-AWSSecretsManagerAPIRequest,0.000005,1,API Requests,False,True
+2026-10-20,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-20,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-20,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-20,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-21,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-21,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-21,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-21,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-21,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.00268817,Bucket-Mo,False,True
+2026-10-21,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-22,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-22,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,338,Requests,False,True
+2026-10-22,Amazon Elastic Compute Cloud - Compute,APS2-BoxUsage:c7i-flex.large,0.0782113901,0.706389,Hrs,False,True
+2026-10-22,Amazon Elastic Compute Cloud - Compute,APS2-CloudFront-In-Bytes,0,0.0000180285,GB,False,True
+2026-10-22,Amazon Elastic Compute Cloud - Compute,APS2-CloudFront-Out-Bytes,0,0.0000024475,GB,False,True
+2026-10-22,Amazon Elastic Compute Cloud - Compute,APS2-DataTransfer-In-Bytes,0,1.676E-7,GB,False,True
+2026-10-22,Amazon Elastic Compute Cloud - Compute,APS2-DataTransfer-Out-Bytes,0,4.47E-7,GB,False,True
+2026-10-22,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-22,Amazon SageMaker,APS2-Train:ml.g5.xlarge,20.2976321102,12.41445389,Hrs,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.0001303411,GB,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0013558788,GB,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-Requests-Annotation-Tier1,0.000011,2,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-Requests-Tier1,0.096514,17548,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-Requests-Tier2,0.0070598,16045,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-Requests-Tier8,0.00006,2,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0028501598,0.11400639,GB-Month,False,True
+2026-10-22,Amazon Simple Storage Service,APS3-DataTransfer-In-Bytes,0,2.8E-7,GB,False,True
+2026-10-22,Amazon Simple Storage Service,APS3-DataTransfer-Out-Bytes,0,0.0000012543,GB,False,True
+2026-10-22,Amazon Simple Storage Service,APS3-Requests-Tier1,0.000015,3,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.00000653,GB,False,True
+2026-10-22,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-22,Amazon Simple Storage Service,Requests-Tier1,0.00007,14,Requests,False,True
+2026-10-22,Amazon Simple Storage Service,USW2-DataTransfer-Out-Bytes,0,0.000001,GB,False,True
+2026-10-22,Amazon Simple Storage Service,USW2-Requests-Tier1,0.00001,2,Requests,False,True
+2026-10-22,Amazon Virtual Private Cloud,APS2-PublicIPv4:InUseAddress,0.003558335,0.711667,Hrs,False,True
+2026-10-22,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.0873655899,Metrics,False,True
+2026-10-22,AmazonCloudWatch,APS2-CW:Requests,0,740,Requests,False,True
+2026-10-22,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0002239101,GB,False,True
+2026-10-22,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000009,GB-Month,False,True
+2026-10-22,EC2 - Other,APS2-APS1-AWS-In-Bytes,0,21.0186086372,GB,False,True
+2026-10-22,EC2 - Other,APS2-APS1-AWS-Out-Bytes,0.0036798517,0.0375495069,GB,False,True
+2026-10-22,EC2 - Other,APS2-DataTransfer-Regional-Bytes,0,0.00001656,GB,False,True
+2026-10-22,EC2 - Other,APS2-EBS:VolumeUsage.gp3,0.0057831541,0.0602411888,GB-Month,False,True
+2026-10-22,EC2 - Other,APS2-EBSOptimized:c7i-flex.large,0,0.706389,Hrs,False,True
+2026-10-23,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-23,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,11,Requests,False,True
+2026-10-23,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-23,Amazon SageMaker,APS2-Train:ml.g5.xlarge,0.5790684078,0.35417028,Hrs,False,True
+2026-10-23,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0000134397,GB,False,True
+2026-10-23,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0007425,135,Requests,False,True
+2026-10-23,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000264,6,Requests,False,True
+2026-10-23,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-23,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,3.7E-7,GB,False,True
+2026-10-23,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-23,Amazon Simple Storage Service,Requests-Tier1,0.000005,1,Requests,False,True
+2026-10-23,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.00672043,Metrics,False,True
+2026-10-23,AmazonCloudWatch,APS2-CW:Requests,0,21,Requests,False,True
+2026-10-23,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0000015972,GB,False,True
+2026-10-23,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.000014275,GB-Month,False,True
+2026-10-24,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-24,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-24,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-24,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-24,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-25,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-25,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-25,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-25,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-25,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-26,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-26,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-26,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-26,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-26,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-26,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-27,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-27,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-27,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-27,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-27,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-28,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-28,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-28,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,False,True
+2026-10-28,Amazon Simple Storage Service,APS2-Requests-Tier2,8.8E-7,2,Requests,False,True
+2026-10-28,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-28,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-28,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-29,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-29,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-29,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-29,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-29,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-30,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-30,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-30,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-30,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-30,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-10-31,AWS Glue,APS2-Catalog-Request,0,2,Requests,False,True
+2026-10-31,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.021677419,0.1612903198,GB-Month,False,True
+2026-10-31,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0087481605,0.34992642,GB-Month,False,True
+2026-10-31,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.001344086,Bucket-Mo,False,True
+2026-10-31,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000143083,GB-Month,False,True
+2026-11-01,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-01,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,1,Requests,True,True
+2026-11-01,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-01,Amazon Simple Queue Service,APS2-Requests-Tier1,0,1,Requests,True,True
+2026-11-01,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-01,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-01,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-01,Tax,APS2-ApiGatewayHttpRequest,0,0,,True,True
+2026-11-01,Tax,APS2-CW:MetricMonitorUsage,0,0,,True,True
+2026-11-01,Tax,APS2-CW:OTEL:Bytes:AWS,0,0,,True,True
+2026-11-01,Tax,APS2-CW:Requests,0,0,,True,True
+2026-11-01,Tax,APS2-Catalog-Request,0,0,,True,True
+2026-11-01,Tax,APS2-DataProcessing-Bytes,0,0,,True,True
+2026-11-01,Tax,APS2-DataTransfer-In-Bytes,0,0,,True,True
+2026-11-01,Tax,APS2-DataTransfer-Out-Bytes,0,0,,True,True
+2026-11-01,Tax,APS2-Host:ml.g5.xlarge,0,0,,True,True
+2026-11-01,Tax,APS2-Hst:Data-Bytes-In,0,0,,True,True
+2026-11-01,Tax,APS2-Hst:Data-Bytes-Out,0,0,,True,True
+2026-11-01,Tax,APS2-Lambda-GB-Second,0,0,,True,True
+2026-11-01,Tax,APS2-Request,0,0,,True,True
+2026-11-01,Tax,APS2-Requests-Tier1,0,0,,True,True
+2026-11-01,Tax,APS2-Requests-Tier2,0,0,,True,True
+2026-11-01,Tax,APS2-Requests-Tier8,0,0,,True,True
+2026-11-01,Tax,APS2-Studio:VolumeUsage.gp3,0,0,,True,True
+2026-11-01,Tax,APS2-TimedStorage-ByteHrs,0,0,,True,True
+2026-11-01,Tax,APS2-Train:ml.g5.xlarge,0,0,,True,True
+2026-11-01,Tax,APS2-USE1-AWS-Out-Bytes,0,0,,True,True
+2026-11-01,Tax,APS2-VendedLog-Bytes,0,0,,True,True
+2026-11-01,Tax,DataTransfer-Out-Bytes,0,0,,True,True
+2026-11-01,Tax,Global-Bucket-Hrs-FreeTier,0,0,,True,True
+2026-11-01,Tax,Requests-Tier1,0,0,,True,True
+2026-11-01,Tax,ap-southeast-2-KMS-Requests,0,0,,True,True
+2026-11-02,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-02,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-02,Amazon Simple Notification Service,APS2-Requests-Tier1,0,1,Requests,True,True
+2026-11-02,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,True,True
+2026-11-02,Amazon Simple Storage Service,APS2-Requests-Tier2,8.8E-7,2,Requests,True,True
+2026-11-02,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-02,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-02,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-03,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-03,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-03,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-03,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-03,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-04,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-04,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-04,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-04,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-04,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-05,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-05,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-05,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-05,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-05,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-06,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-06,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,1,Requests,True,True
+2026-11-06,AWS Lambda,APS2-Lambda-GB-Second,0,0.0135,Lambda-GB-Second,True,True
+2026-11-06,AWS Lambda,APS2-Request,0,1,Requests,True,True
+2026-11-06,Amazon API Gateway,APS2-ApiGatewayHttpRequest,0.00000129,1,Requests,True,True
+2026-11-06,Amazon API Gateway,APS2-DataTransfer-Out-Bytes,0,1.676E-7,GB,True,True
+2026-11-06,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-06,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0000023952,GB,True,True
+2026-11-06,Amazon Simple Storage Service,APS2-Requests-Tier1,0.000011,2,Requests,True,True
+2026-11-06,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000308,7,Requests,True,True
+2026-11-06,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-06,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,7.488E-7,GB,True,True
+2026-11-06,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-06,Amazon Simple Storage Service,Requests-Tier1,0.00001,2,Requests,True,True
+2026-11-06,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147853,GB-Month,True,True
+2026-11-06,AmazonCloudWatch,APS2-VendedLog-Bytes,0,5.3E-7,GB,True,True
+2026-11-07,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-07,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-07,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,True,True
+2026-11-07,Amazon Simple Storage Service,APS2-Requests-Tier2,8.8E-7,2,Requests,True,True
+2026-11-07,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-07,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-07,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147996,GB-Month,True,True
+2026-11-08,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-08,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-08,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-08,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-08,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147996,GB-Month,True,True
+2026-11-09,AWS Glue,APS2-Catalog-Request,0,3,Requests,True,True
+2026-11-09,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,384,Requests,True,True
+2026-11-09,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-09,Amazon SageMaker,APS2-Train:ml.g5.xlarge,23.5430121984,14.39939584,Hrs,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.0001148085,GB,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0005010297,GB,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0107855,1961,Requests,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-Requests-Tier2,0.02105972,47863,Requests,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-Requests-Tier8,0.00003,1,Requests,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0090397658,0.36159063,GB-Month,True,True
+2026-11-09,Amazon Simple Storage Service,APS2-USE1-AWS-Out-Bytes,0.0000302124,0.0003082899,GB,True,True
+2026-11-09,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.0000014976,GB,True,True
+2026-11-09,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-09,Amazon Simple Storage Service,Requests-Tier1,0.00002,4,Requests,True,True
+2026-11-09,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.1083332694,Metrics,True,True
+2026-11-09,AmazonCloudWatch,APS2-CW:Requests,0,876,Requests,True,True
+2026-11-09,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.00041028,GB,True,True
+2026-11-09,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000147996,GB-Month,True,True
+2026-11-10,AWS Glue,APS2-Catalog-Request,0,3,Requests,True,True
+2026-11-10,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,352,Requests,True,True
+2026-11-10,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-10,Amazon SageMaker,APS2-Train:ml.g5.xlarge,21.1848739344,12.95710944,Hrs,True,True
+2026-11-10,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.33741962,GB,True,True
+2026-11-10,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,1.2816931601,GB,True,True
+2026-11-10,Amazon Simple Storage Service,APS2-Requests-Tier1,0.010769,1958,Requests,True,True
+2026-11-10,Amazon Simple Storage Service,APS2-Requests-Tier2,0.0070972,16130,Requests,True,True
+2026-11-10,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0098950468,0.39580187,GB-Month,True,True
+2026-11-10,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.00000112,GB,True,True
+2026-11-10,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-10,Amazon Simple Storage Service,Requests-Tier1,0.000015,3,Requests,True,True
+2026-11-10,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.0972221594,Metrics,True,True
+2026-11-10,AmazonCloudWatch,APS2-CW:Requests,0,786,Requests,True,True
+2026-11-10,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0002220069,GB,True,True
+2026-11-10,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000247,GB-Month,True,True
+2026-11-11,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-11,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,3,Requests,True,True
+2026-11-11,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-11,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.0000064792,GB,True,True
+2026-11-11,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.0006726659,GB,True,True
+2026-11-11,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0001045,19,Requests,True,True
+2026-11-11,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00000792,18,Requests,True,True
+2026-11-11,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.010672657,0.42690628,GB-Month,True,True
+2026-11-11,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,3.7E-7,GB,True,True
+2026-11-11,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-11,Amazon Simple Storage Service,Requests-Tier1,0.000005,1,Requests,True,True
+2026-11-11,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000301668,GB-Month,True,True
+2026-11-12,AWS Glue,APS2-Catalog-Request,0,2,Requests,True,True
+2026-11-12,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-12,Amazon Simple Storage Service,APS2-Requests-Tier1,0.0000055,1,Requests,True,True
+2026-11-12,Amazon Simple Storage Service,APS2-Requests-Tier2,8.8E-7,2,Requests,True,True
+2026-11-12,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.010672657,0.4269062783,GB-Month,True,True
+2026-11-12,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-12,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000301668,GB-Month,True,True
+2026-11-13,AWS Glue,APS2-Catalog-Request,0,4,Requests,True,True
+2026-11-13,AWS Key Management Service,ap-southeast-2-KMS-Requests,0,6,Requests,True,True
+2026-11-13,Amazon SageMaker,APS2-Host:ml.g5.xlarge,19.5242600035,10.66200306,Hrs,True,True
+2026-11-13,Amazon SageMaker,APS2-Hst:Data-Bytes-In,2.21E-8,0.0000013876,GB,True,True
+2026-11-13,Amazon SageMaker,APS2-Hst:Data-Bytes-Out,7.34E-8,0.0000045858,GB,True,True
+2026-11-13,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0223999857,0.166666559,GB-Month,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,1.9465500898,GB,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,1.4599021328,GB,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-Requests-Tier1,0.002343,426,Requests,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-Requests-Tier2,0.0002596,590,Requests,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.010672657,0.4269062783,GB-Month,True,True
+2026-11-13,Amazon Simple Storage Service,APS2-USE1-AWS-Out-Bytes,0.0000103879,0.000106,GB,True,True
+2026-11-13,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,0.00000111,GB,True,True
+2026-11-13,Amazon Simple Storage Service,Global-Bucket-Hrs-FreeTier,0,0.0013888889,Bucket-Mo,True,True
+2026-11-13,Amazon Simple Storage Service,Requests-Tier1,0.000015,3,Requests,True,True
+2026-11-13,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.0902777195,Metrics,True,True
+2026-11-13,AmazonCloudWatch,APS2-CW:OTEL:Bytes:AWS,0.0167902185,0.0335804367,GigaBytes,True,True
+2026-11-13,AmazonCloudWatch,APS2-CW:Requests,0,683,Requests,True,True
+2026-11-13,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.0031116598,GB,True,True
+2026-11-13,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0000301668,GB-Month,True,True
+2026-11-14,AWS Glue,APS2-Catalog-Request,0,1,Requests,True,True
+2026-11-14,Amazon SageMaker,APS2-Host:ml.g5.xlarge,23.8056,13,Hrs,True,True
+2026-11-14,Amazon SageMaker,APS2-Hst:Data-Bytes-In,5.3E-8,0.000003309,GB,True,True
+2026-11-14,Amazon SageMaker,APS2-Hst:Data-Bytes-Out,2.463E-7,0.0000153967,GB,True,True
+2026-11-14,Amazon SageMaker,APS2-Studio:VolumeUsage.gp3,0.0121333256,0.0902777195,GB-Month,True,True
+2026-11-14,Amazon Simple Storage Service,APS2-DataTransfer-In-Bytes,0,0.5154137109,GB,True,True
+2026-11-14,Amazon Simple Storage Service,APS2-DataTransfer-Out-Bytes,0,0.7099625831,GB,True,True
+2026-11-14,Amazon Simple Storage Service,APS2-Requests-Tier1,0.000605,110,Requests,True,True
+2026-11-14,Amazon Simple Storage Service,APS2-Requests-Tier2,0.00005236,119,Requests,True,True
+2026-11-14,Amazon Simple Storage Service,APS2-TimedStorage-ByteHrs,0.0123211172,0.49284469,GB-Month,True,True
+2026-11-14,Amazon Simple Storage Service,DataTransfer-Out-Bytes,0,3.7E-7,GB,True,True
+2026-11-14,Amazon Simple Storage Service,Requests-Tier1,0.000005,1,Requests,True,True
+2026-11-14,AmazonCloudWatch,APS2-CW:MetricMonitorUsage,0,0.0833332795,Metrics,True,True
+2026-11-14,AmazonCloudWatch,APS2-CW:OTEL:Bytes:AWS,0.0175855572,0.0351711147,GigaBytes,True,True
+2026-11-14,AmazonCloudWatch,APS2-CW:Requests,0,841,Requests,True,True
+2026-11-14,AmazonCloudWatch,APS2-DataProcessing-Bytes,0,0.002889116,GB,True,True
+2026-11-14,AmazonCloudWatch,APS2-TimedStorage-ByteHrs,0,0.0001040182,GB-Month,True,True

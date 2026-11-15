@@ -1,0 +1,10 @@
+---
+import shell from '../templates/marketing-shell.html?raw';
+import { normalizeTemplateHtml } from '../lib/routes.mjs';
+interface Props { title: string }
+const { title } = Astro.props;
+const html = normalizeTemplateHtml(shell)
+  .replace(/<title>[^<]*<\/title>/, `<title>${title} · Nuance</title>`)
+  .replace('</head>', '<link rel="stylesheet" href="/nuance-transitions.css"><script src="/nuance-navigation.js"></script></head>');
+---
+<Fragment set:html={html} />

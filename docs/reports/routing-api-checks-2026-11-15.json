@@ -1,0 +1,74 @@
+[
+  {
+    "path": "/",
+    "method": "GET",
+    "status": 302,
+    "location": "http://localhost:3000/login"
+  },
+  {
+    "path": "/login",
+    "method": "GET",
+    "status": 200,
+    "location": null
+  },
+  {
+    "path": "/signup",
+    "method": "GET",
+    "status": 200,
+    "location": null
+  },
+  {
+    "path": "/api/quota",
+    "method": "GET",
+    "status": 401,
+    "location": null
+  },
+  {
+    "path": "/api/upload-url",
+    "method": "POST",
+    "status": 403,
+    "location": null
+  },
+  {
+    "path": "/api/sentiment-inference",
+    "method": "POST",
+    "status": 403,
+    "location": null
+  },
+  {
+    "path": "/api/neon/status",
+    "method": "GET",
+    "status": 404,
+    "location": null
+  },
+  {
+    "path": "/api/async-inference/quota",
+    "method": "GET",
+    "status": 401,
+    "location": null
+  },
+  {
+    "path": "/api/async-inference/unknown",
+    "method": "GET",
+    "status": 404,
+    "location": null
+  },
+  {
+    "path": "/api/auth/login",
+    "method": "POST",
+    "status": 400,
+    "location": null
+  },
+  {
+    "path": "/api/auth/signup",
+    "method": "POST",
+    "status": 400,
+    "location": null
+  },
+  {
+    "path": "/api/quota",
+    "method": "OPTIONS",
+    "status": 204,
+    "location": null
+  }
+]

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-function CodeExamples() {
+function CodeExamples({ guarded = true }: { guarded?: boolean }) {
   const [activeTab, setActiveTab] = useState<"ts" | "curl">("ts");
 
-  const tsCode = `const fileType = "mp4";
+  const tsCode = `const fileType = ".mp4";
   // 1. Get upload URL
   const res = await fetch("/api/upload-url", {
     method: "POST",
@@ -76,6 +76,19 @@ curl -X POST \\
   -H "Content-Type: application/json" \\
   -d '{"key": "\${key}"}' \\
   /api/sentiment-inference`;
+
+  if (guarded) {
+    return <div className="mt-3 rounded-xl bg-gray-100 p-4 text-sm">
+      <h3>Guarded MP4 upload API</h3>
+      <ol className="list-inside list-decimal space-y-2">
+        <li>POST <code>/api/async-inference/uploads</code> with an empty JSON object.</li>
+        <li>POST the returned fields and video as multipart form data to the signed S3 URL.</li>
+        <li>POST <code>/api/async-inference/jobs</code> with the returned <code>upload_id</code>.</li>
+        <li>GET <code>/api/async-inference/jobs/&#123;job_id&#125;</code> until the job completes.</li>
+      </ol>
+      <p className="mt-2 text-gray-500">Authenticate API requests with your Bearer key. Send only the signed form and file to S3.</p>
+    </div>;
+  }
 
   return (
     <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
