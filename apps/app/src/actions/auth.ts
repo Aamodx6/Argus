@@ -41,7 +41,7 @@ export async function registerUser(data: SignupSchema) {
 
     return { success: true };
   } catch (error) {
-    console.error("User registration failed");
+    console.error("User registration failed:", error);
     return {
       error: "Could not create account",
     };

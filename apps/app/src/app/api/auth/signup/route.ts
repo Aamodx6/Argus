@@ -3,7 +3,7 @@ import { registerUser } from "~/actions/auth";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as Parameters<typeof registerUser>[0];
     const result = await registerUser(body);
 
     if (result.error) {

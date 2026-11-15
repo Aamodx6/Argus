@@ -21,12 +21,12 @@ jobs:
           node-version: 20
           cache: 'npm'
           cache-dependency-path: |
-            apps/web/package.json
-            apps/app/package.json
+            apps/web/package-lock.json
+            apps/app/package-lock.json
 
       - name: Install dependencies (apps/web)
         working-directory: apps/web
-        run: npm ci || npm install
+        run: npm ci
 
       - name: Build Astro Frontend (apps/web)
         working-directory: apps/web

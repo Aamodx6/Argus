@@ -5,7 +5,7 @@ import { db } from "~/server/db";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body: unknown = await req.json();
     const parsed = loginSchema.safeParse(body);
 
     if (!parsed.success) {

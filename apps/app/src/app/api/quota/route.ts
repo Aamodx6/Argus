@@ -4,7 +4,7 @@ import { db } from "~/server/db";
 export async function GET(req: Request) {
   try {
     const authHeader = req.headers.get("Authorization");
-    const secretKey = authHeader?.replace(/^Bearer\s+/i, "") || new URL(req.url).searchParams.get("secretKey");
+    const secretKey = authHeader?.replace(/^Bearer\s+/i, "") ?? new URL(req.url).searchParams.get("secretKey");
 
     if (secretKey) {
       const quota = await db.apiQuota.findUnique({
