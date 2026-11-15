@@ -8,13 +8,17 @@ import { BrandMark } from "~/components/BrandMark";
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { moderationRequired } from "~/lib/guardrails";
+import { GuardedQuota } from "~/components/client/GuardedQuota";
+import { redirect } from "next/navigation";
 
 export default async function HomePage() {
   const session = await auth();
+  if (!session?.user?.id) redirect("/login");
+  const guarded = moderationRequired();
 
   const quota = await db.apiQuota.findUniqueOrThrow({
     where: {
-      userId: session?.user.id,
+      userId: session.user.id,
     },
   });
 
@@ -27,7 +31,7 @@ export default async function HomePage() {
       </nav>
 
       <main className="flex min-h-screen w-full flex-col gap-6 p-4 sm:p-10 md:flex-row">
-        <Inference quota={{ secretKey: quota.secretKey }} guarded={moderationRequired()} />
+        <Inference quota={{ secretKey: quota.secretKey }} guarded={guarded} />
         <div className="hidden border-l border-slate-200 md:block"></div>
         <div className="flex h-fit w-full flex-col gap-3 md:w-1/2">
           <h2 className="text-lg font-medium text-slate-800">API</h2>
@@ -49,7 +53,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
+          {guarded ? <GuardedQuota apiKey={quota.secretKey} /> : <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-sm">Monthly quota</span>
               <span className="text-sm text-gray-500">
@@ -64,8 +68,8 @@ export default async function HomePage() {
                 className="h-1 rounded-full bg-gray-800"
               ></div>
             </div>
-          </div>
-          <CodeExamples />
+          </div>}
+          <CodeExamples guarded={guarded} />
         </div>
       </main>
     </div>

@@ -1,6 +1,6 @@
 /* Nuance Universal Page Transitions */
 @view-transition {
-  navigation: auto;
+  navigation: none;
 }
 
 html {
@@ -11,87 +11,18 @@ body {
   background-color: #fbfbf9 !important;
 }
 
-/* Base Enter Animation on Page Load */
-body:not(.nuance-transition-ready) {
-  opacity: 0;
-}
-
+/* Content remains visible even if JavaScript cannot initialize. */
 body.nuance-transition-ready {
-  animation: nuancePageEnter 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-
-/* Exit Animation on Page Leave */
-body.nuance-page-leaving {
-  opacity: 0 !important;
-  transform: translate3d(-24px, -10px, 0) !important;
-  transition: opacity 0.32s cubic-bezier(0.65, 0, 0.35, 1), transform 0.32s cubic-bezier(0.65, 0, 0.35, 1) !important;
-  pointer-events: none !important;
+  animation: nuancePageEnter 0.2s ease-out;
 }
 
 @keyframes nuancePageEnter {
   0% {
     opacity: 0;
-    transform: translate3d(20px, 8px, 0);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
   }
-}
-
-/* Native View Transitions (Chromium / Brave) */
-::view-transition-old(root) {
-  animation: 0.32s cubic-bezier(0.65, 0, 0.35, 1) both nuanceViewExit;
-}
-
-::view-transition-new(root) {
-  animation: 0.55s cubic-bezier(0.65, 0, 0.35, 1) both nuanceViewEnter;
-}
-
-@keyframes nuanceViewExit {
-  from {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    opacity: 0;
-    transform: translate3d(-24px, -10px, 0);
-  }
-}
-
-@keyframes nuanceViewEnter {
-  from {
-    opacity: 0;
-    transform: translate3d(20px, 8px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* Top Shimmer Progress Bar */
-#nuance-page-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2.5px;
-  width: 0%;
-  background: linear-gradient(90deg, #ff4b1f, #ff7a50);
-  z-index: 999999;
-  pointer-events: none;
-  transition: width 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.2s ease;
-  opacity: 0;
-}
-
-#nuance-page-progress.active {
-  opacity: 1;
-  width: 70%;
-}
-
-#nuance-page-progress.finishing {
-  opacity: 1;
-  width: 100%;
 }
 
 /* Prevent Framer form submit buttons from shrinking, warping, or wrapping text */
@@ -124,10 +55,21 @@ button[type="submit"] *,
   word-break: keep-all !important;
 }
 
-/* Hide Sign In from Navbar */
-#nuance-nav-signin-btn,
-[data-framer-name="Button · Sign in"],
-.framer-dzy6g4 {
-  display: none !important;
+.nuance-nav-signin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 1px solid rgba(17,19,23,.18);
+  border-radius: 999px;
+  color: #111317;
+  font: 13px/1.2 system-ui,sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nuance-nav-signin:hover { background: rgba(255,255,255,.45); }
+@media (prefers-reduced-motion: reduce) {
+  body.nuance-transition-ready { animation: none; }
 }
 

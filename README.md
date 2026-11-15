@@ -40,7 +40,8 @@ This README describes the checked-in Nuance code. Other guides contain historica
 | Feedback | Signed prediction tokens, corrected labels, DynamoDB storage and accuracy counters |
 | Operations | EMF, baseline generation, drift math, scheduled jobs, alarms, dashboards, Firehose, and Athena definitions |
 | Advanced data path | Optional CDK for Aurora, RDS Proxy, DynamoDB, Valkey, encrypted S3, and async jobs |
-| Input guardrails | Quarantine, malware/content checks, review API, Aurora strikes, calibrated abstention, and terminal cleanup are implemented; live staging remains required |\n| Silent videos | The model still depends on speech. With the quality policy, missing or muted audio returns an abstention. Facial-expression classification needs separate integration and evaluation. |
+| Input guardrails | Quarantine, malware/content checks, review API, Aurora strikes, calibrated abstention, and terminal cleanup are implemented; live staging remains required |
+| Silent videos | The model still depends on speech. With the quality policy, missing or muted audio returns an abstention. Facial-expression classification needs separate integration and evaluation. |
 | Live availability | A previous endpoint was deleted to avoid idle GPU charges. Inspect the current project before attempting live inference. |
 
 The continuation chat *Improve silent video analysis* explored silent-video support. Its working changes included sampling throughout a clip, extraction without an audio stream, and a visual-only response mode. Those changes are absent from this checkout. The two requested silent clips were not tested on the hosted app because the Vercel preview required sign-in. Treat visual-only support as pending.
@@ -169,7 +170,7 @@ The current Prisma client uses Neon's WebSocket adapter. A generic local Postgre
 
 ~~~powershell
 git clone https://github.com/Aamodx6/Nuance.git
-cd Nuance/ai-video-sentiment-saas-main
+cd Nuance/apps/app
 Copy-Item .env.example .env
 ~~~
 
@@ -203,7 +204,7 @@ npm run db:migrate
 npm run dev
 ~~~
 
-Open [localhost:3000](http://localhost:3000), create an account, and sign in. An existing database needs its migration history checked before applying changes. A guarded upload needs the deployed moderation and async stack, its safety database migration, and a calibrated model policy. Follow [the guardrail rollout](SAFETY_AND_MODEL_QUALITY.md) before enabling uploads.
+Open [localhost:3000](http://localhost:3000), create an account, and sign in. An existing database needs its migration history checked before applying changes. A guarded upload needs the deployed moderation and async stack, its safety database migration, and a calibrated model policy. Follow [the guardrail rollout](docs/architecture/safety.md) before enabling uploads.
 
 For a production build, set the canonical HTTPS origin in AUTH_URL.
 
@@ -338,7 +339,7 @@ Training includes class weights, label smoothing, grouped learning rates, a vali
 Use an isolated Python 3.11 environment. Training pins PyTorch 2.5.1, torchaudio 2.5.1, torchvision 0.20.1, and Transformers 4.46.3. Serving pins Transformers 4.47.1 and Whisper 20240930. The trainer imports sklearn, so include scikit-learn in a local training environment.
 
 ~~~powershell
-cd ai-video-sentiment-model-main
+cd services/inference
 python -m venv .venv
 .venv/Scripts/Activate.ps1
 python -m pip install -r training/requirements.txt scikit-learn
@@ -457,9 +458,13 @@ The app is structured for Next.js hosting, including Vercel. Set the SaaS direct
 
 The continuation chat reached a protected Vercel preview and could not complete the two-video test. A preview URL and a successful build alone do not verify the model connection.
 
-Provisioned GPUs cost money while idle. The earlier real-time endpoint was removed after testing, with the model archive and configuration retained for recreation. Async capacity can release idle GPUs, with a cold start for the next job. Hosting, database, and storage still incur their own usage.
+Provisioned GPUs cost money while idle. Following the AWS audit on 15 November 2026, `sentiment-analysis-endpoint` was removed with approval and its absence verified. Its model archive, model registration and endpoint configuration were preserved. Live analysis requires recreating the endpoint, which resumes the Sydney `ml.g5.xlarge` charge of US$1.8312/hour before credits and other charges. Async capacity can release idle GPUs after that path is deployed and verified, with a cold start for the next job.
 
 Cost documents contain planning estimates. Check current regional rates and measure clip length, upload size, peak traffic, and GPU throughput before budgeting. One million inference requests per day is a design target. That capacity has not been demonstrated.
+
+The [15 November AWS cost audit](docs/reports/aws-cost-analysis-2026-11-15.md) includes actual service and usage charges, credits, retained storage, per-minute rate equivalents, Sydney price tiers, and monitoring/production scenarios. Supporting CSVs preserve small charges and distinguish current resources from optional infrastructure.
+
+The subsequent [cost-reduction record](docs/reports/aws-cost-reductions-2026-11-15.md) lists the completed endpoint removal, stale-upload cleanup, retention controls, one-hour Studio idle default, and restore commands. Known retained storage costs approximately US$1.05/month before request and telemetry extras. Model/data files and the Studio disk remain available.
 
 ## Verification
 
@@ -508,20 +513,25 @@ For acceptance testing, register a temporary user, sign in, upload a short speec
 
 ## Documentation and attribution
 
+The [routing and dead-code review](docs/reports/routing-and-dead-code-review-2026-11-15.md) records the verified Astro/Next.js routes, removed template modules and duplicate assets, quota authorization fix, shared authentication forms, and test coverage. Production static hosting needs the configured API origin or a reverse proxy; local builds and mocked browser flows do not demonstrate live inference.
+
 | Reference | Coverage |
 | --- | --- |
-| [Architecture](ARCH.md) | Broader AWS and application diagrams |\n| [Safety and model quality](SAFETY_AND_MODEL_QUALITY.md) | Guarded API, moderation, strikes, policy calibration, and rollout |
-| [Hosting](HOSTING.md) | Hosting guidance and historical endpoint restoration |
-| [Model guide](ai-video-sentiment-model-main/README.md) | Original training walkthrough |
-| [SaaS guide](ai-video-sentiment-saas-main/README.md) | Web setup and API configuration |
-| [Progress](ASPECT_SENTIMENT_PROGRESS.md) | Recorded tutorial and team milestones |
-| [Data architecture](ai-video-sentiment-model-main/monitoring/DATA_ARCHITECTURE.md) | Access patterns, retention, erasure, recovery, and load testing |
-| [Cost model](ai-video-sentiment-model-main/monitoring/COST.md) | Monitoring and inference estimates |
-| [Runbook](ai-video-sentiment-model-main/monitoring/RUNBOOK.md) | Alarm response and diagnostics |
-| [Historical test status](ai-video-sentiment-model-main/monitoring/TEST_STATUS.md) | Earlier checks and gaps |
+| [Architecture](docs/architecture/overview.md) | Broader AWS and application diagrams |
+| [Safety and model quality](docs/architecture/safety.md) | Guarded API, moderation, strikes, policy calibration, and rollout |
+| [Hosting](docs/guides/hosting.md) | Hosting guidance and historical endpoint restoration |
+| [Model guide](services/inference/README.md) | Original training walkthrough |
+| [SaaS guide](apps/app/README.md) | Web setup and API configuration |
+| [Progress](docs/architecture/aspect-sentiment-progress.md) | Recorded tutorial and team milestones |
+| [Data architecture](services/inference/monitoring/DATA_ARCHITECTURE.md) | Access patterns, retention, erasure, recovery, and load testing |
+| [Cost model](docs/guides/cost.md) | Monitoring and inference planning estimates |
+| [AWS expenditure audit](docs/reports/aws-cost-analysis-2026-11-15.md) | Live resource inventory, actual charges, credits, rate card and detailed scenarios |
+| [Cost reductions](docs/reports/aws-cost-reductions-2026-11-15.md) | Verified cleanup actions, remaining idle storage costs and endpoint restoration |
+| [Runbook](services/inference/monitoring/RUNBOOK.md) | Alarm response and diagnostics |
+| [Historical test status](services/inference/monitoring/TEST_STATUS.md) | Earlier checks and gaps |
 
 Some older guides describe the original SQLite setup or earlier endpoint state. Use this README with the current source and schema when configuring this checkout.
 
 The starting model and SaaS follow [Andreas Trolle's tutorial](https://youtu.be/Myo5kizoSk0). Team work includes AWS deployment and compatibility fixes, monitoring and drift infrastructure, feedback, PostgreSQL integration, and ongoing silent-video improvements. Both source trees retain their original MIT license and copyright notices.
 
-[Model license](ai-video-sentiment-model-main/LICENSE.MD) Â· [SaaS license](ai-video-sentiment-saas-main/LICENSE.MD)
+[Model license](services/inference/LICENSE.MD) Â· [SaaS license](apps/app/LICENSE.MD)

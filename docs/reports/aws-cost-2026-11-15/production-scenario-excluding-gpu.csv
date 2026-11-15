@@ -1,0 +1,38 @@
+component,quantity,unit,monthly_usd,average_usd_per_wall_minute,assumption
+Rekognition six-frame image moderation,180000000,images,70140.0000000000,1.623611111111111111111111111,"Six calls per upload, no custom adapter; Group2 monthly volume tiers"
+Rekognition escalated full-video moderation,150000.000,video-minutes,19500.0000000000000,0.4513888888888888888888888889,1% escalation at 30 seconds per clip
+Transcribe language-identification pass,720000000.0,audio-seconds,72000.00000000000,1.666666666666666666666666667,80% audio-containing clips at 30s; all eligible for language check
+Transcribe toxicity pass,720000000.0,audio-seconds,16987.50000000000,0.3932291666666666666666666667,All audio clips assumed eligible en-US after language gate; toxicity SKU treated as priced job; base-charge contingency separate
+GuardDuty scanned video data,292968.75,GiB,29882.710500000000,0.6917294097222222222222222222,One uploaded object scanned; checked prefix excluded from scan plan
+GuardDuty object scan requests,30000000,objects,7259.7580000000,0.1680499537037037037037037037,Includes published first-1000 free request tier
+Step Functions moderation,600000000,state-transitions,15000.0000000000,0.3472222222222222222222222222,Illustrative 20 mean transitions per upload; retries/polls change count
+"S3 accepted videos, seven days",68359.375,GiB-month,1691.8250000000,0.03916261574074074074074074074,"All uploads accepted, 10MiB, seven-day retention; uses first-two S3 storage tiers"
+S3 quarantine two-day allowance,39062.50,GiB-month,976.562500000000,0.02260561342592592592592592593,Two copies retained two days; terminal success usually cleans earlier; lifecycle can lag
+S3 results and lake allowance,100,GiB-month,2.5000000000,0.00005787037037037037037037037037,Explicit placeholder; lake size and tenant count must be measured
+S3 upload/copy/result PUT,150000000,requests,825.0000000000,0.01909722222222222222222222222,"Illustrative 5 billable PUT/COPY/LIST per job, before multipart extras"
+S3 object reads/head/tag checks,300000000,requests,132.0000000000,0.003055555555555555555555555556,Illustrative 10 GET/HEAD-class operations per upload
+API Gateway REST submissions/status,690000000,requests,2415.0000000000,0.05590277777777777777777777778,3 submission/quota/upload calls +20 polls per job; excludes Next.js hosting
+Jobs API Lambda,17250000.000,GB-second,425.5005750000000,0.009849550347222222222222222222,"256MiB,100ms per API call, before free allowance"
+Moderation frame extraction Lambda,90000000.0,GB-second,1506.00300000000,0.03486118055555555555555555556,"1536MiB,2s per clip assumption; probe/download/API waits may make this much higher"
+Other workflow Lambda,7500000.000,GB-second,155.0002500000000,0.0035879687500,Five other task calls at256MiB/200ms per upload; exclude retries
+DynamoDB API/job reads,1380000000,RRU,196.6500000000,0.004552083333333333333333333333,Two strongly-consistent <=4KiB reads per API call; estimate
+DynamoDB writes and indexes,480000000,WRU,340.8000000000,0.007888888888888888888888888889,16 <=1KiB WRUs/job including transactions and index fanout; measure actual consumed capacity
+DynamoDB job/key storage and PITR,50,GiB-month each,25.6500000000,0.0005937500,"50GiB logical tables/indexes estimate; PITR for retained table data, simplified before allowance"
+SQS standard operations,90000000,requests,35.60,0.0008240740740740740740740740741,"Send,receive,delete each once; subtract first1m free requests; no retries/empty receives/64KiB splitting"
+SNS completion publications,60000000,requests,29.50,0.0006828703703703703703703703704,"Two topic publications/job; first1m free; Lambda destinations, no SMS/email delivery"
+EventBridge result bus,30000000,64KiB-events,30.0000000000,0.0006944444444444444444444444444,One custom result event/job; AWS service events separately priced/free by event type
+Aurora minimum writer+reader,720,aggregate-ACU-hours,144.0000000000,0.003333333333333333333333333333,"2 instances *0.5ACU minimum; this is a floor, not production sizing"
+RDS Proxy minimum-capacity illustration,720,aggregate-ACU-hours,18.0000000000,0.0004166666666666666666666666667,Price at same aggregate1ACU; verify any applicable minimum for chosen deployment
+Aurora storage,20,GiB-month,2.2000000000,0.00005092592592592592592592592593,20GiB logical storage assumption
+Aurora billed I/O,300000000,IOs,66.0000000000,0.001527777777777777777777777778,10 billed I/Os/upload illustration; SQL calls do not equal billed I/Os
+Aurora Data API moderation calls,180000000,32KiB-request-units,75.6000000000,0.0017500000,"Six <=32KiB call-equivalents per upload, including policy reads and audit; illustrative"
+Aurora excess backup storage allowance,20,GiB-month,0.4600000000,0.00001064814814814814814814814815,20GiB beyond included backup allocation; retained manual snapshots also count
+Valkey minimum storage,72.0,GiB-hours,7.27200000000,0.0001683333333333333333333333333,100MB minimum modelled as0.1GB; verify byte conversion and actual cached data
+Valkey request processing,2070000000,ECPUs,5.5890000000,0.0001293750,Three1ECPU command-equivalents per API call; Lua can consume more
+"PrivateLink four services, two AZs",5760,endpoint-AZ-hours,74.8800000000,0.001733333333333333333333333333,"Secrets,SQS,SageMakerRuntime,RDSData; no NAT"
+PrivateLink processing allowance,100,GiB,1.0000000000,0.00002314814814814814814814814815,100GiB processing assumption; video S3 traffic uses free gateway endpoint
+Customer-managed KMS keys,16,key-month,16.0000000000,0.0003703703703703703703703703704,16 identifiable data-class keys in full architecture; rotations can add key-material charges
+KMS symmetric API allowance,60000000,requests,180.0000000000,0.004166666666666666666666666667,Two charged operations/job placeholder; bucket keys and service caching change actual count
+Secrets Manager secret storage,3,secret-month,1.20,0.00002777777777777777777777777778,"Three database secrets at$0.40 each, rotation compute additional"
+Secrets Manager retrieval allowance,1000000,requests,5,0.0001157407407407407407407407407,One million calls at$0.05/10k; application caching changes count
+Monitoring subtotal,1,scenario,100.0613718328794517517089844,0.002316235459094431753511782046,"Detailed in monitoring-scenario.csv; includes feedback, capture allowance and analytics"

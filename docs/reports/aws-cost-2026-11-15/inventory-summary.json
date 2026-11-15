@@ -1,0 +1,43 @@
+{
+  "region": "ap-southeast-2",
+  "project": "console dot dream",
+  "code_commit": "7275ff7",
+  "collected_utc": "2026-11-15T03:45:09.744759+00:00",
+  "plan": "FREE",
+  "remaining_credits_usd": "31.82",
+  "endpoint": {
+    "name": "sentiment-analysis-endpoint",
+    "status": "InService",
+    "instance_type": "ml.g5.xlarge",
+    "instance_count": 1,
+    "async_configured": false,
+    "data_capture_configured": false,
+    "autoscaling_targets": 0,
+    "invocations_in_sampled_24h": "19.0"
+  },
+  "s3_current_objects": 17612,
+  "s3_current_bytes": 16141392034,
+  "s3_incomplete_uploads": 2,
+  "s3_incomplete_bytes": 276824064,
+  "s3_lifecycle_configured": false,
+  "s3_versioning_enabled": false,
+  "log_stored_bytes": 8353072,
+  "log_group_count": 4,
+  "log_groups_with_retention": 0,
+  "studio_retained_volume_gb": "5",
+  "studio_running_apps": 0,
+  "ecr_repositories": 1,
+  "ecr_images": 0,
+  "kms_aws_managed_keys": 1,
+  "kms_customer_managed_keys": 0,
+  "http_apis": 1,
+  "lambda_functions": 0,
+  "inventory_denied_by_scp": [
+    "Firehose",
+    "Transcribe",
+    "GuardDuty malware protection",
+    "FSx"
+  ],
+  "cost_explorer_pages": 3,
+  "cost_explorer_query_list_cost_usd": "0.03"
+}

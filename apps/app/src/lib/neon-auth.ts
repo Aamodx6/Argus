@@ -1,9 +1,5 @@
 import { env } from "~/env";
 
-export const neonAuthConfig = {
-  baseUrl: env.NEON_AUTH_BASE_URL,
-  jwksUrl: env.NEON_AUTH_JWKS_URL,
-};
 
 export async function checkNeonAuthStatus() {
   if (!env.NEON_AUTH_JWKS_URL) {

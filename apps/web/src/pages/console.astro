@@ -1,9 +1,11 @@
 ---
+import RuntimeConfig from "../components/RuntimeConfig.astro";
 // Nuance Multimodal Video Sentiment Console - Bento Design Workspace
 ---
 <!doctype html>
 <html lang="en">
 <head>
+  <RuntimeConfig />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nuance · Multimodal Sentiment Console</title>
@@ -14,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700&family=Funnel+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/nuance-transitions.css" />
-  <script src="/nuance-transitions.js" is:inline></script>
+  <script src="/nuance-navigation.js" is:inline></script>
 
   <style is:global>
     *, *::before, *::after {
@@ -1233,7 +1235,7 @@
         <div class="key-surface">
           <span style="font-size:12px; font-weight:600; color:var(--text-secondary);">Key</span>
           <div class="key-display-row">
-            <span class="key-code-pill" id="secret-key-display">sa_live_732abd844e654c9b57a1874a1c8777a3a0b0077a600fcb5a</span>
+            <span class="key-code-pill" id="secret-key-display">YOUR_API_KEY</span>
             <button class="btn-key-copy" id="copy-key-btn" type="button">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -1378,7 +1380,7 @@
     };
 
     // Code snippets
-    const tsCode = `const fileType = "mp4";
+    const tsCode = `const fileType = ".mp4";
 // 1. Get upload URL
 const res = await fetch("/api/upload-url", {
   method: "POST",
@@ -1432,7 +1434,7 @@ curl -X POST \\
   -H "Authorization: Bearer \${YOUR_API_KEY}" \\
   -H "Content-Type: application/json" \\
   -d '{"fileType": ".mp4"}' \\
-  http://localhost:3000/api/upload-url
+  ${window.nuanceConfig.apiBaseUrl || window.location.origin}/api/upload-url
 
 # Response contains url and key
 
@@ -1447,7 +1449,7 @@ curl -X POST \\
   -H "Authorization: Bearer \${YOUR_API_KEY}" \\
   -H "Content-Type: application/json" \\
   -d '{"key": "\${key}"}' \\
-  http://localhost:3000/api/sentiment-inference`;
+  ${window.nuanceConfig.apiBaseUrl || window.location.origin}/api/sentiment-inference`;
 
     const pythonCode = `import requests
 
@@ -1455,7 +1457,7 @@ API_KEY = "YOUR_API_KEY"
 headers = {"Authorization": f"Bearer {API_KEY}"}
 
 # 1. Obtain presigned upload URL
-res = requests.post("http://localhost:3000/api/upload-url",
+res = requests.post("${window.nuanceConfig.apiBaseUrl || window.location.origin}/api/upload-url",
   headers=headers,
   json={"fileType": ".mp4"}
 ).json()
@@ -1465,7 +1467,7 @@ with open("video.mp4", "rb") as f:
   requests.put(res["url"], data=f, headers={"Content-Type": res["contentType"]})
 
 # 3. Run multimodal inference pipeline
-analysis = requests.post("http://localhost:3000/api/sentiment-inference",
+analysis = requests.post("${window.nuanceConfig.apiBaseUrl || window.location.origin}/api/sentiment-inference",
   headers=headers,
   json={"key": res["key"]}
 ).json()
@@ -1473,11 +1475,11 @@ analysis = requests.post("http://localhost:3000/api/sentiment-inference",
 print("Emotion & Sentiment Scores:", analysis)`;
 
     // State
-    let currentApiKey = "sa_live_732abd844e654c9b57a1874a1c8777a3a0b0077a600fcb5a";
+    let currentApiKey = "";
     let requestsUsed = 0;
-    let maxRequests = 10000;
+    let maxRequests = 0;
+    let quotaAvailable = false;
     let currentTab = "ts";
-    let activeAnalysis = null;
 
     // Sample video analysis data
     const sampleAnalysis = {
@@ -1596,13 +1598,22 @@ print("Emotion & Sentiment Scores:", analysis)`;
           if (typeof quota.maxRequests === "number") maxRequests = quota.maxRequests;
         }
 
-        // Fetch fresh quota from server
-        const res = await fetch("http://localhost:3000/api/quota", {
-          headers: { Authorization: "Bearer " + currentApiKey }
+        if (!currentApiKey) {
+          updateUIQuota();
+          renderCodeSnippet();
+          return;
+        }
+        const quotaPath = window.nuanceConfig.guarded ? "/api/async-inference/quota" : "/api/quota";
+        const res = await fetch(window.nuanceApiUrl(quotaPath), {
+          headers: { Authorization: "Bearer " + currentApiKey }, cache: "no-store"
         });
         if (res.ok) {
           const data = await res.json();
-          if (data.quota) {
+          quotaAvailable = true;
+          if (window.nuanceConfig.guarded) {
+            requestsUsed = data.requests_used;
+            maxRequests = data.max_requests;
+          } else if (data.quota) {
             currentApiKey = data.quota.secretKey;
             requestsUsed = data.quota.requestsUsed;
             maxRequests = data.quota.maxRequests;
@@ -1620,14 +1631,18 @@ print("Emotion & Sentiment Scores:", analysis)`;
     }
 
     function updateUIQuota() {
-      secretKeyDisplay.textContent = currentApiKey;
-      quotaTextDisplay.textContent = `${requestsUsed} / ${maxRequests} requests`;
+      secretKeyDisplay.textContent = currentApiKey || "Sign in to obtain an API key";
+      quotaTextDisplay.textContent = quotaAvailable ? `${requestsUsed} / ${maxRequests} requests` : "Usage unavailable";
       if (quotaUsedBig) quotaUsedBig.textContent = requestsUsed;
-      const pct = Math.min(100, Math.round((requestsUsed / maxRequests) * 100));
+      const pct = Math.min(100, Math.round((requestsUsed / (maxRequests || 1)) * 100));
       quotaBarFill.style.width = `${pct}%`;
     }
 
     function renderCodeSnippet() {
+      if (window.nuanceConfig.guarded) {
+        codeBlockContent.textContent = `Guarded MP4 upload flow:\nPOST ${window.nuanceApiUrl('/api/async-inference/uploads')}\nPOST the signed form and file to S3\nPOST ${window.nuanceApiUrl('/api/async-inference/jobs')} with upload_id\nGET ${window.nuanceApiUrl('/api/async-inference/jobs/{job_id}')} until terminal status\n\nAuthenticate API requests with Authorization: Bearer YOUR_API_KEY.\nS3 receives only the signed form and file.`;
+        return;
+      }
       if (currentTab === "ts") {
         codeBlockContent.textContent = tsCode.replace('apiKey', `"${currentApiKey}"`);
       } else if (currentTab === "curl") {
@@ -1725,8 +1740,12 @@ print("Emotion & Sentiment Scores:", analysis)`;
       };
     }
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    }
+
     function renderAnalysis(data) {
-      activeAnalysis = data;
+      policyAlert.style.display = ['warn', 'throttle', 'suspend'].includes(data.account_policy) ? 'block' : 'none';
       const averages = calculateAverages(data);
 
       if (averages?.topEmotion && averages?.topSentiment) {
@@ -1764,7 +1783,7 @@ print("Emotion & Sentiment Scores:", analysis)`;
             <div class="breakdown-row">
               <span class="breakdown-label">
                 <span>${EMOTION_EMOJI[e.label] || "•"}</span>
-                ${e.label}
+                ${escapeHtml(e.label)}
               </span>
               <div class="breakdown-track">
                 <div class="breakdown-fill orange" style="width: ${Math.round(e.confidence * 100)}%;"></div>
@@ -1778,7 +1797,7 @@ print("Emotion & Sentiment Scores:", analysis)`;
             <div class="breakdown-row">
               <span class="breakdown-label">
                 <span>${SENTIMENT_EMOJI[s.label] || "•"}</span>
-                ${s.label}
+                ${escapeHtml(s.label)}
               </span>
               <div class="breakdown-track">
                 <div class="breakdown-fill" style="width: ${Math.round(s.confidence * 100)}%;"></div>
@@ -1790,7 +1809,7 @@ print("Emotion & Sentiment Scores:", analysis)`;
           item.innerHTML = `
             <div class="time-text-col">
               <span class="time-badge">${Number(u.start_time).toFixed(1)}s – ${Number(u.end_time).toFixed(1)}s</span>
-              <p class="utterance-text">"${u.text}"</p>
+              <p class="utterance-text">"${escapeHtml(u.text)}"</p>
             </div>
             <div class="breakdown-col">
               <span class="breakdown-title">Emotions</span>
@@ -1834,99 +1853,30 @@ print("Emotion & Sentiment Scores:", analysis)`;
       setProcessingState(false);
     }
 
-    // Handle File Upload Flow
+    // Both upload modes use the actual backend. Failures never become sample predictions.
     async function handleFileUpload(file) {
       if (!file) return;
-      if (!/\.(mp4|mov|avi)$/i.test(file.name)) {
-        showError("Invalid file type. Please upload an .mp4, .mov, or .avi video.");
-        return;
-      }
-
       try {
-        setProcessingState(true, "Requesting encrypted S3 presigned upload URL...", 15);
-
-        // 1. Get presigned upload URL from backend
-        let uploadMeta = null;
-        try {
-          const res = await fetch("http://localhost:3000/api/upload-url", {
-            method: "POST",
-            headers: {
-              Authorization: "Bearer " + currentApiKey,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ fileType: "." + file.name.split(".").pop().toLowerCase() })
-          });
-
-          if (res.ok) {
-            uploadMeta = await res.json();
-          }
-        } catch (e) {
-          console.warn("Direct upload-url call:", e);
-        }
-
-        // 2. Upload to S3 if URL available
-        if (uploadMeta?.url) {
-          setProcessingState(true, "Uploading video payload to AWS S3 bucket...", 45);
-          const uploadRes = await fetch(uploadMeta.url, {
-            method: "PUT",
-            headers: { "Content-Type": uploadMeta.contentType || file.type || "video/mp4" },
-            body: file
-          });
-
-          if (!uploadRes.ok) {
-            throw new Error("Failed to upload video to S3");
-          }
-
-          // 3. Trigger inference
-          setProcessingState(true, "Running speech prosody and facial action coding...", 75);
-          const inferenceRes = await fetch("http://localhost:3000/api/sentiment-inference", {
-            method: "POST",
-            headers: {
-              Authorization: "Bearer " + currentApiKey,
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ key: uploadMeta.key })
-          });
-
-          if (!inferenceRes.ok) {
-            const errJson = await inferenceRes.json().catch(() => ({}));
-            throw new Error(errJson.error || "Inference failed");
-          }
-
-          const analysisData = await inferenceRes.json();
-          setProcessingState(true, "Finalizing timestamp-aligned scores...", 100);
-          setTimeout(() => {
-            setProcessingState(false);
-            renderAnalysis(analysisData);
-          }, 400);
-          return;
-        }
-
-        // Fallback: If local AWS keys/S3 bucket are not configured, simulate pipeline processing smoothly
-        setProcessingState(true, "Extracting audio wave and facial keypoints...", 55);
-        await new Promise(r => setTimeout(r, 600));
-
-        setProcessingState(true, "Executing SageMaker multimodal sentiment model...", 85);
-        await new Promise(r => setTimeout(r, 700));
-
-        setProcessingState(true, "Synthesizing spoken segment utterances...", 100);
-        await new Promise(r => setTimeout(r, 400));
-
+        const { analyzeVideo } = await import('/console-api.mjs');
+        const result = await analyzeVideo(file, currentApiKey, {
+          baseUrl: window.nuanceConfig.apiBaseUrl,
+          guarded: window.nuanceConfig.guarded,
+          onProgress: (message, percent) => setProcessingState(true, message, percent),
+        });
         setProcessingState(false);
-        renderAnalysis(sampleAnalysis);
-
-      } catch (err) {
-        console.error("Upload error:", err);
-        showError(err.message || "Failed to analyze video. Please check API server.");
+        renderAnalysis(result);
+        await initSession();
+      } catch (error) {
+        showError(error.message || "Video analysis is unavailable.");
       }
     }
 
     // Demo analysis button click
     demoBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      setProcessingState(true, "Loading benchmark video clip...", 30);
+      setProcessingState(true, "Loading sample data; no video is submitted...", 30);
       setTimeout(() => {
-        setProcessingState(true, "Running multimodal sentiment model on demo clip...", 70);
+        setProcessingState(true, "Loading saved sample predictions...", 70);
         setTimeout(() => {
           setProcessingState(true, "Aligning spoken segments and confidence...", 100);
           setTimeout(() => {

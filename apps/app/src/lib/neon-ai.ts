@@ -1,9 +1,5 @@
 import { env } from "~/env";
 
-export const neonAIConfig = {
-  baseUrl: env.NEON_AI_GATEWAY_BASE_URL,
-  token: env.NEON_AI_GATEWAY_TOKEN,
-};
 
 export async function getNeonAIModels() {
   if (!env.NEON_AI_GATEWAY_BASE_URL || !env.NEON_AI_GATEWAY_TOKEN) {

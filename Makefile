@@ -23,6 +23,10 @@ build:
 lint:
 	cd apps/app && npm run lint
 
+test:
+	cd apps/web && npm test
+	cd apps/app && npm test
+
 clean:
 	@echo "Cleaning build artifacts..."
 	rm -rf apps/web/dist apps/web/.astro apps/app/.next
