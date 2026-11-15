@@ -36,21 +36,9 @@ const textMap = [
       for (const c of node.childNodes) update(c);
     }
   }
-  function ensureNavbarSignIn() {
-    const rightNav = document.querySelector('.framer-3jg8q');
-    if (rightNav && !document.getElementById('nuance-nav-signin-btn')) {
-      const signInLink = document.createElement('a');
-      signInLink.id = 'nuance-nav-signin-btn';
-      signInLink.href = '/login';
-      signInLink.textContent = 'Sign In';
-      signInLink.style.cssText = 'font-size: 13px; font-weight: 500; font-family: Inter, sans-serif; color: #111317; text-decoration: none; padding: 6px 14px; border-radius: 9999px; transition: all 0.15s ease; margin-right: 6px; display: inline-flex; align-items: center; cursor: pointer;';
-      signInLink.onmouseenter = () => signInLink.style.backgroundColor = 'rgba(17, 19, 23, 0.07)';
-      signInLink.onmouseleave = () => signInLink.style.backgroundColor = 'transparent';
-      rightNav.insertBefore(signInLink, rightNav.firstChild);
-    }
-  }
   function fixLinks() {
-    ensureNavbarSignIn();
+    const existing = document.getElementById('nuance-nav-signin-btn');
+    if (existing) existing.remove();
     document.querySelectorAll('a').forEach(a => {
       const text = a.textContent?.trim();
       if (text === 'Sign In' || text === 'Sign in') {

@@ -123,3 +123,11 @@ button[type="submit"] *,
   white-space: nowrap !important;
   word-break: keep-all !important;
 }
+
+/* Hide Sign In from Navbar */
+#nuance-nav-signin-btn,
+[data-framer-name="Button · Sign in"],
+.framer-dzy6g4 {
+  display: none !important;
+}
+
