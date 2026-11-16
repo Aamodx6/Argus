@@ -190,8 +190,9 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
       transition: all 0.15s ease;
     }
     .btn-signout:hover {
-      background: #f4f3ef;
-      border-color: #d1cebe;
+      background: rgba(255, 75, 31, 0.08);
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
     }
 
     /* Console Page Canvas */
@@ -1352,7 +1353,6 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
     <div class="workspace-footer-inner">
       <div class="footer-left-group">
         <span>© 2026 Nuance Multimodal AI Labs. Models deployed in ap-southeast-2.</span>
-        <span class="footer-pill-tag">SageMaker Live · 99.98% SLA</span>
       </div>
       <div>
         <a href="/pricing" style="color:var(--text-secondary); text-decoration:none; margin-right:16px;">Pricing</a>

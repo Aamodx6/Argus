@@ -49,25 +49,225 @@ body.nuance-page-leaving .bento-grid {
   transition: opacity 0.12s cubic-bezier(0.16, 1, 0.3, 1), transform 0.12s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Native Framer Sign In Button Active and Hover Styles */
-[data-framer-name="Button · Sign in"] {
+/* ============================================================
+   NAVBAR HOVER & ACTIVE ORANGE STATES
+   ============================================================ */
+
+/* 1. Global Navigation Links (Desktop, Tablet, Mobile Drawer, and AuthPage) */
+nav[name="Navigation"] [data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] [data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+[data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+[data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+header.site-header .nav-links a,
+.framer-1tc5ffl a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+.framer-styles-preset-1ijj2jb {
+  transition: color 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Hover on Navbar Links: Change color to Orange */
+nav[name="Navigation"] [data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover,
+nav[name="Navigation"] [data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover *,
+nav[name="Navigation"] [data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover,
+nav[name="Navigation"] [data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover *,
+[data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover,
+[data-framer-name="Links"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover *,
+[data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover,
+[data-framer-name="Drawer"] a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover *,
+.framer-1tc5ffl a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover,
+.framer-1tc5ffl a:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]):hover *,
+header.site-header .nav-links a:hover,
+header.site-header .nav-links a:hover *,
+.framer-styles-preset-1ijj2jb:hover,
+.framer-styles-preset-1ijj2jb:hover * {
+  color: #ff4b1f !important;
+  --framer-link-hover-text-color: #ff4b1f !important;
+  --framer-link-text-color: #ff4b1f !important;
+  --text-color: #ff4b1f !important;
+}
+
+/* Active / Open Page State for Navbar Links: Orange */
+nav[name="Navigation"] [data-framer-name="Links"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] [data-framer-name="Links"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+nav[name="Navigation"] [data-framer-name="Drawer"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] [data-framer-name="Drawer"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+[data-framer-name="Links"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+[data-framer-name="Links"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+[data-framer-name="Drawer"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+[data-framer-name="Drawer"] a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+.framer-1tc5ffl a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+.framer-1tc5ffl a.active:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+nav[name="Navigation"] [data-framer-name="Links"] [data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] [data-framer-name="Links"] [data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+nav[name="Navigation"] [data-framer-name="Drawer"] [data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] [data-framer-name="Drawer"] [data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+nav[name="Navigation"] a[data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]),
+nav[name="Navigation"] a[data-framer-page-link-current="true"]:not([data-framer-name*="Button"]):not([href*="/login"]):not([href*="/contact"]) *,
+header.site-header .nav-links a.active,
+header.site-header .nav-links a.active *,
+.framer-styles-preset-1ijj2jb.active,
+.framer-styles-preset-1ijj2jb.active * {
+  color: #ff4b1f !important;
+  --framer-link-current-text-color: #ff4b1f !important;
+  --framer-link-text-color: #ff4b1f !important;
+  --text-color: #ff4b1f !important;
+}
+
+/* 2. Sign In Button Normal Styling (Strictly Neutral - No Orange Under ANY State in Navbar) */
+nav[name="Navigation"] [data-framer-name="Button · Sign in"],
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:hover,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus-visible,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus-within,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:active,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"].active,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"][data-framer-page-link-current="true"],
+nav[name="Navigation"] a[href="/login"],
+nav[name="Navigation"] a[href="/login"]:hover,
+nav[name="Navigation"] a[href="/login"]:focus,
+nav[name="Navigation"] a[href="/login"]:focus-visible,
+nav[name="Navigation"] a[href="/login"]:focus-within,
+nav[name="Navigation"] a[href="/login"]:active,
+nav[name="Navigation"] a[href="/login"].active,
+nav[name="Navigation"] a[href="/login"][data-framer-page-link-current="true"],
+.nuance-nav-signin,
+.nuance-nav-signin:hover,
+.nuance-nav-signin.active,
+header.site-header .pill.secondary,
+header.site-header .pill.secondary:hover,
+header.site-header .pill.secondary.active {
   cursor: pointer !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #111317 !important;
+  border: 1px solid rgba(17, 19, 23, 0.18) !important;
+  border-color: rgba(17, 19, 23, 0.18) !important;
+  --border-color: rgba(17, 19, 23, 0.18) !important;
+  --framer-link-hover-text-color: #111317 !important;
+  --framer-link-current-text-color: #111317 !important;
+  --framer-link-text-color: #111317 !important;
+  --text-color: #111317 !important;
+  background: transparent !important;
   transition: border-color 0.15s ease, background 0.15s ease !important;
 }
 
-[data-framer-name="Button · Sign in"]:hover {
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:hover,
+nav[name="Navigation"] a[href="/login"]:hover,
+.nuance-nav-signin:hover,
+header.site-header .pill.secondary:hover {
   background: rgba(17, 19, 23, 0.04) !important;
   border-color: rgba(17, 19, 23, 0.35) !important;
+  --border-color: rgba(17, 19, 23, 0.35) !important;
 }
 
-[data-framer-name="Button · Sign in"].active,
-[data-framer-name="Button · Sign in"]:has([data-framer-page-link-current="true"]) {
-  border-color: #ff4b1f !important;
+nav[name="Navigation"] [data-framer-name="Button · Sign in"] *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:hover *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus-visible *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:focus-within *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"]:active *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"].active *,
+nav[name="Navigation"] [data-framer-name="Button · Sign in"][data-framer-page-link-current="true"] *,
+nav[name="Navigation"] a[href="/login"] *,
+nav[name="Navigation"] a[href="/login"]:hover *,
+nav[name="Navigation"] a[href="/login"]:focus *,
+nav[name="Navigation"] a[href="/login"]:focus-visible *,
+nav[name="Navigation"] a[href="/login"]:focus-within *,
+nav[name="Navigation"] a[href="/login"]:active *,
+nav[name="Navigation"] a[href="/login"].active *,
+nav[name="Navigation"] a[href="/login"][data-framer-page-link-current="true"] *,
+.nuance-nav-signin *,
+.nuance-nav-signin:hover *,
+.nuance-nav-signin.active *,
+header.site-header .pill.secondary * {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-color: transparent !important;
+  color: #111317 !important;
+  --framer-text-color: #111317 !important;
+  --framer-link-hover-text-color: #111317 !important;
+  --framer-link-current-text-color: #111317 !important;
+  --framer-link-text-color: #111317 !important;
+  --text-color: #111317 !important;
 }
 
-[data-framer-name="Button · Sign in"].active p,
-[data-framer-name="Button · Sign in"]:has([data-framer-page-link-current="true"]) p {
-  color: #ff4b1f !important;
+/* 3. Analyse a Video / Connect Button Normal Styling (Strictly Neutral Dark Pill - No Orange in Navbar) */
+nav[name="Navigation"] [data-framer-name="Button · Connect"],
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:hover,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus-visible,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus-within,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:active,
+nav[name="Navigation"] [data-framer-name="Button · Connect"].active,
+nav[name="Navigation"] [data-framer-name="Button · Connect"][data-framer-page-link-current="true"],
+nav[name="Navigation"] a[href="/contact"],
+nav[name="Navigation"] a[href="/contact"]:hover,
+nav[name="Navigation"] a[href="/contact"]:focus,
+nav[name="Navigation"] a[href="/contact"]:focus-visible,
+nav[name="Navigation"] a[href="/contact"]:focus-within,
+nav[name="Navigation"] a[href="/contact"]:active,
+nav[name="Navigation"] a[href="/contact"].active,
+nav[name="Navigation"] a[href="/contact"][data-framer-page-link-current="true"],
+header.site-header .pill.primary,
+header.site-header .pill.primary:hover,
+header.site-header .pill.primary.active {
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: #111317 !important;
+  color: #ffffff !important;
+  --border-color: transparent !important;
+  --framer-link-hover-text-color: #ffffff !important;
+  --framer-link-current-text-color: #ffffff !important;
+  --framer-link-text-color: #ffffff !important;
+  --text-color: #ffffff !important;
+}
+
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:hover,
+nav[name="Navigation"] a[href="/contact"]:hover,
+header.site-header .pill.primary:hover {
+  background-color: #23272e !important;
+}
+
+nav[name="Navigation"] [data-framer-name="Button · Connect"] *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:hover *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus-visible *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:focus-within *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"]:active *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"].active *,
+nav[name="Navigation"] [data-framer-name="Button · Connect"][data-framer-page-link-current="true"] *,
+nav[name="Navigation"] a[href="/contact"] *,
+nav[name="Navigation"] a[href="/contact"]:hover *,
+nav[name="Navigation"] a[href="/contact"]:focus *,
+nav[name="Navigation"] a[href="/contact"]:focus-visible *,
+nav[name="Navigation"] a[href="/contact"]:focus-within *,
+nav[name="Navigation"] a[href="/contact"]:active *,
+nav[name="Navigation"] a[href="/contact"].active *,
+nav[name="Navigation"] a[href="/contact"][data-framer-page-link-current="true"] *,
+header.site-header .pill.primary * {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  color: #ffffff !important;
+  --framer-text-color: #ffffff !important;
+  --framer-link-hover-text-color: #ffffff !important;
+  --framer-link-current-text-color: #ffffff !important;
+  --framer-link-text-color: #ffffff !important;
+  --text-color: #ffffff !important;
+}
+
+/* 4. Logo in Navbar - Normal Neutral Color (No Orange) */
+nav[name="Navigation"] [data-framer-name="Logo"],
+nav[name="Navigation"] [data-framer-name="Logo"]:hover,
+nav[name="Navigation"] [data-framer-name="Logo"] p,
+nav[name="Navigation"] [data-framer-name="Logo"]:hover p,
+header.site-header .brand,
+header.site-header .brand:hover,
+header.site-header .brand span,
+header.site-header .brand:hover span {
+  color: #111317 !important;
 }
 
 /* Clean neutral styling for forms - remove red/orange boxes, glows, and inner outlines */
@@ -105,22 +305,284 @@ form input:focus-visible {
   box-shadow: none !important;
 }
 
-.framer-iLirp a[href="/contact"] {
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), 
-              border-color 0.18s ease, 
-              background-color 0.18s ease, 
-              box-shadow 0.18s ease !important;
+/* ============================================================
+   AUTH WORKSPACE ALTERNATE BUTTONS (Orange Text Only, Neutral Box)
+   Only on /login and /contact form cards
+   ============================================================ */
+.alternate-btn,
+a.alternate-btn,
+form.framer-iLirp a[href="/contact"],
+form.framer-iLirp a[href="/login"],
+form.framer-iLirp a[href="/signup"],
+form a[href="/contact"],
+form a[href="/login"],
+form a[href="/signup"],
+.auth-hero a.alternate-btn {
+  color: #ff4b1f !important;
+  text-decoration: none !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(17, 19, 23, 0.14) !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
 }
 
-.framer-iLirp a[href="/contact"]:hover {
-  transform: translateY(-2px) !important;
+.alternate-btn:hover,
+a.alternate-btn:hover,
+form.framer-iLirp a[href="/contact"]:hover,
+form.framer-iLirp a[href="/login"]:hover,
+form.framer-iLirp a[href="/signup"]:hover,
+form a[href="/contact"]:hover,
+form a[href="/login"]:hover,
+form a[href="/signup"]:hover,
+.auth-hero a.alternate-btn:hover {
   background-color: #ffffff !important;
-  border-color: rgba(17, 19, 23, 0.3) !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(17, 19, 23, 0.28) !important;
+  color: #ff4b1f !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  transform: translateY(-1px) !important;
 }
 
-.framer-iLirp a[href="/contact"]:active {
+.alternate-btn:active,
+a.alternate-btn:active,
+form.framer-iLirp a[href="/contact"]:active,
+form.framer-iLirp a[href="/login"]:active,
+form.framer-iLirp a[href="/signup"]:active,
+form a[href="/contact"]:active,
+form a[href="/login"]:active,
+form a[href="/signup"]:active,
+.auth-hero a.alternate-btn:active {
+  background-color: rgba(0, 0, 0, 0.04) !important;
   transform: translateY(0) !important;
+}
+
+.alternate-btn:visited,
+a.alternate-btn:visited,
+form.framer-iLirp a[href="/contact"]:visited,
+form.framer-iLirp a[href="/login"]:visited,
+form.framer-iLirp a[href="/signup"]:visited,
+form a[href="/contact"]:visited,
+form a[href="/login"]:visited,
+form a[href="/signup"]:visited,
+.auth-hero a.alternate-btn:visited {
+  color: #ff4b1f !important;
+}
+
+/* Ensure only text and arrow are orange inside the auth forms */
+.alternate-btn *,
+a.alternate-btn *,
+form.framer-iLirp a[href="/contact"] *,
+form.framer-iLirp a[href="/login"] *,
+form.framer-iLirp a[href="/signup"] *,
+form a[href="/contact"] *,
+form a[href="/login"] *,
+form a[href="/signup"] *,
+.auth-hero a.alternate-btn * {
+  color: #ff4b1f !important;
+  --text-color: #ff4b1f !important;
+  --framer-link-text-color: #ff4b1f !important;
+  --framer-link-hover-text-color: #ff4b1f !important;
+  --framer-link-current-text-color: #ff4b1f !important;
+  text-decoration: none !important;
+}
+
+/* ============================================================
+   CTA BANNER BUTTONS (Reference Video / Image Matching)
+   Top button: Solid Orange pill with crisp white text & arrow
+   Bottom button: Translucent dark pill with border & white text
+   ============================================================ */
+
+/* ============================================================
+   FOOTER CONTAINER & LINKS (Clean subtle links, NO light gray pills)
+   "Talk to us" links: hello@nuance.example, Book a demo, Security review
+   ============================================================ */
+.framer-mOx05,
+.framer-mOx05 .framer-dq4ije {
+  background-color: #111317 !important;
+}
+
+.framer-mOx05 .framer-1ec5x1e a,
+.framer-mOx05 .framer-4nmwyj a,
+.framer-mOx05 .framer-mikva5 a,
+.framer-mOx05 .framer-n00s59 a,
+.framer-mOx05 .framer-4uj1pu a,
+.framer-mOx05 .framer-vqdmty a,
+[data-framer-name="Talk to us"] a,
+[data-framer-name="Talk to us"] p a,
+.framer-1ec5x1e a,
+.framer-1ec5x1e p a {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  display: inline !important;
+  color: rgba(244, 243, 239, 0.62) !important;
+  --framer-text-color: rgba(244, 243, 239, 0.62) !important;
+  --text-color: rgba(244, 243, 239, 0.62) !important;
+  --framer-link-text-color: rgba(244, 243, 239, 0.62) !important;
+  transition: color 0.15s ease !important;
+}
+
+.framer-mOx05 .framer-1ec5x1e a:hover,
+.framer-mOx05 .framer-4nmwyj a:hover,
+.framer-mOx05 .framer-mikva5 a:hover,
+.framer-mOx05 .framer-n00s59 a:hover,
+.framer-mOx05 .framer-4uj1pu a:hover,
+.framer-mOx05 .framer-vqdmty a:hover,
+[data-framer-name="Talk to us"] a:hover,
+[data-framer-name="Talk to us"] p a:hover,
+.framer-1ec5x1e a:hover,
+.framer-1ec5x1e p a:hover {
+  color: #ffffff !important;
+  --framer-text-color: #ffffff !important;
+  --text-color: #ffffff !important;
+  --framer-link-hover-text-color: #ffffff !important;
+}
+
+.framer-mOx05 .framer-1ec5x1e a *,
+.framer-mOx05 .framer-4nmwyj a *,
+.framer-mOx05 .framer-mikva5 a *,
+.framer-mOx05 .framer-n00s59 a *,
+.framer-mOx05 .framer-4uj1pu a *,
+.framer-mOx05 .framer-vqdmty a *,
+[data-framer-name="Talk to us"] a *,
+.framer-1ec5x1e a * {
+  color: inherit !important;
+  background: transparent !important;
+}
+
+/* ============================================================
+   REMOVE FOOTER STATUS / UPTIME PILL
+   ============================================================ */
+.framer-mOx05 [data-framer-name="Status"],
+.framer-mOx05 .framer-1wek95h,
+[data-framer-name="Status"],
+.framer-1wek95h,
+.footer-status,
+.footer-pill-tag {
+  display: none !important;
+}
+
+/* ============================================================
+   CTA BANNER BUTTONS (Exact match to Reference Screenshot)
+   Top button: Solid Orange pill with white text & white arrow
+   Bottom button: Translucent dark pill with border & white text
+   ============================================================ */
+
+/* Top CTA Button: "Analyse a video →" / "Connect a source →" */
+.framer-mOx05 .framer-1dcoolc,
+[data-framer-name="Button · Connect a source"] {
+  align-content: center !important;
+  align-items: center !important;
+  background-color: #ff4b1f !important;
+  background: #ff4b1f !important;
+  border-radius: 999px !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(255, 75, 31, 0.32) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex: none !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  height: min-content !important;
+  justify-content: flex-start !important;
+  padding: 14px 20px !important;
+  position: relative !important;
+  text-decoration: none !important;
+  width: min-content !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.framer-mOx05 .framer-1dcoolc:hover,
+[data-framer-name="Button · Connect a source"]:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.08) !important;
+  box-shadow: 0 8px 24px rgba(255, 75, 31, 0.45) !important;
+}
+
+.framer-mOx05 .framer-1dcoolc:active,
+[data-framer-name="Button · Connect a source"]:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.framer-mOx05 .framer-1dcoolc *,
+[data-framer-name="Button · Connect a source"] * {
+  color: #ffffff !important;
+  --framer-text-color: #ffffff !important;
+  --text-color: #ffffff !important;
+  --framer-link-text-color: #ffffff !important;
+  --framer-link-hover-text-color: #ffffff !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+
+/* Bottom CTA Button: "Create your free API key →" / "Book a 20-minute demo →" */
+.framer-mOx05 .framer-ywpeio,
+[data-framer-name="Button · Book a 20-minute demo"] {
+  align-content: center !important;
+  align-items: center !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border: 1px solid rgba(244, 243, 239, 0.28) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex: none !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 10px !important;
+  height: min-content !important;
+  justify-content: flex-start !important;
+  padding: 14px 20px !important;
+  position: relative !important;
+  text-decoration: none !important;
+  width: min-content !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background 0.2s ease !important;
+}
+
+.framer-mOx05 .framer-ywpeio:hover,
+[data-framer-name="Button · Book a 20-minute demo"]:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(244, 243, 239, 0.55) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.framer-mOx05 .framer-ywpeio:active,
+[data-framer-name="Button · Book a 20-minute demo"]:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.framer-mOx05 .framer-ywpeio *,
+[data-framer-name="Button · Book a 20-minute demo"] * {
+  color: #ffffff !important;
+  --framer-text-color: #ffffff !important;
+  --text-color: #ffffff !important;
+  --framer-link-text-color: #ffffff !important;
+  --framer-link-hover-text-color: #ffffff !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+
+/* Arrow inside bottom button is ORANGE as in reference image 3 */
+.framer-mOx05 .framer-ywpeio .framer-1rje5ss,
+.framer-mOx05 .framer-ywpeio .framer-1rje5ss *,
+[data-framer-name="Button · Book a 20-minute demo"] .framer-1rje5ss,
+[data-framer-name="Button · Book a 20-minute demo"] .framer-1rje5ss * {
+  color: #ff4b1f !important;
+  --framer-text-color: #ff4b1f !important;
+  --text-color: #ff4b1f !important;
 }
 
 .framer-iLirp button[type="submit"] {
@@ -209,11 +671,14 @@ button[type="submit"] *,
 .nuance-nav-signin:hover {
   background: rgba(17, 19, 23, 0.04) !important;
   border-color: rgba(17, 19, 23, 0.35) !important;
+  color: #111317 !important;
+  box-shadow: none !important;
 }
 
 .nuance-nav-signin.active {
-  border-color: #ff4b1f !important;
-  color: #ff4b1f !important;
+  border-color: rgba(17, 19, 23, 0.35) !important;
+  color: #111317 !important;
+  box-shadow: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
