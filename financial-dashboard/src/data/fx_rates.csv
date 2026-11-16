@@ -1,0 +1,2 @@
+﻿base_currency,quote_currency,rate,unit,currency,year,rate_date,usage,source_id,source_url,retrieved_date
+USD,INR,94.1997,INR per USD,INR,2026,2026-11-13,Comparison conversion only; not historical accounting FX,FX,https://rbi.org.in/,2026-11-14

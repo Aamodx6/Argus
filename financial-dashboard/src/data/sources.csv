@@ -1,0 +1,62 @@
+﻿source_id,title,source_url,source_type,publication_date,retrieved_date,year,unit,currency,notes
+ARCH,Project architecture,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/ARCH.md,supplied local file,,2026-11-14,2026,text,,
+README,Current project README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,supplied local file,,2026-11-14,2026,text,,
+SAFETY,Upload safety and quality,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/SAFETY_AND_MODEL_QUALITY.md,supplied local file,,2026-11-14,2026,text,,
+NOTES,Supplied customer notes,file:///C:/Users/yashv/Desktop/New%20folder/Customer%20Analysis.txt,supplied local file,,2026-11-14,2026,text,,
+AWS,AWS Cost Explorer screenshot,file:///C:/Users/yashv/Desktop/New%20folder/new.jpg,supplied local file,,2026-11-14,2026,text,,
+FX,RBI / FBIL exchange-rate snapshot,https://rbi.org.in/,official exchange rate,2026-11-13,2026-11-14,2026,text,,Single comparison-date rate; historical amounts are not translated at historical FX.
+N23,NiCE full-year 2023 results,https://www.nice.com/press-releases/nice-press-release-2023-q4,primary,2024-02-22,2026-11-14,2026,text,,
+N24,NiCE full-year 2024 results,https://www.nice.com/press-releases/nice-reports-25-year-over-year-cloud-revenue-growth-for-the-full-year-2024,primary,2025-02-20,2026-11-14,2026,text,,
+N25,NiCE full-year 2025 results,https://www.nice.com/press-releases/nice-reports-14-year-over-year-cloud-revenue-growth-for-fourth-quarter-and-13-growth-for-full-year-2025,primary,2026-02-19,2026-11-14,2026,text,,
+N26,NiCE Q3 2026 results,https://www.nice.com/press-releases/nice-exceeds-revenue-and-eps-guidance-ranges-reporting-8-year-over-year-revenue-growth-in-third-quarter-2026,primary,2026-11-04,2026-11-14,2026,text,,
+NCAP,NiCE valuation snapshot,https://stockanalysis.com/stocks/nice/statistics/,financial data provider,,2026-11-14,2026,text,,"Page dated November 13, 2026 close; market cap rounded to US$5.51bn. Not enterprise value."
+NP,NiCE CXone pricing,https://www.nice.com/pricing,primary,,2026-11-14,2026,text,,
+HP,Hume current product,https://www.hume.ai/,primary,,2026-11-14,2026,text,,
+HB,Hume Expression Measurement billing,https://dev.hume.ai/expression-measurement/docs/billing,primary,,2026-11-14,2026,text,,
+HF,Hume Series B,https://www.hume.ai/blog/series-b-evi-announcement,primary,2024-03-25,2026-11-14,2026,text,,
+AP,AssemblyAI pricing,https://www.assemblyai.com/pricing,primary,,2026-11-14,2026,text,,
+AF,AssemblyAI Series C,https://www.assemblyai.com/blog/announcing-our-50m-series-c-to-build-superhuman-speech-ai-models,primary,2023-12-03,2026-11-14,2026,text,,
+GP,Gong pricing,https://www.gong.io/pricing,primary,,2026-11-14,2026,text,,
+GF,Gong Series E,https://www.gong.io/press/gong-raises-250-million-in-series-e-funding-at-7-25-billion-valuation,primary,2021-06-03,2026-11-14,2026,text,,
+GA,Gong ARR disclosure,https://www.gong.io/press/gong-surpasses-300m-arr-amid-increased-demand-for-ai-powered-revenue-solutions,primary,2025-03-05,2026-11-14,2026,text,,
+GE,Gong EMEA operations,https://www.gong.io/press/revenue-ai-leader-gong-scales-irish-operations-and-ai-capabilities-due-to-accelerated-emea-customer-demand,primary,2025-07-08,2026-11-14,2026,text,,
+UF,Uniphore Series F,https://www.uniphore.com/press-releases/nvidia-amd-snowflake-databricks-invest-in-uniphores-series-f/,primary,2025-10-22,2026-11-14,2026,text,,
+UP,Uniphore U-Analyze listing,https://aws.amazon.com/marketplace/pp/prodview-gt5qvrbqgeyxw,primary,,2026-11-14,2026,text,,Public 12-month listing amount; verify dimension and quantities before buying. No monthly equivalent inferred.
+CP,Convin pricing,https://www.convin.ai/pricing,primary,,2026-11-14,2026,text,,
+CF,Kalaari on Convin Series A,https://kalaari.com/insights-from-the-fronlines/convin-raises-6-5-million-series-a-2,investor primary source,2026-04-28,2026-11-14,2026,text,,Publication date is not treated as the funding closing date; exact event date not disclosed in this extraction.
+MG,IMARC global speech analytics,https://www.imarcgroup.com/speech-analytics-market,market research,2026-08-20,2026-11-14,2026,text,,
+MI,TechSci India speech analytics,https://www.techsciresearch.com/report/india-speech-analytics-market/2163.html,market research,,2026-11-14,2026,text,,"November 2026 report; market measurements are publisher research, not audited company sales."
+MU,IMARC US speech analytics,https://www.imarcgroup.com/united-states-speech-analytics-market,market research,,2026-11-14,2026,text,,
+MK,MarketsandMarkets UK speech analytics,https://www.marketsandmarkets.com/Market-Reports/geography/speech-analytics-market/uk,market research,,2026-11-14,2026,text,,Money omitted: same page inconsistently labels its UK monetary figures USD and GBP.
+MC,MarketsandMarkets China speech analytics,https://www.marketsandmarkets.com/Market-Reports/geography/speech-analytics-market/China,market research,,2026-11-14,2026,text,,
+MS,MarketsandMarkets ASEAN speech analytics,https://www.marketsandmarkets.com/Market-Reports/geography/speech-analytics-market/asean-countries,market research,,2026-11-14,2026,text,,"ASEAN is a regional proxy, not an exact Southeast Asia total."
+ML,Livpure case study,https://convin.ai/en-us/case-studies/real-time-insights-to-elevate-cx-retention,vendor/customer case study,,2026-11-14,2026,text,,
+MA,AWS / MaestroQA case study,https://aws.amazon.com/blogs/machine-learning/revolutionizing-customer-service-maestroqas-integration-with-amazon-bedrock-for-actionable-insight/,vendor/customer case study,2025-03-13,2026-11-14,2026,text,,
+MN,NatWest re:Invent presentation,https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/events/approved/reinvent-2025/reinvent/2024/slides/fsi/FSI316_NatWest-Personalizing-customer-experience-with-Amazon-Connect-and-AI-ML.pdf,customer conference presentation,,2026-11-14,2026,text,,2024 presentation; measurement dates and baseline levels not disclosed.
+MT,Amazon Contact Lens launch and customer statements,https://press.aboutamazon.com/2020/7/aws-announces-general-availability-of-contact-lens-for-amazon-connect,vendor/customer statement,,2026-11-14,2026,text,,Amazon is the vendor here. Customer statements do not disclose Amazon retail sales uplift.
+SH,AWS schuh case study,https://d1.awsstatic.com/psc-digital/2023/gc-600/omnichannel-customer-experience/omnichannel-customer-experience.pdf,vendor/customer case study,,2026-11-14,2026,text,,2023 case study; no numeric satisfaction before/after.
+REU,EU AI Act Article 5,https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-5,regulator,,2026-11-14,2026,text,,
+RIN,India DPDP rules and timeline,https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa?pageTitle=Digital-Personal-Data-Protection-Rules-2025%3B,regulator,,2026-11-14,2026,text,,
+RUS,FTC biometric policy,https://www.ftc.gov/legal-library/browse/policy-statement-federal-trade-commission-biometric-information-section-5-federal-trade-commission,regulator,,2026-11-14,2026,text,,
+RUK,ICO worker monitoring,https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/specific-data-protection-considerations-for-different-ways-or-methods-of-monitoring-workers/,regulator,,2026-11-14,2026,text,,
+RCN,China PIPL,https://en.spp.gov.cn/2021-12/29/c_948419.htm,official law text,,2026-11-14,2026,text,,
+RME,UAE data protection laws,https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws,government,,2026-11-14,2026,text,,
+RSA,Saudi transfer clauses,https://dgp.sdaia.gov.sa/wps/wcm/connect/016534ff-df3b-4bf4-80d7-d7145f41a926/Standard%2BContractual%2BClauses%2BFor%2BPersonal%2BData%2BTransfer.pdf?CACHEID=ROOTWORKSPACE-016534ff-df3b-4bf4-80d7-d7145f41a926-p77WQDo&CONVERT_TO=url&MOD=AJPERES,regulator,,2026-11-14,2026,text,,
+RSEA,Singapore PDPC AI guidelines,https://www.pdpc.gov.sg/-/media/files/pdpc/pdf-files/advisory-guidelines/advisory-guidelines-on-the-use-of-personal-data-in-ai-recommendation-and-decision-systems.pdf,regulator,,2026-11-14,2026,text,,
+PX1,Deepgram Nova-3 monolingual PAYG ($0.0077/min),https://deepgram.com/pricing,official vendor pricing / public API,,2026-11-14,2026,text,USD,Base transcription only; feature parity not established
+PX2,AWS Transcribe Tier 1 ($0.024/min),https://aws.amazon.com/blogs/machine-learning/live-meeting-assistant-with-amazon-transcribe-amazon-bedrock-and-strands-agents/,official vendor pricing / public API,,2026-11-14,2026,text,USD,Base transcription only; feature parity not established
+PX3,Google Cloud Speech V2 first tier ($0.016/min),https://cloud.google.com/speech-to-text/pricing,official vendor pricing / public API,,2026-11-14,2026,text,USD,Base transcription only; feature parity not established
+PX4,Azure East US Fast Transcription standard meter,https://prices.azure.com/api/retail/prices?$filter=armRegionName%20eq%20'eastus'%20and%20meterName%20eq%20'Fast%20Transcription%20Speech%20To%20Text',official vendor pricing / public API,,2026-11-14,2026,text,USD,Base transcription only; feature parity not established
+PX5,OpenAI gpt-4o-mini-transcribe,https://developers.openai.com/api/docs/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,Deprecated; vendor guide says shutdown 26 Feb 2027
+PX6,Google Cloud Video Intelligence Face Detection,https://cloud.google.com/products/video-intelligence/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX7,AWS Rekognition Stored Video,https://aws.amazon.com/rekognition/pricing/,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX8,Azure Video Indexer Basic Video,https://prices.azure.com/api/retail/prices,official vendor pricing / public API,,2026-11-15,2026,text,USD,"Retail API query: armRegionName eq 'eastus' and contains(productName,'Video Indexer'); Basic Video Indexing Analysis Input Content Minutes"
+PX9,Twelve Labs Video understanding indexing,https://www.twelvelabs.io/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX10,Hume AI Expression Measurement video,https://dev.hume.ai/expression-measurement/docs/billing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX11,AWS Comprehend sentiment,https://aws.amazon.com/comprehend/pricing/,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX12,Google Cloud Natural Language sentiment,https://cloud.google.com/products/natural-language/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX13,Azure AI Language sentiment,https://azure.microsoft.com/en-us/pricing/details/cognitive-services/language-service/,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX14,OpenAI gpt-5-mini,https://developers.openai.com/api/docs/models/gpt-5-mini,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX15,Anthropic Claude Haiku 4.5,https://www.anthropic.com/claude/haiku,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+PX16,Google Gemini 2.5 Flash-Lite,https://ai.google.dev/gemini-api/docs/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
+GPU15,AWS Sydney GPU hosting,https://aws.amazon.com/sagemaker/ai/pricing/,official vendor pricing / public API,,2026-11-15,2026,text,USD,Sydney on-demand hosting; audited public price list; before credits allowances and tax

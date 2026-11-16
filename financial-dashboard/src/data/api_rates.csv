@@ -1,0 +1,6 @@
+provider,mode,usd_hour,offer,source
+AssemblyAI,Recorded,0.15,Universal-2,https://www.assemblyai.com/pricing
+Deepgram,Streaming,0.462,Nova-3 monolingual PAYG ($0.0077/min),https://deepgram.com/pricing
+AWS,Streaming,1.44,Transcribe Tier 1 ($0.024/min),https://aws.amazon.com/blogs/machine-learning/live-meeting-assistant-with-amazon-transcribe-amazon-bedrock-and-strands-agents/
+Google Cloud,Standard,0.96,Speech V2 first tier ($0.016/min),https://cloud.google.com/speech-to-text/pricing
+Azure,Recorded,0.36,East US Fast Transcription standard meter,https://prices.azure.com/api/retail/prices?$filter=armRegionName%20eq%20'eastus'%20and%20meterName%20eq%20'Fast%20Transcription%20Speech%20To%20Text'

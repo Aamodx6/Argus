@@ -1,0 +1,13 @@
+﻿metric,value,value_usd,value_inr,unit,currency,year,as_of_date,value_status,notes,source_id,source_url,retrieved_date
+aws_cost_mtd,73.9,73.9,6961.36,USD,USD,2026,2026-11-14,disclosed,Screenshot total for 2026-11-01 to 2026-11-14; not a full-month bill.,AWS,file:///C:/Users/yashv/Desktop/New%20folder/new.jpg,2026-11-14
+paid_customers,,,,organizations,,2026,2026-11-14,not disclosed,No verified commercial records supplied.,README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+revenue,,,,USD,USD,2026,2026-11-14,not disclosed,No verified invoices or sales ledger supplied.,README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+mrr,,,,USD/month,USD,2026,2026-11-14,not disclosed,No verified subscriptions supplied.,README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+arr,,,,USD/year,USD,2026,2026-11-14,not disclosed,No verified recurring revenue supplied.,README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+cost_per_user,,,,USD/user,USD,2026,2026-11-14,not disclosed,Verified user denominator not supplied.,AWS,file:///C:/Users/yashv/Desktop/New%20folder/new.jpg,2026-11-14
+gross_margin,,,,percent,,2026,2026-11-14,not disclosed,Revenue and complete delivery costs not supplied.,README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+break_even_customers,,,,organizations,,2026,2026-11-14,not disclosed,"Verified price, contribution and full fixed cost not supplied.",README,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/README.md,2026-11-14
+gpu_throughput,,,,video minutes/GPU hour,,2026,2026-11-14,not disclosed,Production benchmark not supplied; one-million-requests scenario is not measured capacity.,ARCH,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/ARCH.md,2026-11-14
+cold_start_latency,,,,seconds,,2026,2026-11-14,not disclosed,Must be measured; not disclosed.,ARCH,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/ARCH.md,2026-11-14
+max_upload_duration,120,,,seconds,,2026,2026-11-14,disclosed,"Configured bound, not measured throughput.",SAFETY,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/SAFETY_AND_MODEL_QUALITY.md,2026-11-14
+max_upload_size,128,,,MiB,,2026,2026-11-14,disclosed,"Configured bound, not an observed average upload size.",SAFETY,file:///C:/Users/yashv/Desktop/New%20folder/Nuance-main/SAFETY_AND_MODEL_QUALITY.md,2026-11-14

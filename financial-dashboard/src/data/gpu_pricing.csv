@@ -1,0 +1,2 @@
+﻿instance_type,region,usd_per_hour,inr_per_hour,fx_inr_per_usd,fx_rate_date,source_id,source_url,evidence_url,retrieved_date,value_status,notes
+ml.g5.xlarge,ap-southeast-2,1.8312,172.49849064,94.1997,2026-11-13,GPU15,https://aws.amazon.com/sagemaker/ai/pricing/,https://github.com/Aamodx6/Nuance/blob/cef48cb/docs/reports/aws-cost-2026-11-15/sydney-unit-rates.csv,2026-11-15,disclosed,Sydney on-demand hosting; audited public price list; before credits allowances and tax

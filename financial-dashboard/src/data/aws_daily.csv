@@ -1,0 +1,189 @@
+date,service,usd
+2026-10-07,AWS CloudShell,0
+2026-10-07,AWS Glue,0
+2026-10-07,AWS Key Management Service,0
+2026-10-07,AWS Secrets Manager,0.000005
+2026-10-07,AWS Service Catalog,0
+2026-10-07,Amazon SageMaker,1.0023232905
+2026-10-07,Amazon Simple Notification Service,0
+2026-10-07,Amazon Simple Queue Service,0
+2026-10-07,Amazon Simple Storage Service,0.0000336536
+2026-10-07,AmazonCloudWatch,0.00564
+2026-10-07,Tax,0
+2026-10-08,AWS Glue,0
+2026-10-08,AWS Secrets Manager,0.000005
+2026-10-08,Amazon SageMaker,0.9190889337
+2026-10-08,Amazon Simple Notification Service,0
+2026-10-08,Amazon Simple Queue Service,0
+2026-10-08,Amazon Simple Storage Service,0.0029206536
+2026-10-08,AmazonCloudWatch,0.00846
+2026-10-09,AWS Glue,0
+2026-10-09,AWS Key Management Service,0
+2026-10-09,Amazon SageMaker,0.021677419
+2026-10-09,Amazon Simple Storage Service,0.0024629765
+2026-10-09,AmazonCloudWatch,0
+2026-10-10,AWS Glue,0
+2026-10-10,Amazon SageMaker,0.021677419
+2026-10-10,Amazon Simple Storage Service,0.0024629765
+2026-10-10,AmazonCloudWatch,0
+2026-10-11,AWS Glue,0
+2026-10-11,Amazon SageMaker,0.021677419
+2026-10-11,Amazon Simple Storage Service,0.0024629765
+2026-10-11,AmazonCloudWatch,0
+2026-10-12,AWS Glue,0
+2026-10-12,AWS Secrets Manager,0.000005
+2026-10-12,Amazon SageMaker,0.0840318265
+2026-10-12,Amazon Simple Storage Service,0.0024738683
+2026-10-12,AmazonCloudWatch,0.00282
+2026-10-13,AWS Glue,0
+2026-10-13,Amazon SageMaker,0.5911314454
+2026-10-13,Amazon Simple Notification Service,0
+2026-10-13,Amazon Simple Queue Service,0
+2026-10-13,Amazon Simple Storage Service,0.0026246336
+2026-10-13,AmazonCloudWatch,0.02256
+2026-10-14,AWS Glue,0
+2026-10-14,AWS Key Management Service,0
+2026-10-14,Amazon SageMaker,0.6468822537
+2026-10-14,Amazon Simple Storage Service,0.0029217537
+2026-10-14,AmazonCloudWatch,0.00564
+2026-10-15,AWS Glue,0
+2026-10-15,Amazon SageMaker,0.021677419
+2026-10-15,Amazon Simple Storage Service,0.0028501598
+2026-10-15,AmazonCloudWatch,0
+2026-10-16,AWS Glue,0
+2026-10-16,Amazon SageMaker,0.021677419
+2026-10-16,Amazon Simple Storage Service,0.0028556598
+2026-10-16,AmazonCloudWatch,0
+2026-10-17,AWS Glue,0
+2026-10-17,Amazon SageMaker,0.021677419
+2026-10-17,Amazon Simple Storage Service,0.0028574198
+2026-10-17,AmazonCloudWatch,0
+2026-10-18,AWS Glue,0
+2026-10-18,Amazon SageMaker,0.021677419
+2026-10-18,Amazon Simple Storage Service,0.0028501598
+2026-10-18,AmazonCloudWatch,0
+2026-10-19,AWS Glue,0
+2026-10-19,Amazon SageMaker,0.0216728612
+2026-10-19,Amazon Simple Storage Service,0.0028556598
+2026-10-19,AmazonCloudWatch,0.00282
+2026-10-20,AWS Glue,0
+2026-10-20,AWS Secrets Manager,0.000005
+2026-10-20,Amazon SageMaker,0.021677419
+2026-10-20,Amazon Simple Storage Service,0.0028501598
+2026-10-20,AmazonCloudWatch,0
+2026-10-21,AWS Glue,0
+2026-10-21,Amazon SageMaker,0.021677419
+2026-10-21,Amazon Simple Storage Service,0.0028556598
+2026-10-21,AmazonCloudWatch,0
+2026-10-22,AWS Glue,0
+2026-10-22,AWS Key Management Service,0
+2026-10-22,Amazon Elastic Compute Cloud - Compute,0.0782113901
+2026-10-22,Amazon SageMaker,20.3193095292
+2026-10-22,Amazon Simple Storage Service,0.1065899598
+2026-10-22,Amazon Virtual Private Cloud,0.003558335
+2026-10-22,AmazonCloudWatch,0
+2026-10-22,EC2 - Other,0.0094630058
+2026-10-23,AWS Glue,0
+2026-10-23,AWS Key Management Service,0
+2026-10-23,Amazon SageMaker,0.6007458268
+2026-10-23,Amazon Simple Storage Service,0.0094983005
+2026-10-23,AmazonCloudWatch,0
+2026-10-24,AWS Glue,0
+2026-10-24,Amazon SageMaker,0.021677419
+2026-10-24,Amazon Simple Storage Service,0.0087481605
+2026-10-24,AmazonCloudWatch,0
+2026-10-25,AWS Glue,0
+2026-10-25,Amazon SageMaker,0.021677419
+2026-10-25,Amazon Simple Storage Service,0.0087481605
+2026-10-25,AmazonCloudWatch,0
+2026-10-26,AWS Glue,0
+2026-10-26,Amazon SageMaker,0.021677419
+2026-10-26,Amazon Simple Storage Service,0.0087536605
+2026-10-26,AmazonCloudWatch,0
+2026-10-27,AWS Glue,0
+2026-10-27,Amazon SageMaker,0.021677419
+2026-10-27,Amazon Simple Storage Service,0.0087481605
+2026-10-27,AmazonCloudWatch,0
+2026-10-28,AWS Glue,0
+2026-10-28,Amazon SageMaker,0.021677419
+2026-10-28,Amazon Simple Storage Service,0.0087545405
+2026-10-28,AmazonCloudWatch,0
+2026-10-29,AWS Glue,0
+2026-10-29,Amazon SageMaker,0.021677419
+2026-10-29,Amazon Simple Storage Service,0.0087481605
+2026-10-29,AmazonCloudWatch,0
+2026-10-30,AWS Glue,0
+2026-10-30,Amazon SageMaker,0.021677419
+2026-10-30,Amazon Simple Storage Service,0.0087481605
+2026-10-30,AmazonCloudWatch,0
+2026-10-31,AWS Glue,0
+2026-10-31,Amazon SageMaker,0.021677419
+2026-10-31,Amazon Simple Storage Service,0.0087481605
+2026-10-31,AmazonCloudWatch,0
+2026-11-01,AWS Glue,0
+2026-11-01,AWS Key Management Service,0
+2026-11-01,Amazon SageMaker,0.0223999857
+2026-11-01,Amazon Simple Queue Service,0
+2026-11-01,Amazon Simple Storage Service,0.0090397658
+2026-11-01,AmazonCloudWatch,0
+2026-11-01,Tax,0
+2026-11-02,AWS Glue,0
+2026-11-02,Amazon SageMaker,0.0223999857
+2026-11-02,Amazon Simple Notification Service,0
+2026-11-02,Amazon Simple Storage Service,0.0090461458
+2026-11-02,AmazonCloudWatch,0
+2026-11-03,AWS Glue,0
+2026-11-03,Amazon SageMaker,0.0223999857
+2026-11-03,Amazon Simple Storage Service,0.0090397658
+2026-11-03,AmazonCloudWatch,0
+2026-11-04,AWS Glue,0
+2026-11-04,Amazon SageMaker,0.0223999857
+2026-11-04,Amazon Simple Storage Service,0.0090397658
+2026-11-04,AmazonCloudWatch,0
+2026-11-05,AWS Glue,0
+2026-11-05,Amazon SageMaker,0.0223999857
+2026-11-05,Amazon Simple Storage Service,0.0090397658
+2026-11-05,AmazonCloudWatch,0
+2026-11-06,AWS Glue,0
+2026-11-06,AWS Key Management Service,0
+2026-11-06,AWS Lambda,0
+2026-11-06,Amazon API Gateway,0.00000129
+2026-11-06,Amazon SageMaker,0.0223999857
+2026-11-06,Amazon Simple Storage Service,0.0090638458
+2026-11-06,AmazonCloudWatch,0
+2026-11-07,AWS Glue,0
+2026-11-07,Amazon SageMaker,0.0223999857
+2026-11-07,Amazon Simple Storage Service,0.0090461458
+2026-11-07,AmazonCloudWatch,0
+2026-11-08,AWS Glue,0
+2026-11-08,Amazon SageMaker,0.0223999857
+2026-11-08,Amazon Simple Storage Service,0.0090397658
+2026-11-08,AmazonCloudWatch,0
+2026-11-09,AWS Glue,0
+2026-11-09,AWS Key Management Service,0
+2026-11-09,Amazon SageMaker,23.5654121841
+2026-11-09,Amazon Simple Storage Service,0.0409651982
+2026-11-09,AmazonCloudWatch,0
+2026-11-10,AWS Glue,0
+2026-11-10,AWS Key Management Service,0
+2026-11-10,Amazon SageMaker,21.2072739201
+2026-11-10,Amazon Simple Storage Service,0.0277762468
+2026-11-10,AmazonCloudWatch,0
+2026-11-11,AWS Glue,0
+2026-11-11,AWS Key Management Service,0
+2026-11-11,Amazon SageMaker,0.0223999857
+2026-11-11,Amazon Simple Storage Service,0.010790077
+2026-11-11,AmazonCloudWatch,0
+2026-11-12,AWS Glue,0
+2026-11-12,Amazon SageMaker,0.0223999857
+2026-11-12,Amazon Simple Storage Service,0.010679037
+2026-11-12,AmazonCloudWatch,0
+2026-11-13,AWS Glue,0
+2026-11-13,AWS Key Management Service,0
+2026-11-13,Amazon SageMaker,19.5466600847
+2026-11-13,Amazon Simple Storage Service,0.0133006449
+2026-11-13,AmazonCloudWatch,0.0167902185
+2026-11-14,AWS Glue,0
+2026-11-14,Amazon SageMaker,23.8177336249
+2026-11-14,Amazon Simple Storage Service,0.0129834772
+2026-11-14,AmazonCloudWatch,0.0175855572
