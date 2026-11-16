@@ -1,0 +1,12 @@
+services/
+docs/
+scratch/
+claude-seo/
+node_modules/
+apps/app/node_modules/
+apps/web/node_modules/
+.next/
+dist/
+.astro/
+venv/
+.venv/

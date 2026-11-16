@@ -57,9 +57,12 @@ Desktop.ini
 # Temporary and test artifacts
 *.log
 .turbo/
+.vercel/
 
 # Local build metadata and remnants of the retired monorepo layout
 *.tsbuildinfo
 next-env.d.ts
 /ai-video-sentiment-saas-main/
 /ai-video-sentiment-model-main/
+
+.vercel

@@ -1,0 +1,26 @@
+{
+    "services":  {
+                     "app":  {
+                                 "framework":  "nextjs",
+                                 "root":  "apps/app"
+                             },
+                     "web":  {
+                                 "framework":  "astro",
+                                 "root":  "apps/web"
+                             }
+                 },
+    "rewrites":  [
+                     {
+                         "destination":  {
+                                             "service":  "app"
+                                         },
+                         "source":  "/api/(.*)"
+                     },
+                     {
+                         "destination":  {
+                                             "service":  "web"
+                                         },
+                         "source":  "/(.*)"
+                     }
+                 ]
+}

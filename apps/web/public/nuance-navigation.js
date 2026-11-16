@@ -303,56 +303,11 @@
     document.querySelectorAll('[data-framer-name="Status"], .framer-1wek95h, .footer-status, .footer-pill-tag').forEach((el) => el.remove());
   }
 
-  function handleAuthForms() {
-    const current = window.location.pathname.replace(/\/$/, '') || '/';
-    if (current !== '/login' && current !== '/contact') return;
-    document.querySelectorAll('form').forEach(form => {
-      if (form.__nuanceAuthBound) return;
-      form.__nuanceAuthBound = true;
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
-        if (submitBtn) submitBtn.disabled = true;
-        const emailInput = form.querySelector('input[type="email"], input[name="Email"]') || form.querySelector('input');
-        const email = emailInput?.value || 'user@company.com';
-        const quota = {
-          secretKey: 'sa_live_' + Array.from(crypto.getRandomValues(new Uint8Array(20))).map(b => b.toString(16).padStart(2, '0')).join(''),
-          requestsUsed: 0,
-          maxRequests: 10000
-        };
-        try {
-          const endpoint = current === '/contact' ? '/api/auth/signup' : '/api/auth/login';
-          const apiUrl = window.nuanceApiUrl ? window.nuanceApiUrl(endpoint) : endpoint;
-          const res = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          const data = await res.json();
-          if (data?.quota?.secretKey) {
-            localStorage.setItem('argus_quota', JSON.stringify(data.quota));
-            localStorage.setItem('argus_user', JSON.stringify(data.user || { email }));
-            localStorage.setItem('nuance_quota', JSON.stringify(data.quota));
-            localStorage.setItem('nuance_user', JSON.stringify(data.user || { email }));
-            window.location.assign('/console');
-            return;
-          }
-        } catch (_) {}
-        localStorage.setItem('argus_quota', JSON.stringify(quota));
-        localStorage.setItem('argus_user', JSON.stringify({ email }));
-        localStorage.setItem('nuance_quota', JSON.stringify(quota));
-        localStorage.setItem('nuance_user', JSON.stringify({ email }));
-        window.location.assign('/console');
-      }, true);
-    });
-  }
 
   syncNode(document.documentElement);
   removeFooterStatus();
   cleanupDuplicateSignIn();
   highlightActiveNav();
-  handleAuthForms();
 
   new MutationObserver(records => {
     for (const record of records) {
@@ -362,7 +317,6 @@
     removeFooterStatus();
     cleanupDuplicateSignIn();
     highlightActiveNav();
-    handleAuthForms();
   }).observe(document.documentElement, {
     subtree: true,
     childList: true,
@@ -414,3 +368,4 @@
     window.nuanceNavigate(target.href);
   }, true);
 })();
+
