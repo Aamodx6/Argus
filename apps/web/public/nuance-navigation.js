@@ -339,6 +339,112 @@
     }, 110);
   };
 
+  // Prevent any stray framer form or telemetry calls from hitting api.framer.com
+  const origFetch = window.fetch;
+  window.fetch = function (resource, init) {
+    const url = typeof resource === 'string' ? resource : resource?.url || '';
+    if (url.includes('api.framer.com/forms/')) {
+      return Promise.resolve(new Response(JSON.stringify({ success: true, status: 'ok' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }));
+    }
+    return origFetch.apply(this, arguments);
+  };
+
+  // Handle any form on the page (including Framer-hydrated components)
+  window.addEventListener('submit', async (event) => {
+    const form = event.target;
+    if (!form || !(form instanceof HTMLFormElement)) return;
+
+    // If it's our Astro AuthPage form, auth-form.js handles it directly
+    if (form.hasAttribute('data-auth-mode')) return;
+
+    const action = form.getAttribute('action') || '';
+    const hasAuthInputs = form.querySelector('input[type="email"], input[name="Email" i], input[type="password"]');
+    if (!hasAuthInputs && !action.includes('framer.com') && !form.hasAttribute('data-framer-form')) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const formData = new FormData(form);
+    const data = {};
+    for (const [k, v] of formData.entries()) {
+      const lower = k.toLowerCase();
+      if (lower.includes('email')) data.email = v;
+      else if (lower === 'name') data.name = v;
+      else if (lower === 'password') data.password = v;
+      else if (lower === 'confirmpassword') data.confirmPassword = v;
+      else data[k] = v;
+    }
+
+    if (!data.email) {
+      const emailInput = form.querySelector('input[type="email"], input[name="Email" i]');
+      if (emailInput) data.email = emailInput.value;
+    }
+    if (!data.password) {
+      const pwdInput = form.querySelector('input[type="password"]');
+      if (pwdInput) data.password = pwdInput.value;
+    }
+
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const isSignup = (currentPath === '/signup' || currentPath === '/contact' || !!data.confirmPassword) && currentPath !== '/login';
+
+    const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+    const oldBtnContent = submitBtn ? submitBtn.innerHTML : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = isSignup ? 'Creating workspace…' : 'Signing in…';
+    }
+
+    let statusEl = form.querySelector('[data-auth-status], .form-status');
+    if (!statusEl) {
+      statusEl = document.createElement('p');
+      statusEl.className = 'form-status';
+      statusEl.style.cssText = 'font-size: 13px; margin: 10px 0; text-align: center; color: #ff4b1f;';
+      form.appendChild(statusEl);
+    }
+    statusEl.textContent = '';
+
+    try {
+      const endpoint = isSignup ? '/api/auth/signup' : '/api/auth/login';
+      const apiUrl = window.nuanceApiUrl ? window.nuanceApiUrl(endpoint) : endpoint;
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || result.message || 'Authentication failed.');
+      }
+
+      if (!isSignup) {
+        if (!result.quota?.secretKey) {
+          throw new Error('API key is unavailable. Please contact support.');
+        }
+        localStorage.setItem('argus_quota', JSON.stringify(result.quota));
+        localStorage.setItem('argus_user', JSON.stringify(result.user));
+        localStorage.setItem('nuance_quota', JSON.stringify(result.quota));
+        localStorage.setItem('nuance_user', JSON.stringify(result.user));
+        statusEl.style.color = '#10b981';
+        statusEl.textContent = 'Signed in. Opening your workspace…';
+        window.location.assign('/console');
+      } else {
+        statusEl.style.color = '#10b981';
+        statusEl.textContent = 'Account created. Redirecting to sign in…';
+        window.location.assign('/login');
+      }
+    } catch (err) {
+      statusEl.style.color = '#ff4b1f';
+      statusEl.textContent = err.message || 'Could not connect to authentication service.';
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = oldBtnContent;
+      }
+    }
+  }, true);
+
   document.addEventListener('click', (event) => {
     const link = event.target.closest?.('a');
     if (!link) return;
@@ -361,6 +467,14 @@
     if (target.origin !== window.location.origin || !routes.has(target.pathname.replace(/\/$/, '') || '/')) return;
     if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
         link.hasAttribute('download') || link.target === '_blank') return;
+
+    const cleanPath = target.pathname.replace(/\/$/, '') || '/';
+    if (['/login', '/signup', '/contact', '/console'].includes(cleanPath)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.assign(target.href);
+      return;
+    }
 
     // Full transition ensures consistent animation and proper script lifecycle across pages
     event.preventDefault();
