@@ -49,8 +49,8 @@ export function Ring({parts,total,center,renderDetail}){
  const content=r=>renderDetail(r);
  return <div className="splitring"><div className="ringbox"><EPlot height="100%" detail={p=>content(parts[p.dataIndex])} option={{tooltip:{show:false},series:[{type:'pie',radius:['69%','88%'],label:{show:false},data:parts}]}}/><strong><TipTarget content={renderDetail({name:'Total',value:total})}>{center}</TipTarget><small>Total</small></strong></div><div className="ringlist">{parts.map((r,i)=><TipTarget key={r.name} content={content(r)}><i style={{background:palette[i%palette.length]}}/>{r.name}<b>{shareLabel(100*r.value/total)}</b></TipTarget>)}</div></div>
 }
-export function Metric({label,usd,formula,status='calculated',source,notes,display}){
- const {money}=useStore();return <TipTarget className="metric" data-metric={label} content={<MoneyDetail {...{label,usd,formula,status,source,notes}}/>}><label>{label}</label><strong>{display|| (usd==null?'Enter measured throughput':money(usd))}</strong><small>{status}</small></TipTarget>
+export function Metric({label,usd,formula,status='calculated',source,notes,display,digits=2}){
+ const {money}=useStore();return <TipTarget className="metric" data-metric={label} content={<MoneyDetail {...{label,usd,formula,status,source,notes}}/>}><label>{label}</label><strong>{display|| (usd==null?'Enter measured throughput':money(usd,{digits}))}</strong><small>{status}</small></TipTarget>
 }
 export function AssumptionField({name,label,min=0,max,step='any',unit}){
  // Imported store here keeps every input on the shared, persisted model.

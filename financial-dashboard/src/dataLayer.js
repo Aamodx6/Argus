@@ -4,7 +4,7 @@ export const tables=Object.fromEntries(Object.entries(snapshots).map(([path,text
 export function exportCSV(name,rows){const href=URL.createObjectURL(new Blob(['\uFEFF'+csvFormat(rows)],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=href;a.download=name+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000)}
 export const FX=Number(tables.fx_rates[0].rate);
 export const FX_DATE=tables.fx_rates[0].rate_date;
-export const UPDATED='2026-11-15';
+export const UPDATED='2026-11-16';
 export const gpu=tables.gpu_pricing[0];
 export const RATE=Number(gpu.usd_per_hour);
 export const IDLE=1.048077790023759;

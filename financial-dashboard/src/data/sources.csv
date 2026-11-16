@@ -60,3 +60,6 @@ PX14,OpenAI gpt-5-mini,https://developers.openai.com/api/docs/models/gpt-5-mini,
 PX15,Anthropic Claude Haiku 4.5,https://www.anthropic.com/claude/haiku,official vendor pricing / public API,,2026-11-15,2026,text,USD,
 PX16,Google Gemini 2.5 Flash-Lite,https://ai.google.dev/gemini-api/docs/pricing,official vendor pricing / public API,,2026-11-15,2026,text,USD,
 GPU15,AWS Sydney GPU hosting,https://aws.amazon.com/sagemaker/ai/pricing/,official vendor pricing / public API,,2026-11-15,2026,text,USD,Sydney on-demand hosting; audited public price list; before credits allowances and tax
+AWS16-console,User supplied AWS console screenshot,./aws-console-snapshot-2026-11-15.png,user-supplied AWS evidence,,2026-11-16,2026,USD unless otherwise stated,USD,
+AWS16-summary,User supplied AWS assistant burn summary,./aws-burn-summary-2026-11-15.txt,user-supplied AWS evidence,,2026-11-16,2026,USD unless otherwise stated,USD,
+AWS16-trend,User supplied AWS daily and monthly trend,./aws-burn-trend-2026-11-15.png,user-supplied AWS evidence,,2026-11-16,2026,USD unless otherwise stated,USD,
