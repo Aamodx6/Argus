@@ -3,6 +3,7 @@ import {useStore} from './store';
 import {tables,IDLE,RATE,auditSource} from './dataLayer';
 import {Ring,Metric,Link,Plot,Panel,Keys} from './ChartKit';
 import {Filter} from './Benchmark';
+import {PracticalVideoCosts} from './PracticalVideoCosts';
 import {BurnAndIterations} from './BurnAndIterations';
 import {MoneyDetail,Missing} from './RichTooltip';
 const labels={'Amazon SageMaker':'SageMaker','Amazon Simple Storage Service':'S3','AmazonCloudWatch':'CloudWatch'};
@@ -98,5 +99,5 @@ export function AwsPage(){
  <Plot height={250} data={creditMonths} series={[{key:'gross',name:'Gross usage'},{key:'credits',name:'Credits offset'}]} format={money} detail={tooltip}/></Panel>
  <Panel title="Other services · earlier audit" id="aws-other-services" rows={nonGPU} foot={<Link href={source}/>}>
  <Plot horizontal height={270} labels data={nonGPU} series={[{key:'cost',name:'Gross usage · excluding SageMaker'}]} format={v=>money(v,{digits:v>0&&v<.001?8:3})} detail={tooltip}/></Panel>
- </div><BurnAndIterations/></>
+ </div><BurnAndIterations/><PracticalVideoCosts/></>
 }
