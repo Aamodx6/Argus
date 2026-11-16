@@ -4,7 +4,7 @@ import { normalizeTemplateHtml } from '../lib/routes.mjs';
 interface Props { title: string }
 const { title } = Astro.props;
 const html = normalizeTemplateHtml(shell)
-  .replace(/<title>[^<]*<\/title>/, `<title>${title} · Nuance</title>`)
+  .replace(/<title>[^<]*<\/title>/, `<title>${title} · Argus</title>`)
   .replace('</head>', '<link rel="stylesheet" href="/nuance-transitions.css"><script src="/nuance-navigation.js"></script></head>');
 ---
 <Fragment set:html={html} />

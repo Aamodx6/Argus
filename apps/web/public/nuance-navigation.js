@@ -11,14 +11,14 @@
   window.addEventListener('pageshow', enter);
 
   const titles = {
-    '/': 'Nuance · Aspect sentiment for video',
-    '/product': 'Product · Nuance',
-    '/sources': 'Sources · Nuance',
-    '/customers': 'Customers · Nuance',
-    '/pricing': 'Pricing · Nuance',
-    '/changelog': 'Changelog · Nuance',
-    '/contact': 'Create account · Nuance',
-    '/login': 'Sign in · Nuance',
+    '/': 'Argus · Aspect sentiment for video',
+    '/product': 'Product · Argus',
+    '/sources': 'Sources · Argus',
+    '/customers': 'Customers · Argus',
+    '/pricing': 'Pricing · Argus',
+    '/changelog': 'Changelog · Argus',
+    '/contact': 'Create account · Argus',
+    '/login': 'Sign in · Argus',
   };
   const updateTitle = () => {
     const current = window.location.pathname.replace(/\/$/, '') || '/';
@@ -52,7 +52,7 @@
     ["A coffee subscription with 40,000 members traced a third of its churn to expired cards, then fixed it with one retry rule.", "A consumer video brand with 40,000 users detected micro-hesitation during onboarding, then streamlined the checkout flows."],
     ["Subscription retail", "Consumer Video"],
     ["Kitefin closes the month four days sooner", "Kitefin scores user interviews 4x faster."],
-    ["A payments startup put billing, ledger and bank data behind one question and cut its close from nine working days to five.", "A fintech app aligned video frames, acoustic prosody and transcripts in Nuance and cut its research review sprint in half."],
+    ["A payments startup put billing, ledger and bank data behind one question and cut its close from nine working days to five.", "A fintech app aligned video frames, acoustic prosody and transcripts in Argus and cut its research review sprint in half."],
     ["faster month-end close", "faster interview audit"],
     ["Oakmere Health fills 18% more afternoon appointments", "Oakmere Health flags patient hesitation in telehealth"],
     ["Fourteen clinics used one shared glossary to compare bookings, no-shows and staffing, and found their empty afternoons.", "Fourteen clinics paired vocal pitch and facial micro-cues to spot patient anxiety, cutting intake drop-offs by a fifth."],
@@ -68,7 +68,7 @@
     ["A network of private schools combined attendance, support tickets and payments to spot families at risk of leaving.", "An online academy combined video attention, vocal pacing and quizzes to spot remote learners at risk of leaving."],
     ["“Finance used to spend the first week of every month reconciling three systems. Now we ask, check the thread, and move on.”", "“Research teams used to spend two weeks every month re-watching user interviews. Now we score, inspect the cues, and ship.”"],
     ["Idris Laval, Finance Lead", "Idris Laval, Product Lead"],
-    ["Also weaving with Warpyn", "Also scoring with Nuance"],
+    ["Also weaving with Warpyn", "Also scoring with Argus"],
     ["Your question could be the seventh story.", "Your research could be the seventh story."],
     ["Bring the one number your team argues about. We will weave it on the first call.", "Bring the one video your team debates about. We will score it on the first call."],
     ["Northdesk","Acoustics"],
@@ -79,13 +79,13 @@
     ["Sheetwise","TimeAlign"],
     ["Rosterly","SageGPU"],
     ["Stackhold","Webhooks"],
-    ["Warpyn · Ask your data in plain English","Nuance · Multimodal Video Sentiment AI"],
-    ["Warpyn connects billing, CRM, product and supp","Nuance fuses video frames, vocal tone and transcripts"],
+    ["Warpyn · Ask your data in plain English","Argus · Multimodal Video Sentiment AI"],
+    ["Warpyn connects billing, CRM, product and supp","Argus fuses video frames, vocal tone and transcripts"],
     ["Connect a source","Analyse a video"],
     ["Analyze a video","Analyse a video"],
     ["Start weaving","Start analysis"],
     ["Ninety tools in. One answer out.","Three modalities in. One truth out."],
-    ["Warpyn connects your billing, CRM, product and support data, then answers questions in plain English. Every figure is woven from rows you can trace.","Nuance fuses video frames, vocal tone and speech transcripts, then scores emotions with exact precision. Every rating is grounded in cues you can audit."],
+    ["Warpyn connects your billing, CRM, product and support data, then answers questions in plain English. Every figure is woven from rows you can trace.","Argus fuses video frames, vocal tone and speech transcripts, then scores emotions with exact precision. Every rating is grounded in cues you can audit."],
     ["Why did net revenue retention dip in March?","Where did customer sentiment dip in interview?"],
     ["WEAVING ANS","FUSING DATA"],
     ["Product events","Video frames"],
@@ -103,30 +103,30 @@
     ["Accounts","Emotions"],
     ["02 · Lineage","02 · Grounding"],
     ["Pull any thread back to the row it came from.","Trace every emotion back to the clip it came from."],
-    ["An answer is only as good as the rows under it. Hover a line of the cloth and Warpyn lights the thread back through the reed to its source, the exact record and every step in between.","A score is only as good as the cues under it. Hover a line of the graph and Nuance lights the signal back through the model to its source, the exact moment and every frame in between."],
+    ["An answer is only as good as the rows under it. Hover a line of the cloth and Warpyn lights the thread back through the reed to its source, the exact record and every step in between.","A score is only as good as the cues under it. Hover a line of the graph and Argus lights the signal back through the model to its source, the exact moment and every frame in between."],
     ["From ninety tabs to one answer, in three steps.","From raw video to sentiment, in three easy steps."],
-    ["No new dashboards to maintain and no copy of your data to babysit. Warpyn reads what you already have and keeps every figure traceable.","No complex pipelines to build and no cloud compute to babysit. Nuance scores what you upload and keeps every rating traceable."],
-    ["Point Warpyn at your warehouse, billing, CRM and support desk. 240+ connectors, read-only by default, live in minutes.","Point Nuance at your video files, presigned S3 upload API, or storage bucket. MP4, MOV and AVI ready in minutes."],
+    ["No new dashboards to maintain and no copy of your data to babysit. Warpyn reads what you already have and keeps every figure traceable.","No complex pipelines to build and no cloud compute to babysit. Argus scores what you upload and keeps every rating traceable."],
+    ["Point Warpyn at your warehouse, billing, CRM and support desk. 240+ connectors, read-only by default, live in minutes.","Point Argus at your video files, presigned S3 upload API, or storage bucket. MP4, MOV and AVI ready in minutes."],
     ["Every source is combed into one model: customers, revenue, usage and tickets lined up on the same key, with a glossary your team agrees on once.","Every stream is fused into one model: video frames, vocal pitch, acoustic energy and speech text aligned on the same millisecond timestamp."],
     ["Ask in plain English. The answer is woven from the rows, and every figure keeps its thread back to them.","Score every utterance. The report is output from the clips, and every emotion keeps its link back to them."],
     ["Ask in plain English","Inspect every utterance"],
     ["Type the question you would ask your analyst.","Spot the feelings that pure text transcript misses."],
-    ["No SQL, no dashboard to find. Pick a question below to see the answer Warpyn weaves, with the figure first and the reason underneath.","No guess, no manual review. Pick a video below to see the sentiment Nuance outputs, with the emotion first and the clip underneath."],
+    ["No SQL, no dashboard to find. Pick a question below to see the answer Warpyn weaves, with the figure first and the reason underneath.","No guess, no manual review. Pick a video below to see the sentiment Argus outputs, with the emotion first and the clip underneath."],
     ["One thread out of line, and you hear about it first.","One tone out of line, and you hear about it first."],
-    ["Pulse learns what normal looks like for every metric you care about and only speaks up when something is both unusual and large enough to matter. Each alert arrives with the answer attached.","Nuance learns what normal looks like for every emotion you care about and only speaks up when sentiment is both intense and clear enough to matter. Each alert arrives with the footage attached."],
+    ["Pulse learns what normal looks like for every metric you care about and only speaks up when something is both unusual and large enough to matter. Each alert arrives with the answer attached.","Argus learns what normal looks like for every emotion you care about and only speaks up when sentiment is both intense and clear enough to matter. Each alert arrives with the footage attached."],
     ["What changes when every figure has a thread.","What changes when every feeling has a timestamp."],
     ["Averages across 212 companies in their first six months, measured against the reporting they ran before.","Results across 212 video sets in their first evaluation, measured against the text models used before."],
     ["faster from question to answer than a ticket to the data team","distinct emotion classes plus three-way sentiment scoring"],
     ["fewer dashboards kept alive after the first quarter","higher sentiment accuracy over basic transcript tools"],
     ["saved per analyst every week, mostly on one-off requests","median inference latency on our AWS SageMaker pipeline"],
-    ["copies of your raw rows stored by Warpyn","copies of raw video clips retained by Nuance"],
+    ["copies of your raw rows stored by Warpyn","copies of raw video clips retained by Argus"],
     ["Customer story · Harrow & Pike","Customer story · MediaInsight"],
-    ["“We thought we had a loyalty problem. Warpyn showed us it was a card-expiry problem, and it took one question to see it.”","“We thought our interview was positive. Nuance showed us where visual hesitation flared, and it took one video to see it.”"],
+    ["“We thought we had a loyalty problem. Warpyn showed us it was a card-expiry problem, and it took one question to see it.”","“We thought our interview was positive. Argus showed us where visual hesitation flared, and it took one video to see it.”"],
     ["Maren Solberg, Head of Growth, Harrow & Pike","Maren Solberg, Head of UX, MediaInsight"],
     ["involuntary churn in two quarters","unnoticed frustration in key moments"],
     ["Permissions travel with the thread.","Data privacy travels with the video."],
-    ["Warpyn reads with the access you give it and nothing more. If a person cannot see a row in the source, the thread from that row never reaches their answer.","Nuance processes with the keys you give it and nothing more. If a team requires encrypted S3 storage, the video from that job never escapes their domain."],
-    ["Raw rows stay where they are; Warpyn stores query plans and the answers you save.","Raw videos stay in your private S3 bucket; Nuance stores only inference predictions and the tokens you save."],
+    ["Warpyn reads with the access you give it and nothing more. If a person cannot see a row in the source, the thread from that row never reaches their answer.","Argus processes with the keys you give it and nothing more. If a team requires encrypted S3 storage, the video from that job never escapes their domain."],
+    ["Raw rows stay where they are; Warpyn stores query plans and the answers you save.","Raw videos stay in your private S3 bucket; Argus stores only inference predictions and the tokens you save."],
     ["240+ threads, one loom.","3 modalities, one model."],
     ["Warehouses, billing, CRM, support, product events and the spreadsheets nobody admits to. Each one is read-only and keyed to the same customer.","Audio tracks, video frames, acoustic prosody, text transcripts and timing metadata. Each one is normalized and keyed to the exact timestamp."],
     ["Point Warpyn at your warehouse and it reads the models your data team already trusts.","Ingest raw MP4, MOV, and AVI videos via encrypted AWS S3 presigned upload URLs with zero lag."],
@@ -136,12 +136,12 @@
     ["For companies running on their numbers.","For platforms processing high-volume feeds."],
     ["For regulated data and many teams.","For custom fine-tuning and private VPCs."],
     ["What teams ask before they connect anything.","What teams ask before they upload anything."],
-    ["Does Warpyn copy our data?","Does Nuance store or train on our video data?"],
-    ["No. Warpyn reads from your warehouse and tools with read-only credentials and keeps only the query plans and the answers you save. Raw rows stay where they are.","No. Nuance processes video streams with ephemeral compute or private S3 access and keeps only the prediction metadata you save. Raw videos stay in your domain."],
+    ["Does Warpyn copy our data?","Does Argus store or train on our video data?"],
+    ["No. Warpyn reads from your warehouse and tools with read-only credentials and keeps only the query plans and the answers you save. Raw rows stay where they are.","No. Argus processes video streams with ephemeral compute or private S3 access and keeps only the prediction metadata you save. Raw videos stay in your domain."],
     ["Ask your first real question on Monday.","Score your first video clip in minutes."],
     ["Connect two sources in the first call. Most teams have an answer they trust before the call ends.","Upload one MP4 test in the live console. Most teams have accurate predictions before the test ends."],
     ["Book a 20-minute demo","Create your free API key"],
-    ["© 2026 Warpyn Labs. Answers woven in Lisbon and New York.","© 2026 Nuance AI Labs. Models deployed in Sydney and Virginia."],
+    ["© 2026 Warpyn Labs. Answers woven in Lisbon and New York.","© 2026 Argus AI Labs. Models deployed in Sydney and Virginia."],
     ["All threads running · 99.98% uptime",""],
     ["One loom for every question your company asks.","One model for every feeling your audience shows."],
     ["Connect the tools you already run, agree what your numbers mean once, then ask in plain English. Every answer arrives with the thread that made it.","Ingest the video you already record, score what your speakers feel live, then audit each emotion. Every rating arrives with the moment that made it."],
@@ -149,7 +149,7 @@
     ["240+ sources, from your warehouse and production replica to billing, CRM, support and the spreadsheets finance swears by. Each connector asks for the narrowest scope the tool allows.","All formats, from your storage bucket and raw camera footage to Zoom, Meet, podcasts and the MP4 clips research swears by. Each pipeline runs with the narrowest scope you permit."],
     ["OAuth or a service account; most teams connect four sources in the first call.","Presigned URL or S3 bucket; most teams upload four test clips in the first run."],
     ["Nothing copied","Nothing retained"],
-    ["Warpyn queries in place and stores query plans and saved answers only.","Nuance processes in place and stores inference graphs and emotion cues only."],
+    ["Warpyn queries in place and stores query plans and saved answers only.","Argus processes in place and stores inference graphs and emotion cues only."],
     ["Schema-aware","Stream-aware"],
     ["Column descriptions and your dbt docs are read so answers use your names.","Speaker labels and your audio tracks are read so ratings match your names."],
     ["Agree what revenue means, once.","Agree what sentiment means, once."],
@@ -169,12 +169,13 @@
     ["Scheduled answers","Automated reports"],
     ["Email or Slack, with a note when the figure moves more than usual.","Webhooks or API, with a note when the sentiment moves more than usual."],
     ["One thread out of line, and you hear about it first.","One cue out of line, and you hear about it first."],
-    ["Pulse learns what normal looks like for every metric you care about and only speaks up when something is both unusual and large enough to matter. Each alert arrives with the answer attached.","Nuance learns what normal looks like for every speaker you care about and only flags up when emotion is both intense and sharp enough to matter. Each alert arrives with the footage attached."],
-    ["Warpyn","Nuance"]
+    ["Pulse learns what normal looks like for every metric you care about and only speaks up when something is both unusual and large enough to matter. Each alert arrives with the answer attached.","Argus learns what normal looks like for every speaker you care about and only flags up when emotion is both intense and sharp enough to matter. Each alert arrives with the footage attached."],
+    ["Warpyn","Argus"],
+    ["Nuance","Argus"]
   ];
 
   function brand(value) {
-    return value.replace(/\bwarpyn\b/gi, word => word === word.toUpperCase() ? 'NUANCE' : word[0] === 'w' ? 'nuance' : 'Nuance');
+    return value.replace(/\b(warpyn|nuance)\b/gi, word => word === word.toUpperCase() ? 'ARGUS' : word[0] === word[0].toLowerCase() ? 'argus' : 'Argus');
   }
 
   function syncNode(node) {
@@ -185,7 +186,7 @@
         for (const [from, to] of textMap) {
           if (val.includes(from)) val = val.replaceAll(from, to);
         }
-        if (/warpyn/i.test(val)) val = brand(val);
+        if (/(warpyn|nuance)/i.test(val)) val = brand(val);
         if (val !== node.nodeValue) node.nodeValue = val;
       }
       return;
@@ -198,7 +199,7 @@
         for (const [from, to] of textMap) {
           if (v.includes(from)) v = v.replaceAll(from, to);
         }
-        if (/warpyn/i.test(v)) v = brand(v);
+        if (/(warpyn|nuance)/i.test(v)) v = brand(v);
         if (v !== value) node.setAttribute(name, v);
       }
     }
@@ -330,12 +331,16 @@
           });
           const data = await res.json();
           if (data?.quota?.secretKey) {
+            localStorage.setItem('argus_quota', JSON.stringify(data.quota));
+            localStorage.setItem('argus_user', JSON.stringify(data.user || { email }));
             localStorage.setItem('nuance_quota', JSON.stringify(data.quota));
             localStorage.setItem('nuance_user', JSON.stringify(data.user || { email }));
             window.location.assign('/console');
             return;
           }
         } catch (_) {}
+        localStorage.setItem('argus_quota', JSON.stringify(quota));
+        localStorage.setItem('argus_user', JSON.stringify({ email }));
         localStorage.setItem('nuance_quota', JSON.stringify(quota));
         localStorage.setItem('nuance_user', JSON.stringify({ email }));
         window.location.assign('/console');

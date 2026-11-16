@@ -1,4 +1,4 @@
-# Nuance website and browser console
+# Argus website and browser console
 
 `apps/web` contains the Astro 7 static marketing pages, JSON-login views and video console. Marketing pages use imported Framer HTML and local runtime assets; authentication uses a shared native form. The unused component-based template and duplicate image directory have been removed. The remaining Framer bundles are needed for marketing-page hydration; do not delete them merely because they have no TypeScript importers.
 

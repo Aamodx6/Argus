@@ -1,4 +1,4 @@
-name: Nuance CI
+name: Argus CI
 
 on:
   push:
@@ -58,5 +58,5 @@ jobs:
           SKIP_ENV_VALIDATION: '1'
           NEXT_TELEMETRY_DISABLED: '1'
           AUTH_SECRET: ci-only-not-a-production-secret-00000000
-          DATABASE_URL: postgresql://ci:ci@127.0.0.1:9/nuance
+          DATABASE_URL: postgresql://ci:ci@127.0.0.1:9/argus
         run: npm run build

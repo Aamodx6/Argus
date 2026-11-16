@@ -284,7 +284,7 @@ MINUTE │
        │                    [Symbl.ai]
        │                    ($0.027 – $0.090/min)
        │
-       │                                     ★ NUANCE RECOMMENDED TARGET
+       │                                     ★ ARGUS RECOMMENDED TARGET
        │                                       ($0.050 – $0.086/min with Dashboard + API)
        │
        │  [AssemblyAI / Deepgram] (Speech Text Only)
@@ -339,7 +339,7 @@ Across the competitive landscape, SaaS providers universally gate features acros
 1. **The EU AI Act (Crucial 2025/2026 Mandate):**
    - **Prohibited Systems (Article 5):** The EU AI Act expressly **prohibits** the deployment of emotion recognition systems in the **workplace** (e.g., monitoring employee mood, performance stress) and in **educational institutions** (e.g., evaluating student emotion during lectures), with very narrow medical/safety exceptions.
    - **Permitted Use Cases (Article 50):** Customer research, market testing, ad evaluation, and voluntary customer feedback remain legal, but carry **strict transparency obligations**—individuals must be explicitly informed that an emotion recognition system is processing their data.
-   - **Pricing Impact:** Providers operating in the EU face higher legal compliance costs. Nuance must allow customers to toggle off facial emotion recognition and run voice/transcript-only analysis for European subjects.
+   - **Pricing Impact:** Providers operating in the EU face higher legal compliance costs. Argus must allow customers to toggle off facial emotion recognition and run voice/transcript-only analysis for European subjects.
 2. **Illinois BIPA (Biometric Information Privacy Act) & US State Laws:**
    - Laws in Illinois (BIPA), Texas (CBOI), and Washington require informed written consent prior to collecting biometric identifiers (facial geometry). BIPA allows private rights of action with statutory damages ($1,000–$5,000 per violation).
    - **Architectural Solution:** Process facial geometry ephemerally in RAM without saving biometric face templates or vectors to disk. Certifying "zero biometric template storage" justifies enterprise trust.
@@ -350,7 +350,7 @@ Across the competitive landscape, SaaS providers universally gate features acros
 
 ---
 
-## 6. Recommended Pricing & Packaging Strategy for Nuance
+## 6. Recommended Pricing & Packaging Strategy for Argus
 
 ### 6.1 Evaluation of 3 Potential Pricing Strategies
 
@@ -396,7 +396,7 @@ We apply a **~35%–40% Purchasing Power Parity (PPP) adjustment** for direct In
 1. **Free Tier (Developer & Trial Sandbox):**
    - **Target:** Students, individual testers, and hackathons.
    - **Allotment:** 15 minutes/month (lifetime or recurring with watermark/strict limits). Single video length capped at 3 minutes.
-   - **Gating:** Standard web dashboard only; export charts with Nuance watermark; no raw API access; community Discord support.
+   - **Gating:** Standard web dashboard only; export charts with Argus watermark; no raw API access; community Discord support.
 2. **Starter Tier ($39 / mo | ₹2,999 / mo):**
    - **Target:** Independent creators, UX researchers, boutique agencies, early-stage startups.
    - **Allotment:** 300 minutes/month. Effective rate = **$0.130/minute**.
@@ -460,8 +460,8 @@ A 1-minute video asset requires 3 sequential or parallel AI tasks:
 
 ### 6.4 Key Product Differentiators to Justify Price
 
-1. **Unified Dual Interface (Turnkey Dashboard + Robust REST API):** Unlike Gong/Decode (dashboard only, no developer access) or AssemblyAI/Hume (API only, no dashboard for non-technical stakeholders), Nuance gives teams an interactive visual review suite alongside developer webhooks for automated ingestion.
-2. **True Multimodal Cross-Signal Grounding:** Most sentiment tools only analyze text transcripts. Nuance flags **behavioral contradictions**—highlighting the exact millisecond where a speaker's words express agreement, but their vocal pitch rises in tension and facial muscles reveal micro-hesitation.
+1. **Unified Dual Interface (Turnkey Dashboard + Robust REST API):** Unlike Gong/Decode (dashboard only, no developer access) or AssemblyAI/Hume (API only, no dashboard for non-technical stakeholders), Argus gives teams an interactive visual review suite alongside developer webhooks for automated ingestion.
+2. **True Multimodal Cross-Signal Grounding:** Most sentiment tools only analyze text transcripts. Argus flags **behavioral contradictions**—highlighting the exact millisecond where a speaker's words express agreement, but their vocal pitch rises in tension and facial muscles reveal micro-hesitation.
 3. **Asynchronous Drag-and-Drop Batch Ingestion:** Zero friction onboarding. No requirement to connect an invasive live calendar recording bot to Zoom/Teams. Users simply drop 10 user interview MP4s or media files into the web console and receive indexed sentiment timelines in under 60 seconds.
 4. **EU AI Act & Biometric Privacy Safeguards:** Built-in "Zero Biometric Storage" compliance switch. Facial landmarks are processed in ephemeral GPU memory and discarded immediately, generating behavioral engagement scores without storing sensitive facial recognition templates.
 5. **India-Native Infrastructure & Pricing:** Local AWS Mumbai (`ap-south-1`) data residency, native INR checkout with UPI, GST invoicing, and acoustic models fine-tuned to recognize Indian and regional vocal cadences.

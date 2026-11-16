@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea or enhancement for Nuance
+about: Suggest an idea or enhancement for Argus
 title: '[FEAT] '
 labels: enhancement
 assignees: ''

@@ -18,7 +18,7 @@ export function templateLink(href) {
 }
 
 export function normalizeTemplateHtml(html) {
-  return html.replace(/\bWarpyn\b/g, 'Nuance').replace(/href="([^"]+)"/g, (attribute, href) => {
+  return html.replace(/\b(Warpyn|Nuance)\b/g, 'Argus').replace(/href="([^"]+)"/g, (attribute, href) => {
     const target = templateLink(href);
     return target === null ? 'aria-disabled="true" title="This template page is not available"'
       : `href="${target}"`;

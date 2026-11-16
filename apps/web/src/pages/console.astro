@@ -1,6 +1,6 @@
 ---
 import RuntimeConfig from "../components/RuntimeConfig.astro";
-// Nuance Multimodal Video Sentiment Console - Bento Design Workspace
+// Argus Multimodal Video Sentiment Console - Bento Design Workspace
 ---
 <!doctype html>
 <html lang="en">
@@ -8,7 +8,7 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
   <RuntimeConfig />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nuance · Multimodal Sentiment Console</title>
+  <title>Argus · Multimodal Sentiment Console</title>
   <meta name="description" content="Multimodal video sentiment and emotion analysis pipeline powered by AWS SageMaker." />
   <link rel="icon" href="/framerusercontent.com/images/w6xhB1HNHWbIWHXZPYWLdAm0i0c.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1041,7 +1041,7 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
             <span class="brand-bar accent"></span>
             <span class="brand-bar"></span>
           </div>
-          <span class="brand-name">Nuance</span>
+          <span class="brand-name">Argus</span>
         </a>
 
         <div class="header-breadcrumb">
@@ -1058,7 +1058,7 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
       <div class="header-user-actions">
         <div class="user-chip" id="user-display">
           <span class="dot"></span>
-          <span id="user-email-text">user@nuance.example</span>
+          <span id="user-email-text">user@argus.example</span>
         </div>
         <button class="btn-signout" id="logout-btn" type="button">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1352,7 +1352,7 @@ import RuntimeConfig from "../components/RuntimeConfig.astro";
   <footer class="workspace-footer">
     <div class="workspace-footer-inner">
       <div class="footer-left-group">
-        <span>© 2026 Nuance Multimodal AI Labs. Models deployed in ap-southeast-2.</span>
+        <span>© 2026 Argus Multimodal AI Labs. Models deployed in ap-southeast-2.</span>
       </div>
       <div>
         <a href="/pricing" style="color:var(--text-secondary); text-decoration:none; margin-right:16px;">Pricing</a>
@@ -1583,8 +1583,8 @@ print("Emotion & Sentiment Scores:", analysis)`;
     async function initSession() {
       // Check stored user/quota
       try {
-        const storedUser = localStorage.getItem("nuance_user");
-        const storedQuota = localStorage.getItem("nuance_quota");
+        const storedUser = localStorage.getItem("argus_user") || localStorage.getItem("nuance_user");
+        const storedQuota = localStorage.getItem("argus_quota") || localStorage.getItem("nuance_quota");
 
         if (storedUser) {
           const user = JSON.parse(storedUser);
@@ -1697,6 +1697,8 @@ print("Emotion & Sentiment Scores:", analysis)`;
 
     // Logout
     logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("argus_user");
+      localStorage.removeItem("argus_quota");
       localStorage.removeItem("nuance_user");
       localStorage.removeItem("nuance_quota");
       if (window.nuanceNavigate) {

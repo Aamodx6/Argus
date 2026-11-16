@@ -25,6 +25,8 @@
       if (!response.ok || !result.success) throw new Error(result.error || 'Authentication failed.');
       if (!signup) {
         if (!result.quota?.secretKey) throw new Error('The API key is unavailable. Please contact support.');
+        localStorage.setItem('argus_quota', JSON.stringify(result.quota));
+        localStorage.setItem('argus_user', JSON.stringify(result.user));
         localStorage.setItem('nuance_quota', JSON.stringify(result.quota));
         localStorage.setItem('nuance_user', JSON.stringify(result.user));
       }

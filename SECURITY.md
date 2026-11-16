@@ -9,7 +9,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Nuance, please send an email to `security@warpyn.example` (or through our security portal).
+If you discover a security vulnerability within Argus, please send an email to `security@argus.example` (or through our security portal).
 
 Please include:
 - A description of the vulnerability.

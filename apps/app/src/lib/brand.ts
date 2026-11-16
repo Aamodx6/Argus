@@ -1,6 +1,6 @@
 export const brand = {
-  name: "Nuance",
-  initials: "NU",
+  name: "Argus",
+  initials: "AR",
   description: "Multimodal Video Sentiment and Emotion AI.",
 } as const;
 

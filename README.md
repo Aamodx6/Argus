@@ -1,8 +1,8 @@
-# Nuance
+# Argus
 
 **Multimodal emotion and sentiment analysis for video, with a Next.js dashboard and AWS SageMaker inference.**
 
-Nuance combines video frames, audio features, and transcribed speech to predict emotion and sentiment for spoken segments. Users can register, upload videos, inspect a summary and segment scores, and invoke analysis through an API key.
+Argus combines video frames, audio features, and transcribed speech to predict emotion and sentiment for spoken segments. Users can register, upload videos, inspect a summary and segment scores, and invoke analysis through an API key.
 
 The repository contains model training, serving code, the web application, a PostgreSQL schema, and optional AWS monitoring and data infrastructure. The UI currently uses the product name **Aspect Sentiment**. The model scores utterances and the dashboard summarizes those scores at video level. Topic extraction and target-specific aspect sentiment remain future work.
 
@@ -27,7 +27,7 @@ The repository contains model training, serving code, the web application, a Pos
 
 ## Implementation status
 
-This README describes the checked-in Nuance code. Other guides contain historical deployment notes.
+This README describes the checked-in Argus code. Other guides contain historical deployment notes.
 
 | Area | Current implementation |
 | --- | --- |
@@ -96,7 +96,7 @@ The optional data extension also defines Aurora Serverless v2 with RDS Proxy and
 ## Repository layout
 
 ~~~text
-nuance/
+argus/
 ├── README.md
 ├── LICENSE                  (not added yet, owner decides)
 ├── THIRD_PARTY_NOTICES.md
@@ -169,8 +169,8 @@ The current Prisma client uses Neon's WebSocket adapter. A generic local Postgre
 ### Install and configure
 
 ~~~powershell
-git clone https://github.com/Aamodx6/Nuance.git
-cd Nuance/apps/app
+git clone https://github.com/Aamodx6/Argus.git
+cd Argus/apps/app
 Copy-Item .env.example .env
 ~~~
 

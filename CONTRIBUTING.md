@@ -1,6 +1,6 @@
-# Contributing to Nuance
+# Contributing to Argus
 
-Thank you for your interest in contributing to Nuance!
+Thank you for your interest in contributing to Argus!
 
 ## Code of Conduct
 Please read and adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md).
