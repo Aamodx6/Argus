@@ -30,6 +30,7 @@
     "@aws-sdk/credential-provider-node": "^3.972.97",
     "@aws-sdk/s3-request-presigner": "^3.723.0",
     "@hookform/resolvers": "^3.10.0",
+    "@microsoft/clarity": "^1.0.2",
     "@neondatabase/serverless": "^0.10.4",
     "@prisma/adapter-neon": "^5.22.0",
     "@prisma/client": "^5.14.0",
