@@ -1,4 +1,13 @@
 /* Nuance Universal Page Transitions */
+
+[data-pricing-cta],
+[data-pricing-cta] :is(p, span) {
+  color: #fff !important;
+  --framer-text-color: #fff !important;
+  --framer-link-text-color: #fff !important;
+  --framer-link-hover-text-color: #fff !important;
+}
+
 @view-transition {
   navigation: none;
 }
