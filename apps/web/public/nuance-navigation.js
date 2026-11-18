@@ -1,7 +1,6 @@
-// Use actual Astro routes instead of the exported template's client router.
+// Keep Framer's transitions for marketing pages and use Astro for account routes.
 (function () {
   const enter = () => {
-    document.body?.classList.remove('nuance-page-leaving');
     document.body?.classList.add('nuance-transition-ready');
     removeFooterStatus();
     highlightActiveNav();
@@ -31,6 +30,7 @@
   new MutationObserver(updateTitle).observe(document.head, { subtree: true, childList: true });
 
   const routes = new Set(['/', '/product', '/sources', '/customers', '/pricing', '/changelog', '/contact', '/signup', '/login', '/console', '/app', '/dashboard']);
+  const marketingRoutes = new Set(['/', '/product', '/sources', '/customers', '/pricing', '/changelog']);
 
   function targetFor(href) {
     if (href.startsWith('./')) href = '/' + href.slice(2);
@@ -327,16 +327,11 @@
 
   window.nuanceNavigate = (href) => {
     if (!href) return;
-    try {
-      const target = new URL(href, window.location.origin);
-      if (target.pathname === window.location.pathname && target.search === window.location.search && !target.hash) {
-        return;
-      }
-    } catch (_) {}
-    document.body.classList.add('nuance-page-leaving');
-    setTimeout(() => {
-      window.location.assign(href);
-    }, 110);
+    let target;
+    try { target = new URL(href, window.location.href); } catch { return; }
+    if (target.href === window.location.href) return;
+
+    location.assign(target.href);
   };
 
   // Prevent any stray framer form or telemetry calls from hitting api.framer.com
@@ -471,19 +466,26 @@
       event.stopImmediatePropagation();
       void import('/account-session.mjs')
         .then(({ getSession }) => getSession())
-        .then(session => window.location.assign(session ? '/console' : target.href))
-        .catch(() => window.location.assign('/console'));
+        .then(session => window.nuanceNavigate(session ? '/console' : target.href))
+        .catch(() => window.nuanceNavigate('/console'));
       return;
     }
 
-    if (['/login', '/signup', '/contact', '/console'].includes(cleanPath)) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      window.location.assign(target.href);
+    const currentPath = location.pathname.replace(/\/$/, '') || '/';
+    if (link.closest('#main') && document.documentElement.hasAttribute('data-framer-marketing') &&
+        marketingRoutes.has(currentPath) && marketingRoutes.has(cleanPath) && !target.search && !target.hash) {
+      const drawer = link.closest('[data-framer-name="Drawer"]');
+      const closeMenu = drawer?.closest('nav[name="Navigation"]')?.querySelector('button[aria-label="Close menu"]');
+      if (closeMenu) setTimeout(() => {
+        if (!closeMenu.isConnected || closeMenu.getAttribute('aria-label') !== 'Close menu') return;
+        // The exported menu uses Motion's pointer-based tap handler.
+        const pointer = { bubbles: true, pointerId: 1, pointerType: 'mouse', isPrimary: true, button: 0 };
+        closeMenu.dispatchEvent(new PointerEvent('pointerdown', { ...pointer, buttons: 1 }));
+        closeMenu.dispatchEvent(new PointerEvent('pointerup', pointer));
+      }, 0);
       return;
     }
 
-    // Full transition ensures consistent animation and proper script lifecycle across pages
     event.preventDefault();
     event.stopImmediatePropagation();
     window.nuanceNavigate(target.href);

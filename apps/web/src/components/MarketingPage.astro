@@ -1,5 +1,6 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+import PricingCheckout from './PricingCheckout.astro';
 import shell from '../templates/marketing-shell.html?raw';
 import { normalizeTemplateHtml } from '../lib/routes.mjs';
 interface Props { title: string }
@@ -13,13 +14,13 @@ const headHtml = headMatch ? headMatch[1] : '';
 const bodyHtml = bodyMatch ? bodyMatch[1] : '';
 ---
 <!doctype html>
-<html data-valorsic-studio="true" data-account-state="checking">
+<html data-valorsic-studio="true" data-framer-marketing="" data-account-state="checking">
   <head>
     <Fragment set:html={headHtml} />
   </head>
   <body>
     <Fragment set:html={bodyHtml} />
-    <slot />
+    <PricingCheckout />
     <script type="module" src="/account-header.mjs" is:inline></script>
     <Analytics />
   </body>

@@ -66,8 +66,45 @@ html:is([data-account-state="checking"], [data-account-state="signed-in"]) :is([
   --framer-link-hover-text-color: #fff !important;
 }
 
-@view-transition {
-  navigation: none;
+/* Match the exported Framer wipe when Astro opens a new document. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+    types: argus-document;
+  }
+}
+
+@property --argus-wipe-offset {
+  syntax: '<number>';
+  initial-value: 0;
+  inherits: false;
+}
+
+:root:active-view-transition-type(argus-document)::view-transition-old(root),
+:root:active-view-transition-type(argus-document)::view-transition-new(root) {
+  mix-blend-mode: normal;
+  backface-visibility: hidden;
+}
+
+:root:active-view-transition-type(argus-document)::view-transition-old(root) {
+  animation: argus-document-exit .45s cubic-bezier(.65, 0, .35, 1) both;
+}
+
+:root:active-view-transition-type(argus-document)::view-transition-new(root) {
+  animation: argus-document-enter .7s cubic-bezier(.65, 0, .35, 1) both;
+  mask-image: linear-gradient(180deg,
+    black calc(124% * var(--argus-wipe-offset) - 24%),
+    transparent calc(124% * var(--argus-wipe-offset)));
+}
+
+@keyframes argus-document-exit {
+  from { opacity: 1; transform: translate(0, 0); }
+  to { opacity: .6; transform: translate(-24px, -12px); }
+}
+
+@keyframes argus-document-enter {
+  from { --argus-wipe-offset: 0; }
+  to { --argus-wipe-offset: 1; }
 }
 
 html {
@@ -87,33 +124,6 @@ nav[name="Navigation"],
   z-index: 50 !important;
   transform: none !important;
   will-change: auto !important;
-}
-
-/* Unified In-Place Content Entrance Animation (Replicating Pricing & Changelog Framer transition) */
-body.nuance-transition-ready main,
-body.nuance-transition-ready #main > div:first-child,
-body.nuance-transition-ready .bento-grid {
-  animation: nuanceContentEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes nuanceContentEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Subtle Smooth Fade-Out when Leaving */
-body.nuance-page-leaving main,
-body.nuance-page-leaving #main > div:first-child,
-body.nuance-page-leaving .bento-grid {
-  opacity: 0 !important;
-  transform: translateY(-6px) !important;
-  transition: opacity 0.12s cubic-bezier(0.16, 1, 0.3, 1), transform 0.12s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* ============================================================
@@ -353,7 +363,7 @@ form .framer-form-input-wrapper {
 
 .framer-form-input,
 .framer-iLirp input,
-form input {
+form:not([data-auth-mode]) input {
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -365,8 +375,8 @@ form input {
 .framer-form-input:focus-visible,
 .framer-iLirp input:focus,
 .framer-iLirp input:focus-visible,
-form input:focus,
-form input:focus-visible {
+form:not([data-auth-mode]) input:focus,
+form:not([data-auth-mode]) input:focus-visible {
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -679,15 +689,6 @@ form a[href="/signup"] *,
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Subtle Smooth Fade-Out when Leaving */
-body.nuance-page-leaving main,
-body.nuance-page-leaving #main > div:first-child,
-body.nuance-page-leaving .bento-grid {
-  opacity: 0 !important;
-  transform: translateY(-6px) !important;
-  transition: opacity 0.12s cubic-bezier(0.16, 1, 0.3, 1), transform 0.12s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
 /* Prevent Framer form submit buttons from shrinking, warping, or wrapping text */
 button[type="submit"],
 .framer-1rlus6e,
@@ -746,17 +747,4 @@ button[type="submit"] *,
   border-color: rgba(17, 19, 23, 0.35) !important;
   color: #111317 !important;
   box-shadow: none !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.nuance-transition-ready main,
-  body.nuance-transition-ready #main > div:first-child,
-  body.nuance-transition-ready .bento-grid,
-  body.nuance-page-leaving main,
-  body.nuance-page-leaving #main > div:first-child,
-  body.nuance-page-leaving .bento-grid {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
 }
