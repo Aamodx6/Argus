@@ -17,24 +17,6 @@
       }
     },
     {
-      "source": "/checkout",
-      "destination": {
-        "service": "app"
-      }
-    },
-    {
-      "source": "/checkout/(.*)",
-      "destination": {
-        "service": "app"
-      }
-    },
-    {
-      "source": "/_next/(.*)",
-      "destination": {
-        "service": "app"
-      }
-    },
-    {
       "source": "/(.*)",
       "destination": {
         "service": "web"
