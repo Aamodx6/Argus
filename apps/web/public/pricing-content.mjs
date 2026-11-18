@@ -4,21 +4,21 @@ export const monthlyPlans = [
     blurb: "For teams that analyze smaller batches of video.",
     threads: "300 video minutes", picks: "Monthly allowance",
     features: "Video, audio and text analysis|Timestamped sentiment and emotion|Unused minutes expire monthly|Extra usage billed separately",
-    cta: "Get Starter · ₹2,999 / mo", href: "/signup",
+    cta: "₹2,999 / mo", href: "/signup",
   },
   {
     id: "professional", name: "Professional", monthly: 13499, perMinute: 9, featured: true,
     blurb: "For teams processing video regularly.",
     threads: "1,500 video minutes", picks: "Monthly allowance",
     features: "Video, audio and text analysis|Timestamped sentiment and emotion|Unused minutes expire monthly|Extra usage billed separately",
-    cta: "Get Professional · ₹13,499 / mo", href: "/signup",
+    cta: "₹13,499 / mo", href: "/signup",
   },
   {
     id: "business", name: "Business", monthly: 47999, perMinute: 8,
     blurb: "For teams with higher recurring video volume.",
     threads: "6,000 video minutes", picks: "Monthly allowance",
     features: "Video, audio and text analysis|Timestamped sentiment and emotion|Unused minutes expire monthly|Extra usage billed separately",
-    cta: "Get Business · ₹47,999 / mo", href: "/contact",
+    cta: "₹47,999 / mo", href: "/contact",
   },
 ];
 
