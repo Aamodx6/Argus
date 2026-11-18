@@ -1,0 +1,108 @@
+:root { --travel: cubic-bezier(.32, .05, .16, 1); }
+::view-transition-old(root) { animation: release-page 220ms ease-out both; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: settle-ink 320ms 60ms ease-out both; mix-blend-mode: normal; }
+
+:is(.console-arriving, .console-returning) {
+  --travel: cubic-bezier(.32, .05, .16, 1);
+}
+:is(.console-arriving, .console-returning)::view-transition-new(root) {
+  animation: settle-ink 360ms ease-out both;
+  mix-blend-mode: normal;
+}
+:is(.console-arriving, .console-returning)::view-transition-old(root) {
+  z-index: 1;
+  mix-blend-mode: normal;
+  animation: release-page 240ms ease-out both;
+}
+/* A lateral handoff replaces the previous shrinking artwork transition. */
+::view-transition-group(console-art),
+::view-transition-group(console-stage) { z-index: 1; }
+.console-arriving::view-transition-old(console-art) {
+  animation: console-leave 220ms cubic-bezier(.4,0,.2,1) both;
+}
+.console-arriving::view-transition-new(console-stage) {
+  animation: console-enter 480ms 80ms cubic-bezier(.16,1,.3,1) both;
+}
+.console-returning::view-transition-old(console-stage) {
+  animation: console-leave 220ms cubic-bezier(.4,0,.2,1) both;
+}
+.console-returning::view-transition-new(console-art) {
+  animation: console-enter 480ms 80ms cubic-bezier(.16,1,.3,1) both;
+}
+.console-returning::view-transition-new(root) {
+  animation: return-page 480ms cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes console-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes console-leave {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes return-page {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+::view-transition-group(console-title),
+::view-transition-group(console-action),
+::view-transition-group(console-brand) {
+  z-index: 2;
+  animation-duration: 610ms;
+  animation-timing-function: var(--travel);
+}
+::view-transition-group(console-brand) { animation-duration: 400ms; }
+::view-transition-old(console-title), ::view-transition-new(console-title),
+::view-transition-old(console-action), ::view-transition-new(console-action),
+::view-transition-old(console-brand), ::view-transition-new(console-brand) {
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+::view-transition-old(console-title), ::view-transition-old(console-action) {
+  animation: release-page 160ms 140ms ease-in both;
+}
+::view-transition-new(console-title), ::view-transition-new(console-action) {
+  animation: settle-ink 210ms 270ms ease-out both;
+}
+@keyframes release-page { from { opacity: 1; } to { opacity: 0; } }
+@keyframes settle-ink { from { opacity: 0; } to { opacity: 1; } }
+::view-transition-group(console-insights),
+::view-transition-group(console-access),
+::view-transition-group(console-source),
+::view-transition-group(console-sample) { z-index: 1; }
+::view-transition-new(console-insights) {
+  animation: console-panel-in 480ms 100ms cubic-bezier(.16,1,.3,1) both;
+}
+::view-transition-new(console-access) {
+  animation: console-panel-in 480ms 180ms cubic-bezier(.16,1,.3,1) both;
+}
+::view-transition-new(console-source),
+::view-transition-new(console-sample) {
+  animation: console-panel-in 400ms 120ms cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes console-panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion="full"])::view-transition-group(*),
+  :root:not([data-motion="full"])::view-transition-image-pair(*),
+  :root:not([data-motion="full"])::view-transition-old(*),
+  :root:not([data-motion="full"])::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Hold source snapshots while an asynchronously mounted destination becomes ready. */
+.route-waiting::view-transition-old(*) { animation: none; opacity: 1; }
+.route-waiting::view-transition-new(*) { animation: none; opacity: 0; }
+
+
+::view-transition-old(public-title), ::view-transition-old(public-action) {
+  animation: release-page 180ms ease-out both;
+}
+::view-transition-new(public-title), ::view-transition-new(public-action) {
+  animation: settle-ink 360ms 80ms ease-out both;
+}

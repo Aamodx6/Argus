@@ -1,0 +1,21 @@
+---
+import PipelineUpload from './PipelineUpload.astro';
+---
+<div class="upload-entry" id="upload-entry">
+  <div class="entry-workspace">
+    <div class="entry-main">
+      <section class="entry-upload-area" aria-labelledby="console-entry-title">
+        <svg class="entry-flow-mark" viewBox="0 0 240 98" fill="none" aria-hidden="true">
+          <path class="entry-flow-trace" pathLength="100" d="M24 49H75C97 49 101 18 127 18H209M75 49H209M75 49C97 49 101 80 127 80H209" />
+          <path class="entry-flow-signal" pathLength="100" d="M24 49H75C97 49 101 18 127 18H209" />
+          <path class="entry-flow-signal" pathLength="100" d="M24 49H209" />
+          <path class="entry-flow-signal" pathLength="100" d="M24 49H75C97 49 101 80 127 80H209" />
+          <circle cx="24" cy="49" r="6" class="entry-flow-input" />
+          <circle cx="210" cy="18" r="4" /><circle cx="210" cy="49" r="4" /><circle cx="210" cy="80" r="4" />
+        </svg>
+        <div class="entry-intro"><h1 id="console-entry-title">Analysis console</h1></div>
+        <PipelineUpload />
+      </section>
+    </div>
+  </div>
+</div>

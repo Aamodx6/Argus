@@ -1,0 +1,107 @@
+{
+  "account_policy": "active",
+  "analysis": {
+    "utterances": [
+      {
+        "start_time": 0.0,
+        "end_time": 3.2,
+        "text": "Hello everyone, today I am excited to demonstrate our new multimodal platform.",
+        "emotions": [
+          {
+            "label": "joy",
+            "confidence": 0.82
+          },
+          {
+            "label": "surprise",
+            "confidence": 0.1
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.05
+          }
+        ],
+        "sentiments": [
+          {
+            "label": "positive",
+            "confidence": 0.96
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.03
+          },
+          {
+            "label": "negative",
+            "confidence": 0.01
+          }
+        ]
+      },
+      {
+        "start_time": 3.3,
+        "end_time": 6.8,
+        "text": "We spent months refining our audio prosody models and facial feature extraction.",
+        "emotions": [
+          {
+            "label": "joy",
+            "confidence": 0.68
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.22
+          },
+          {
+            "label": "surprise",
+            "confidence": 0.06
+          }
+        ],
+        "sentiments": [
+          {
+            "label": "positive",
+            "confidence": 0.92
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.07
+          },
+          {
+            "label": "negative",
+            "confidence": 0.01
+          }
+        ]
+      },
+      {
+        "start_time": 6.9,
+        "end_time": 10.4,
+        "text": "Every frame is aligned with millisecond precision to give you trusted, verifiable scores.",
+        "emotions": [
+          {
+            "label": "joy",
+            "confidence": 0.76
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.15
+          },
+          {
+            "label": "surprise",
+            "confidence": 0.05
+          }
+        ],
+        "sentiments": [
+          {
+            "label": "positive",
+            "confidence": 0.95
+          },
+          {
+            "label": "neutral",
+            "confidence": 0.04
+          },
+          {
+            "label": "negative",
+            "confidence": 0.01
+          }
+        ]
+      }
+    ],
+    "model_version": "demo-multimodal-v1"
+  }
+}
