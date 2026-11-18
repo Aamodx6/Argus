@@ -1,26 +1,44 @@
 {
-    "services":  {
-                     "app":  {
-                                 "framework":  "nextjs",
-                                 "root":  "apps/app"
-                             },
-                     "web":  {
-                                 "framework":  "astro",
-                                 "root":  "apps/web"
-                             }
-                 },
-    "rewrites":  [
-                     {
-                         "destination":  {
-                                             "service":  "app"
-                                         },
-                         "source":  "/api/(.*)"
-                     },
-                     {
-                         "destination":  {
-                                             "service":  "web"
-                                         },
-                         "source":  "/(.*)"
-                     }
-                 ]
+  "services": {
+    "app": {
+      "framework": "nextjs",
+      "root": "apps/app"
+    },
+    "web": {
+      "framework": "astro",
+      "root": "apps/web"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/checkout",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/checkout/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/_next/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
+    }
+  ]
 }

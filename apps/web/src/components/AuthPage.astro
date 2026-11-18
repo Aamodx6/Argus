@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import RuntimeConfig from './RuntimeConfig.astro';
 interface Props { mode: 'login' | 'signup' }
 const { mode } = Astro.props;
@@ -338,6 +339,7 @@ const signup = mode === 'signup';
         </div>
       </div>
     </footer>
+    <Analytics />
   </body>
 </html>
 

@@ -31,6 +31,8 @@ export const env = createEnv({
     NEON_REALTIME_SECRET: z.string().optional(),
     NEON_AI_GATEWAY_TOKEN: z.string().optional(),
     NEON_AI_GATEWAY_BASE_URL: z.string().optional(),
+    RAZORPAY_KEY_ID: z.string().min(1).optional(),
+    RAZORPAY_KEY_SECRET: z.string().min(1).optional(),
   },
 
   /**
@@ -39,7 +41,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: z.string().min(1).optional(),
   },
 
   /**
@@ -66,6 +68,9 @@ export const env = createEnv({
     NEON_REALTIME_SECRET: process.env.NEON_REALTIME_SECRET,
     NEON_AI_GATEWAY_TOKEN: process.env.NEON_AI_GATEWAY_TOKEN,
     NEON_AI_GATEWAY_BASE_URL: process.env.NEON_AI_GATEWAY_BASE_URL,
+    RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+    RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

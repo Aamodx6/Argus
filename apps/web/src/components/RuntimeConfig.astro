@@ -2,8 +2,9 @@
 import { publicOrigin } from '../lib/routes.mjs';
 const apiBaseUrl = publicOrigin(import.meta.env.PUBLIC_API_URL);
 const guarded = import.meta.env.PUBLIC_REQUIRE_MODERATION !== '0';
+const razorpayKeyId = import.meta.env.PUBLIC_RAZORPAY_KEY_ID || import.meta.env.VITE_RAZORPAY_KEY_ID || '';
 ---
-<script is:inline define:vars={{ apiBaseUrl, guarded }}>
-  window.nuanceConfig = { apiBaseUrl, guarded };
+<script is:inline define:vars={{ apiBaseUrl, guarded, razorpayKeyId }}>
+  window.nuanceConfig = { apiBaseUrl, guarded, razorpayKeyId };
   window.nuanceApiUrl = (path) => apiBaseUrl + path;
 </script>

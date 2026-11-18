@@ -1,10 +1,38 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import shell from '../templates/marketing-shell.html?raw';
-import { normalizeTemplateHtml } from '../lib/routes.mjs';
-interface Props { title: string }
-const { title } = Astro.props;
+import { normalizeTemplateHtml, publicOrigin } from '../lib/routes.mjs';
+interface Props {
+  title: string;
+  enableCheckout?: boolean;
+}
+const { title, enableCheckout = false } = Astro.props;
+const apiBaseUrl = publicOrigin(import.meta.env.PUBLIC_API_URL);
+const guarded = import.meta.env.PUBLIC_REQUIRE_MODERATION !== '0';
+const razorpayKeyId = import.meta.env.PUBLIC_RAZORPAY_KEY_ID || import.meta.env.VITE_RAZORPAY_KEY_ID || '';
+
+const checkoutHead = enableCheckout
+  ? `<script>window.nuanceConfig=${JSON.stringify({ apiBaseUrl, guarded, razorpayKeyId })};window.nuanceApiUrl=function(p){return (window.nuanceConfig.apiBaseUrl||'')+p;};</script><script src="https://checkout.razorpay.com/v1/checkout.js"></script><script src="/razorpay-checkout.js" defer></script>`
+  : '';
+
 const html = normalizeTemplateHtml(shell)
   .replace(/<title>[^<]*<\/title>/, `<title>${title} · Argus</title>`)
-  .replace('</head>', '<link rel="stylesheet" href="/nuance-transitions.css"><script src="/nuance-navigation.js"></script></head>');
+  .replace(
+    '</head>',
+    `<link rel="stylesheet" href="/nuance-transitions.css"><script src="/nuance-navigation.js"></script>${checkoutHead}</head>`,
+  );
+const headMatch = html.match(/<head>([\s\S]*?)<\/head>/i);
+const bodyMatch = html.match(/<body>([\s\S]*?)<\/body>/i);
+const headHtml = headMatch ? headMatch[1] : '';
+const bodyHtml = bodyMatch ? bodyMatch[1] : '';
 ---
-<Fragment set:html={html} />
+<!doctype html>
+<html data-valorsic-studio="true">
+  <head>
+    <Fragment set:html={headHtml} />
+  </head>
+  <body>
+    <Fragment set:html={bodyHtml} />
+    <Analytics />
+  </body>
+</html>
