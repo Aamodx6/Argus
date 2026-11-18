@@ -78,20 +78,19 @@ export class ArchitectureStream {
     cable.append(...paths);
     group.append(cable);
     this.wires.append(group);this.connections.set(key,group);
+    if(this.outputMode||this.reduced())return;
     const {x,y,width,height}=paths[0].getBBox();
     const geometry={from,to,group,paths,x,y,width,height,trace:null};
     this.wireGeometry.set(key,geometry);
-    if(!this.reduced()){
-      // Limit the mask to the cable's footprint and release it after the reveal.
-      const mask=svg('mask',{id:maskID,maskUnits:'userSpaceOnUse',x:x-20,y:y-20,width:width+40,height:height+40});
-      const trace=svg('path',{d,fill:'none',stroke:'#fff','stroke-width':24,'stroke-linecap':'round',pathLength:1});
-      const defs=svg('defs');mask.append(trace);defs.append(mask);group.prepend(defs);
-      cable.setAttribute('mask',`url(#${maskID})`);
-      geometry.trace=trace;
-      trace.style.strokeDasharray='1';
-      const reveal=trace.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration:240,easing:'cubic-bezier(.25,.1,.25,1)',fill:'forwards'});
-      reveal.finished.then(()=>{geometry.trace=null;cable.removeAttribute('mask');defs.remove();}).catch(()=>{});
-    }
+    // Limit the mask to the cable's footprint and release it after the reveal.
+    const mask=svg('mask',{id:maskID,maskUnits:'userSpaceOnUse',x:x-20,y:y-20,width:width+40,height:height+40});
+    const trace=svg('path',{d,fill:'none',stroke:'#fff','stroke-width':24,'stroke-linecap':'round',pathLength:1});
+    const defs=svg('defs');mask.append(trace);defs.append(mask);group.prepend(defs);
+    cable.setAttribute('mask',`url(#${maskID})`);
+    geometry.trace=trace;
+    trace.style.strokeDasharray='1';
+    const reveal=trace.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration:240,easing:'cubic-bezier(.25,.1,.25,1)',fill:'forwards'});
+    reveal.finished.then(()=>{geometry.trace=null;cable.removeAttribute('mask');defs.remove();}).catch(()=>{});
   }
   update(camera,viewport) {
     const matrix=this.autoReveal?new DOMMatrix(getComputedStyle(camera).transform):null,scale=matrix?.a||1;

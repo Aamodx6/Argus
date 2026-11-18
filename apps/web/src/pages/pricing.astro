@@ -1,4 +1,28 @@
 ---
 import MarketingPage from "../components/MarketingPage.astro";
 ---
-<MarketingPage title="Pricing" />
+<MarketingPage title="Pricing">
+  <div id="pricing-checkout-feedback" class="pricing-checkout-feedback" hidden>
+    <p id="pricing-checkout-status" role="status" aria-live="polite"></p>
+    <a href="/login?next=/pricing" id="pricing-checkout-login" hidden>Sign in</a>
+  </div>
+  <script src="/pricing-checkout.mjs" type="module" is:inline></script>
+  <style>
+    .pricing-checkout-feedback {
+      position: fixed;
+      inset: auto 20px 20px auto;
+      z-index: 100;
+      width: min(360px, calc(100% - 40px));
+      padding: 14px 16px;
+      border: 1px solid #e7d8cc;
+      border-radius: 12px;
+      background: #fff9f4;
+      color: #241b15;
+      font: 14px/1.5 Inter, system-ui, sans-serif;
+      box-shadow: 0 8px 28px #241b151a;
+    }
+    .pricing-checkout-feedback p { margin: 0; }
+    .pricing-checkout-feedback a { display: inline-block; margin-top: 6px; color: #873810; text-decoration: underline; }
+    .pricing-checkout-feedback a[hidden] { display: none; }
+  </style>
+</MarketingPage>

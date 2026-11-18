@@ -9,7 +9,7 @@ export function zoomView(view, factor, point) {
 // Pointer coordinates stay in viewport space; media and text keep their native interactions.
 export function createCanvasNavigation({viewport,view,canInteract,onStart,onChange,onFit}) {
   const pointers=new Map();
-  const interactive=target=>target.closest('button,a,video,input,select,textarea,[contenteditable],.output-transcript-text,.history-panel,.flow-notice,dialog');
+  const interactive=target=>target.closest('button,a,video,input,select,textarea,[contenteditable],.output-transcript-text,.history-panel,.space-outputs,.flow-notice,dialog');
   let frame=0;
   const draw=()=>{if(!frame)frame=requestAnimationFrame(()=>{frame=0;onChange();});};
   const center=()=>{

@@ -1,10 +1,19 @@
 ---
 import ArchitectureNode from './ArchitectureNode.astro';
 import PipelineEntry from './PipelineEntry.astro';
+import ConsoleSentimentApi from './ConsoleSentimentApi.astro';
 import {GRAPH} from '../../public/pipeline-model.mjs';
 ---
-<div class="argus-flow" id="argus-flow" data-mode="idle">
- <header class="flow-header workspace-header"><a class="brand" href="/" aria-label="Argus home"><span class="argus-symbol" aria-hidden="true"><i></i><i></i><i></i></span>Argus</a><div id="run-context" class="run-context" hidden><span class="run-indicator" aria-hidden="true"></span><span id="run-stage">Preparing</span><span id="run-progress" hidden></span><button id="follow-progress" type="button" hidden>Follow progress</button></div><button id="new-analysis" class="new-analysis" type="button" hidden><span aria-hidden="true">+</span> New analysis</button><div class="entry-header-tools"><a href="/login" id="entry-signin">Sign in <span aria-hidden="true">↗</span></a></div></header>
+<div class="argus-flow" id="argus-flow" data-mode="idle" hidden>
+ <header class="flow-header workspace-header">
+  <a class="brand" href="/" aria-label="Argus home"><span class="argus-symbol" aria-hidden="true"><i></i><i></i><i></i></span><span data-argus-brand>Argus</span></a>
+  <div class="entry-header-tools">
+    <details id="entry-account"><summary id="entry-email"></summary><button id="entry-signout" type="button">Sign out</button></details>
+  </div>
+  <button id="open-sentiment-api" class="new-analysis" type="button" aria-haspopup="dialog">Sentiment API</button>
+  <div id="run-context" class="run-context" hidden><span class="run-indicator" aria-hidden="true"></span><span id="run-stage">Preparing</span></div>
+  <button id="new-analysis" class="new-analysis" type="button" hidden><span aria-hidden="true">+</span> Upload video</button>
+ </header>
  <main class="flow-viewport" id="flow-viewport" aria-label="Automatic video processing flow">
   <div class="flow-atmosphere" aria-hidden="true"></div>
   <div class="graph-camera" id="graph-camera" inert><div class="pipeline-graph" id="pipeline-graph" style={`width:${GRAPH.width}px;height:${GRAPH.height}px`}>
@@ -13,29 +22,44 @@ import {GRAPH} from '../../public/pipeline-model.mjs';
   <PipelineEntry />
   <div class="space-toolbar">
    <button id="analysis-history" class="analysis-history" type="button" aria-expanded="false" aria-controls="history-panel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Spaces</span></button>
-   <button id="rename-space" type="button" aria-label="Rename active space" title="Rename active space">
-    <span id="active-space-name">My videos</span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 5 5 5M4 20l4-.8L20 7l-3-3L5 16z"/></svg>
-   </button>
-   <form id="space-rename-form" hidden><input id="space-name" aria-label="Space name" maxlength="50" autocomplete="off" /></form>
   </div>
-  <aside id="history-panel" class="history-panel" aria-label="Spaces" hidden>
-   <header><h2>Spaces</h2><button id="close-history" type="button" aria-label="Close Spaces">×</button></header>
+  <aside id="history-panel" class="history-panel" aria-labelledby="history-title" hidden>
+   <header><h2 id="history-title">Spaces</h2><button id="close-history" type="button" aria-label="Close history panel">×</button></header>
    <div class="space-picker">
-    <select id="space-select" aria-label="Active space"></select>
+    <div id="space-select" class="space-select">
+     <button id="space-select-trigger" type="button" role="combobox" aria-label="Video library scope" aria-haspopup="listbox" aria-controls="space-options" aria-expanded="false">
+      <span id="space-select-label">My videos</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+     </button>
+     <div id="space-options" role="listbox" aria-label="Video library scope" hidden></div>
+    </div>
+    <form id="space-rename-form" hidden><input id="space-name" aria-label="Space name" maxlength="50" autocomplete="off" /></form>
+    <button id="rename-space" type="button" aria-label="Rename active space" title="Rename active space">
+     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 5 5 5M4 20l4-.8L20 7l-3-3L5 16z"/></svg>
+    </button>
     <button id="new-space" type="button" aria-label="Create space" title="Create space">+</button>
    </div>
    <button id="add-space-video" type="button">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4M4 15v5h16v-5"/></svg>
-    Upload video
+    Upload videos
    </button>
    <nav id="analysis-list" aria-label="Videos and analyses"></nav>
-   <p id="space-empty">No videos in this space.</p>
+   <p id="space-empty" hidden>No videos in this space yet.</p>
+   <p id="history-status" role="status"></p>
    <p id="space-feedback" role="status"></p>
-   <input id="space-video-file" type="file" accept="video/*,.mp4,.webm" hidden />
   </aside>
+  <aside class="space-outputs" aria-label="Selected video outputs">
+   <details id="space-outputs">
+    <summary>Outputs</summary>
+    <div class="space-outputs-body">
+     <p id="space-outputs-status" role="status">Select a video in Spaces.</p>
+     <div id="space-output-list"></div>
+    </div>
+   </details>
+  </aside>
+  <input id="space-video-file" type="file" accept="video/mp4,.mp4" multiple hidden />
 
-  <aside class="flow-notice" id="flow-notice" hidden role="status"><p id="notice-message"></p><div><a id="notice-signin" href="/login" hidden>Sign in ↗</a><button id="notice-preview" type="button">Preview flow ↗</button><button id="dismiss-notice" type="button" aria-label="Dismiss notification">×</button></div></aside>
+  <aside class="flow-notice" id="flow-notice" hidden role="status"><p id="notice-message"></p><div><button id="dismiss-notice" type="button" aria-label="Dismiss notification">×</button></div></aside>
   <dialog class="result-sheet" id="result-sheet" aria-labelledby="result-title">
     <header class="review-header">
       <div><h2 id="result-title">Analysis</h2><p id="result-source"></p></div>
@@ -70,5 +94,6 @@ import {GRAPH} from '../../public/pipeline-model.mjs';
     </footer>
   </dialog>
  </main>
+ <ConsoleSentimentApi />
  <div class="sr-status" role="status"><span id="flow-status">Ready for a video</span></div>
 </div>

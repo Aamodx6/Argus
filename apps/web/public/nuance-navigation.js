@@ -407,31 +407,21 @@
     statusEl.textContent = '';
 
     try {
-      const endpoint = isSignup ? '/api/auth/signup' : '/api/auth/login';
-      const apiUrl = window.nuanceApiUrl ? window.nuanceApiUrl(endpoint) : endpoint;
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || result.message || 'Authentication failed.');
-      }
-
       if (!isSignup) {
-        if (!result.quota?.secretKey) {
-          throw new Error('API key is unavailable. Please contact support.');
-        }
-        localStorage.setItem('argus_quota', JSON.stringify(result.quota));
-        localStorage.setItem('argus_user', JSON.stringify(result.user));
-        localStorage.setItem('nuance_quota', JSON.stringify(result.quota));
-        localStorage.setItem('nuance_user', JSON.stringify(result.user));
-        statusEl.style.color = '#10b981';
-        statusEl.textContent = 'Signed in. Opening your workspace…';
-        window.location.assign('/console');
+        const { signIn, signInDestination } = await import('/account-session.mjs');
+        await signIn(data);
+        statusEl.style.color = '#873810';
+        statusEl.textContent = 'Signed in.';
+        window.location.assign(signInDestination());
       } else {
-        statusEl.style.color = '#10b981';
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.error || 'Authentication failed.');
+        statusEl.style.color = '#873810';
         statusEl.textContent = 'Account created. Redirecting to sign in…';
         window.location.assign('/login');
       }
@@ -445,7 +435,7 @@
     }
   }, true);
 
-  document.addEventListener('click', (event) => {
+  window.addEventListener('click', (event) => {
     const link = event.target.closest?.('a');
     if (!link) return;
     const href = link.getAttribute('href');
@@ -465,10 +455,27 @@
       return;
     }
     if (target.origin !== window.location.origin || !routes.has(target.pathname.replace(/\/$/, '') || '/')) return;
+    const cleanPath = target.pathname.replace(/\/$/, '') || '/';
+    const analysisLink = ['/contact', '/signup', '/login'].includes(cleanPath) &&
+      /^analy[sz]e a video(?:\s*→)?$/i.test(link.textContent.trim());
+    const accountState = document.documentElement.dataset.accountState;
+    if (analysisLink && accountState === 'signed-in') {
+      target = new URL('/console', window.location.origin);
+      link.href = target.href;
+    }
     if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
         link.hasAttribute('download') || link.target === '_blank') return;
 
-    const cleanPath = target.pathname.replace(/\/$/, '') || '/';
+    if (analysisLink && accountState !== 'signed-in' && accountState !== 'signed-out') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      void import('/account-session.mjs')
+        .then(({ getSession }) => getSession())
+        .then(session => window.location.assign(session ? '/console' : target.href))
+        .catch(() => window.location.assign('/console'));
+      return;
+    }
+
     if (['/login', '/signup', '/contact', '/console'].includes(cleanPath)) {
       event.preventDefault();
       event.stopImmediatePropagation();

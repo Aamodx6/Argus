@@ -64,6 +64,24 @@ model User {
     posts         Post[]
     apiQuota    ApiQuota?
     videoFiles VideoFile[]
+    analyses ConsoleAnalysis[]
+    planPurchases PlanPurchase[]
+}
+
+enum PlanTier {
+    STARTER
+    PROFESSIONAL
+    BUSINESS
+}
+
+model PlanPurchase {
+    orderId   String   @id
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    plan      PlanTier
+    createdAt DateTime @default(now())
+
+    @@index([userId, plan])
 }
 
 model VerificationToken {
@@ -91,4 +109,31 @@ model VideoFile {
     key String @unique
     analyzed Boolean @default(false)
     createdAt DateTime @default(now())
+}
+
+model ConsoleAnalysis {
+    id        String   @id
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    title     String
+    spaceId   String
+    spaceName String
+    status    String   @default("AWAITING_SUBMISSION")
+    code      String?
+    analysis  Json?
+    createdAt DateTime @default(now())
+    chat      AnalysisChatTurn[]
+
+    @@index([userId, createdAt])
+}
+
+model AnalysisChatTurn {
+    id        String          @id @default(cuid())
+    jobId     String
+    job       ConsoleAnalysis @relation(fields: [jobId], references: [id], onDelete: Cascade)
+    question  String
+    answer    String
+    createdAt DateTime        @default(now())
+
+    @@index([jobId, createdAt, id])
 }

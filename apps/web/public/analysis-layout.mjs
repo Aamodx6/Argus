@@ -35,10 +35,10 @@ export function layoutAnalysisOutputs(nodes,index,compact){
   const transcriptY=[100,0,134,42][profile];
   const scoreY=transcriptY+410;
   const layouts=compact?{
-    result:[0,0,360,292], 'transcript-output':[0,324,360,250],
-    'emotion-output':[reverseScores?188:0,606,172,240],
-    'sentiment-output':[reverseScores?0:188,606,172,240],
-    'summary-output':[0,880,360,180],
+    result:[0,0,360,292], 'summary-output':[0,324,360,180],
+    'transcript-output':[0,536,360,250],
+    'emotion-output':[reverseScores?188:0,818,172,300],
+    'sentiment-output':[reverseScores?0:188,818,172,300],
   }:{
     result:[0,stagger,720,500], 'summary-output':[0,stagger+548,720,200],
     'transcript-output':[820,transcriptY,640,340],

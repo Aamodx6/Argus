@@ -1,0 +1,43 @@
+<dialog id="sentiment-api" class="sentiment-api" aria-labelledby="sentiment-api-title">
+  <header class="review-header">
+    <div>
+      <h2 id="sentiment-api-title">Video sentiment API</h2>
+      <p>Analyze videos from your own projects and scripts.</p>
+    </div>
+    <button id="sentiment-close" type="button" aria-label="Close sentiment API" autofocus>×</button>
+  </header>
+  <div class="sentiment-api-body">
+    <section aria-labelledby="sentiment-key-label">
+      <h3 id="sentiment-key-label">API key</h3>
+      <p>Set <code>ARGUS_API_KEY</code> in your server environment or secret manager.</p>
+      <div class="sentiment-api-actions">
+        <code id="sentiment-key" aria-label="API key" hidden></code>
+        <button id="sentiment-reveal" type="button">Show key</button>
+        <button id="sentiment-copy-key" type="button" disabled>Copy key</button>
+      </div>
+      <p id="sentiment-key-status" role="status"></p>
+    </section>
+    <section aria-labelledby="sentiment-example-label">
+      <div class="sentiment-api-example-heading">
+        <h3 id="sentiment-example-label">Code examples</h3>
+        <select id="sentiment-language" aria-label="Example language">
+          <option value="node">Node.js</option>
+          <option value="curl">cURL</option>
+        </select>
+        <button id="sentiment-copy-example" type="button" disabled>Copy code</button>
+      </div>
+      <p id="sentiment-api-mode" role="status"></p>
+      <div id="sentiment-node-instructions">
+        <p>Save as <code>argus-sentiment.mjs</code> and run with Node.js 24 or later.</p>
+        <p><code>node argus-sentiment.mjs video.mp4</code></p>
+      </div>
+      <div id="sentiment-curl-instructions" hidden>
+        <p>Save as <code>argus-sentiment.ps1</code> and run with PowerShell 7 and cURL 7.76 or later.</p>
+        <p><code>$env:ARGUS_API_KEY = Read-Host -MaskInput 'Argus API key'</code></p>
+        <p><code>pwsh -File ./argus-sentiment.ps1 video.mp4</code></p>
+      </div>
+      <pre tabindex="0" aria-labelledby="sentiment-example-label"><code id="sentiment-example"></code></pre>
+      <p id="sentiment-example-status" role="status"></p>
+    </section>
+  </div>
+</dialog>

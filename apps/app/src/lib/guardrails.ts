@@ -3,6 +3,8 @@ import { DynamoDBClient, GetItemCommand, PutItemCommand } from "@aws-sdk/client-
 import { db } from "~/server/db";
 
 export const moderationRequired = () => process.env.REQUIRE_MODERATION !== "0";
+export const guardedSubject = (userId: string) =>
+  createHash("sha256").update(userId).digest("hex").slice(0, 32);
 
 // The hosted app currently has one tenant per user. Only opaque identifiers
 // cross into the moderation and model services.
@@ -15,7 +17,7 @@ export async function registerGuardedKey(token: string): Promise<boolean> {
   const table = process.env.AWS_API_KEYS_TABLE;
   if (!table) throw new Error("Guarded keys are not configured");
   const keyHash = createHash("sha256").update(token).digest("hex");
-  const subject = createHash("sha256").update(quota.userId).digest("hex").slice(0, 32);
+  const subject = guardedSubject(quota.userId);
   const client = new DynamoDBClient({ region: process.env.AWS_REGION ?? "ap-southeast-2" });
   const current = await client.send(new GetItemCommand({
     TableName: table, Key: { key_hash: { S: keyHash } }, ConsistentRead: true,

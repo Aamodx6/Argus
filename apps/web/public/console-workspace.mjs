@@ -2,30 +2,47 @@ import {ArchitectureStream} from './architecture-stream.mjs';
 import {AnalysisOutputs} from './analysis-output.mjs';
 import {AnalysisReview} from './analysis-review.mjs';
 import {createAnalysisLayout,layoutAnalysisOutputs,boundsFor,STAGES,RUN_SPACING} from './analysis-layout.mjs';
-import {NODE_WIDTH,NODE_HEIGHT,OUTPUT_IDS,edges} from './pipeline-model.mjs';
-import {buildSchedule,remainingGuide} from './pipeline-schedule.mjs';
-import {PipelineTimeline} from './pipeline-timeline.mjs';
+import {NODE_WIDTH,NODE_HEIGHT,OUTPUT_IDS,edges,nodes as pipelineNodes} from './pipeline-model.mjs';
 import {createCanvasNavigation} from './canvas-navigation.mjs';
 import {createLiquidUpload} from './console-liquid.mjs';
 import {libraryKey,loadLibrary,localVideo} from './console-library.mjs';
+import {consoleRequest,getConsoleJob,legacyJob,submitConsoleJob,uploadConsoleVideo} from './console-api.mjs';
+import {initializeSentimentApi} from './console-sentiment-api.mjs';
+import {getSession} from './account-session.mjs';
+import {updateAccountHeader} from './account-header.mjs';
+import {createSpacePicker} from './space-picker.mjs';
 
 const $=id=>document.getElementById(id),app=$('argus-flow'),viewport=$('flow-viewport'),camera=$('graph-camera'),world=$('pipeline-graph');
 const reduced=()=>document.documentElement.dataset.motion!=='full'&&matchMedia('(prefers-reduced-motion:reduce)').matches;
 const svgNS='http://www.w3.org/2000/svg';
-const durations={storage:1200,access:1700,malware:2100,media:1700,visual:2400,speech:2900,approval:1300,queue:1500,input:1600,decode:1900,whisper:3400,frames:2300,mel:2100,video:3000,audio:2400,bert:2000,fusion:2100,emotion:1600,sentiment:1600,quality:1900,result:1400};
+const phase = {
+  PENDING_MODERATION: [2, 'Safety checks in progress'],
+  MODERATION_COMMITTING: [4, 'Finalizing safety checks'],
+  ACCEPTED: [5, 'Job accepted'],
+  QUEUED: [5, 'Queued for analysis'],
+  SUBMITTING: [5, 'Starting analysis'],
+  RUNNING: [6, 'Analyzing video'],
+  LEGACY_RUNNING: [6, 'Analyzing on SageMaker'],
+  REVIEW_COMMITTING: [4, 'Finalizing review'],
+};
+const terminal = {
+  BLOCKED: 'Video blocked', FAILED: 'Analysis failed', REVIEW: 'Video needs review',
+  EXPIRED: 'Job expired',
+};
 const transform=view=>`translate(${view.x}px,${view.y}px) scale(${view.scale})`;
+const outputTitles=new Map(pipelineNodes.filter(node=>node.output).map(node=>[node.id,node.title]));
+const wideOutputs=matchMedia('(min-width: 880px)');
 
 class AnalysisRun {
-  constructor(workspace,entry,sample,file){
+  constructor(workspace,entry,file){
     const {index,row,seed}=entry;
     let state=seed;
     const random=()=>((state=(Math.imul(1664525,state)+1013904223)>>>0)/4294967296);
-    Object.assign(this,createAnalysisLayout(index,innerWidth<800,random),{workspace,index,entry,result:null,sample,title:entry.title,stage:0,stageText:'Preparing',complete:false});
+    Object.assign(this,createAnalysisLayout(index,innerWidth<800,random),{workspace,index,entry,result:null,title:entry.title,stage:0,stageText:'Preparing',complete:false});
     this.offset=row*RUN_SPACING;
     this.source=file?URL.createObjectURL(file):null;
     this.positionLocalVideo();
-    this.abort=new AbortController();this.clock=new PipelineTimeline(this.abort.signal,reduced());
-    this.schedule=buildSchedule(STAGES,durations);Object.assign(this.schedule.at(-1),{lead:440,work:650,tail:60});
+    this.abort=new AbortController();
     this.states=new Map(this.nodes.map(node=>[node.id,'idle']));
     this.root=document.createElement('section');this.root.className='analysis-graph';this.root.dataset.analysis=String(index);
     this.root.style.transform=`translateY(${this.offset}px)`;this.root.setAttribute('aria-label',this.title);
@@ -38,20 +55,24 @@ class AnalysisRun {
       onMount:(id,element)=>{
         this.paintNode(id,element);
         if(id==='result'){
-          this.video=element.querySelector('video');this.video.src=this.source||'/pipeline-preview.webm';this.outputs.bindVideo(this.video);
+          this.video=element.querySelector('video');
+          this.video.src=this.source||`/api/console/analyses/${this.entry.id}/video`;
+          this.outputs.bindVideo(this.video);
+          const caption=element.querySelector('.output-preview span');
+          caption.textContent=this.source?'Local video':'S3 video';
+          this.video.addEventListener('error',()=>{caption.textContent='Video unavailable';});
+          this.video.addEventListener('loadedmetadata',()=>{caption.textContent=this.source?'Local video':'S3 video';});
           this.video.addEventListener('play',()=>{
             for(const other of workspace.runs){
               if(other!==this)other.video?.pause();
             }
           });
-          element.querySelector('.output-preview span').textContent=this.source?'Local video':'Sample video';
           const expand=document.createElement('button');expand.type='button';expand.className='preview-expand';expand.setAttribute('aria-label',`Enlarge video in ${this.title}`);
           expand.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>';
           expand.onclick=()=>{workspace.select(this,false);workspace.fit(this,['result']);};element.querySelector('.node-header').append(expand);
         }else if(this.nodes.find(node=>node.id===id).output)this.outputs.mount(id,element);
       },onUpdate:()=>this.paintEdges(),
     });
-    this.stream.start(camera,viewport,this.abort.signal);
   }
   reflow(compact){
     if(this.nodes.find(node=>node.output).compact===compact)return;
@@ -60,11 +81,11 @@ class AnalysisRun {
     this.stream.reflowOutputs();this.outputs.renderAll();this.stream.update(camera,viewport);
   }
   positionLocalVideo(){
-    if(this.entry.kind==='video')Object.assign(this.nodes.find(node=>node.id==='result'),{x:80,y:96});
+    if(this.entry.kind!=='analysis')Object.assign(this.nodes.find(node=>node.id==='result'),{x:80,y:96});
   }
   paintNode(id,element=this.stream?.elements.get(id)){
     if(!element)return;const state=this.states.get(id),node=this.nodes.find(node=>node.id===id);
-    element.dataset.state=state;element.querySelector('.node-state').textContent=node.output?'':({idle:'Waiting',active:'Processing',done:'Complete'}[state]||state);
+    element.dataset.state=state;element.querySelector('.node-state').textContent=node.output?'':({idle:'Waiting',active:'Processing',done:'Complete',skipped:'Skipped'}[state]||state);
     element.setAttribute('aria-label',`${this.title}, ${node.title}: ${state}`);
   }
   paintEdges(){
@@ -76,60 +97,146 @@ class AnalysisRun {
   }
   set(ids,state){
     for(const id of ids){
+      if(this.states.get(id)===state&&this.stream.elements.has(id))continue;
       this.states.set(id,state);
-      if(!this.nodes.find(node=>node.id===id).output||this.stream.outputReady)this.stream.ensure(id);
+      if(!this.nodes.find(node=>node.id===id).output||this.stream.outputReady)this.stream.ensure(id,state==='active');
       this.paintNode(id);
     }
+  }
+  updatePhase(index,label,active=STAGES[index]){
+    if(this.stage===index&&this.stageText===label)return;
+    this.stage=index;
+    this.stageText=label;
+    for(const [step,ids] of STAGES.entries()){
+      if(step<index)this.set(ids,this.stageOutcome(step));
+      else for(const id of ids){
+        if(this.states.get(id)==='active'&&!active.includes(id))this.set([id],'idle');
+      }
+    }
+    this.set(active,'active');
     this.stream.update(camera,viewport);
+    if(this.workspace.selected===this&&this.workspace.following)this.workspace.guide(this);
+    this.workspace.refresh();
   }
-  async play(){
-    try {
-      for(let i=0;i<STAGES.length;i++){
-        this.stage=i;this.stageText=STAGES[i].map(id=>this.nodes.find(node=>node.id===id).title).join(' + ');this.workspace.refresh();
-        const step=this.schedule[i];await this.clock.wait(step.lead);this.set(STAGES[i],'active');
-        if(reduced()&&this.workspace.selected===this&&this.workspace.following&&i<STAGES.length-1){
-          void this.workspace.move(this.workspace.target(this,STAGES[i]),1);
-        }
-        await this.clock.wait(step.work);this.set(STAGES[i],'done');await this.clock.wait(step.tail);
-      }
-      this.showResults(false);
-      this.workspace.finished(this);
-    }catch(error){
-      if(error.name!=='AbortError'){
-        this.failed=true;this.stageText='Preview unavailable';this.workspace.refresh();
-      }
-    }
+  stageOutcome(step){
+    return (this.entry.legacy||legacyJob(this.entry.id))&&step>=2&&step<=4?'skipped':'done';
   }
-  showResults(restore){
+  showResults(payload){
+    this.stopTracking();
+    this.result=payload;
     this.complete=true;
-    this.entry.completed=true;
-    if(this.entry.kind==='video'){
-      this.stageText='Video ready';
-      this.states.set('result','done');
-      this.stream.ensure('result',false);
-      return;
-    }
-    this.result=structuredClone(this.sample);
-    this.stageText='Sample results';
-    if(restore){
-      for(const {id} of this.nodes){
-        this.states.set(id,'done');
-        this.stream.ensure(id,false);
-      }
-    }
+    this.entry.status='SUCCEEDED';
+    this.stageText='Analysis complete';
+    for(const [step,ids] of STAGES.slice(0,-1).entries())this.set(ids,this.stageOutcome(step));
     this.stream.outputReady=true;
     this.stream.outputMode=true;
-    OUTPUT_IDS.forEach(id=>this.stream.ensure(id,!restore));
-    this.outputs.setResult(this.result,true);this.set(OUTPUT_IDS,'done');
+    this.outputs.setResult(payload,false);
+    this.set(OUTPUT_IDS,'done');
+    this.stream.update(camera,viewport);
+    this.workspace.finished(this);
+  }
+  showVideo(){
+    this.complete=true;
+    this.stageText='Video ready';
+    this.showPreview();
+  }
+  showPreview(){
+    this.states.set('result','done');
+    this.stream.ensure('result',false);
+    this.paintNode('result');
+  }
+  fail(message){
+    this.stopTracking();
+    this.failed=true;
+    this.stageText=message;
+    const active=[...this.states].filter(([,state])=>state==='active').map(([id])=>id);
+    this.set(active,'idle');
+    this.paintEdges();
+    const hasUploadedVideo=legacyJob(this.entry.id);
+    if(hasUploadedVideo)this.showPreview();
+    if(this.workspace.selected===this){
+      if(hasUploadedVideo&&this.workspace.following)this.workspace.fit(this,['result']);
+      this.workspace.following=false;
+      this.workspace.showNotice(message);
+    }
+    this.workspace.refresh();
+  }
+  async poll(){
+    if(this.polling)return;
+    this.polling=true;
+    this.failed=false;
+    if(this.workspace.selected===this&&this.entry.status!=='SUCCEEDED')this.startTracking();
+    const signal=this.abort.signal;
+    try {
+      if(this.entry.status==='AWAITING_SUBMISSION'){
+        const legacy=legacyJob(this.entry.id);
+        if(legacy)this.updatePhase(6,'Analyzing on SageMaker');
+        const result=await submitConsoleJob(this.entry,signal);
+        if(legacy&&Array.isArray(result.analysis?.utterances)){
+          this.showResults(result);
+          return;
+        }
+        this.entry.status=legacy?'LEGACY_RUNNING':'ACCEPTED';
+        this.workspace.saveLibrary();
+      }
+      let retries=0;
+      for(let attempt=0;attempt<480&&!signal.aborted;attempt++){
+        let result;
+        try{
+          result=await getConsoleJob(this.entry.id,signal);
+          retries=0;
+        }catch(error){
+          if(error.status===404||error.status===401||++retries>4)throw error;
+          await new Promise(resolve=>setTimeout(resolve,6000));
+          continue;
+        }
+        this.entry.status=result.status;
+        this.entry.code=result.code;
+        if(result.status==='SUCCEEDED'&&Array.isArray(result.analysis?.utterances)){
+          this.showResults(result);
+          return;
+        }
+        if(terminal[result.status]){
+          this.fail([terminal[result.status],result.code,this.entry.id].filter(Boolean).join(' · '));
+          return;
+        }
+        if(result.status==='AWAITING_SUBMISSION'){
+          this.fail('Analysis did not finish. Reopen this video from Spaces to retry.');
+          return;
+        }
+        const [index,label]=phase[result.status]||[5,'Waiting for AWS'];
+        this.updatePhase(index,label);
+        await new Promise(resolve=>setTimeout(resolve,3000));
+      }
+      if(!signal.aborted)this.fail('Analysis is still running. Reopen it from Spaces to check status.');
+    }catch(error){
+      if(!signal.aborted)this.fail(error.message);
+    }finally{this.polling=false;}
+  }
+  startTracking(){
+    if(this.root.hasAttribute('data-live-wires')||reduced())return;
+    this.root.setAttribute('data-live-wires','');
+    this.stream.start(camera,viewport,this.abort.signal);
+  }
+  stopTracking(){
+    this.root.removeAttribute('data-live-wires');
+    this.stream.stop?.();
   }
 }
 
 class Workspace {
-  constructor(){
+  constructor(user){
     this.runs=[];this.view={x:0,y:0,scale:1};this.selected=null;this.following=false;this.starting=false;
-    this.libraryKey=libraryKey();
+    this.libraryKey=libraryKey(user);
     this.library=loadLibrary(this.libraryKey);
-    this.entries=this.library.entries;
+    this.entries=this.library.entries.filter(entry=>entry.kind==='video'||entry.status==='AWAITING_SUBMISSION');
+    this.nextEntryIndex=0;
+    this.nextRowBySpace=new Map();
+    for(const entry of this.entries){
+      this.nextEntryIndex=Math.max(this.nextEntryIndex,entry.index+1);
+      this.nextRowBySpace.set(entry.space,Math.max(this.nextRowBySpace.get(entry.space)||0,entry.row+1));
+    }
+    $('entry-signout').onclick=()=>void this.signOut();
     this.upload=createLiquidUpload($('upload-entry').querySelector('.liquid-upload'));
     this.review=new AnalysisReview({onOpen:()=>{
       this.navigation.cancel();
@@ -137,22 +244,32 @@ class Workspace {
     },
       onSeek:(run,index)=>{this.select(run,false);run.outputs.select(index,true);this.fit(run,['result','transcript-output']);run.video?.focus({preventScroll:true});}});
     this.navigation=createCanvasNavigation({viewport,view:this.view,canInteract:()=>!!this.selected&&!this.starting&&!$('result-sheet').open,
-      onStart:()=>{this.stopMotion();this.following=false;this.refresh();},
+      onStart:()=>{this.stopMotion();this.following=false;this.focusedOutput=null;},
       onChange:()=>{
         const scale=this.view.scale,margin=160;
         const visible=this.runs.filter(run=>!run.root.hidden);
-        const width=Math.max(...visible.map(run=>boundsFor(run.nodes,run.entry.kind==='video'?['result']:undefined).width))+160;
+        const width=Math.max(...visible.map(run=>boundsFor(run.nodes,run.entry.kind!=='analysis'?['result']:undefined).width))+160;
         this.view.x=Math.max(margin-width*scale,Math.min(viewport.clientWidth-margin,this.view.x));
         const lowest=Math.max(...visible.map(run=>run.offset))+RUN_SPACING;
         this.view.y=Math.max(margin-lowest*scale,Math.min(viewport.clientHeight-margin,this.view.y));
         this.paint();
       },onFit:()=>this.frameSelection(),
     });
-    $('upload-entry').addEventListener('click',event=>{if(event.target.closest('#choose-file-btn')){event.preventDefault();void this.start(true);}});
-    $('new-analysis').onclick=()=>void this.start(false);
-    $('follow-progress').onclick=()=>{if(!this.selected?.complete){this.following=true;this.guide(this.selected);this.refresh();}};
-    $('analysis-history').onclick=()=>this.toggleHistory();$('close-history').onclick=()=>{this.toggleHistory(false);$('analysis-history').focus({preventScroll:true});};
-    $('space-select').onchange=()=>this.switchSpace($('space-select').value);
+    const choose=()=>this.chooseVideo();
+    $('choose-file-btn').onclick=choose;
+    $('new-analysis').onclick=choose;
+    $('add-space-video').onclick=choose;
+    $('space-outputs').open=wideOutputs.matches;
+    wideOutputs.addEventListener('change',event=>{$('space-outputs').open=event.matches;});
+    this.historyView='spaces';
+    $('analysis-history').onclick=()=>this.toggleHistory();
+    $('close-history').onclick=()=>this.dismissHistory();
+    this.spacePicker=createSpacePicker($('space-select-trigger'),$('space-select-label'),$('space-options'),id=>{
+      if(this.starting)return;
+      this.historyView=id==='all'?'all':'spaces';
+      if(id==='all'||id===this.library.active)this.renderLibrary();
+      else this.switchSpace(id);
+    });
     $('new-space').onclick=()=>{
       if(this.starting)return;
       const names=new Set(this.library.spaces.map(space=>space.name.toLowerCase()));
@@ -161,13 +278,16 @@ class Workspace {
       do {name=`Space ${String(number++).padStart(2,'0')}`;} while(names.has(name.toLowerCase()));
       const id=crypto.randomUUID();
       this.library.spaces.push({id,name});
+      this.historyView='spaces';
       this.switchSpace(id);
       $('add-space-video').focus({preventScroll:true});
     };
     const rename=$('space-rename-form');
     const nameInput=$('space-name');
     $('rename-space').onclick=()=>{
+      this.spacePicker.close();
       nameInput.value=this.library.spaces.find(space=>space.id===this.library.active).name;
+      $('space-select').hidden=true;
       $('rename-space').hidden=true;
       rename.hidden=false;
       nameInput.select();
@@ -184,11 +304,10 @@ class Workspace {
       event.stopPropagation();
       this.finishRename(false);
     };
-    $('add-space-video').onclick=()=>$('space-video-file').click();
     $('space-video-file').onchange=event=>{
-      const file=event.target.files[0];
+      const files=[...event.target.files];
       event.target.value='';
-      if(file)void this.addVideo(file);
+      if(files.length)void this.uploadVideos(files);
     };
     this.renderLibrary();
     $('analysis-list').addEventListener('keydown',event=>{
@@ -197,19 +316,30 @@ class Workspace {
       const next={ArrowDown:Math.min(buttons.length-1,index+1),ArrowUp:Math.max(0,index-1),Home:0,End:buttons.length-1}[event.key];
       if(next!==undefined){event.preventDefault();buttons[next].focus();}
     });
-    $('dismiss-notice').onclick=()=>{$('flow-notice').hidden=true;};$('notice-preview').onclick=()=>void this.start(app.dataset.mode==='idle');
+    $('dismiss-notice').onclick=()=>{$('flow-notice').hidden=true;};
     viewport.addEventListener('dblclick',event=>{
-      if(!this.selected||event.target.closest('button,a,video,input,select,.output-transcript-text,.history-panel,.flow-notice,dialog'))return;
+      if(!this.selected||event.target.closest('button,a,video,input,select,.output-transcript-text,.history-panel,.space-outputs,.flow-notice,dialog'))return;
       this.frameSelection();
     });
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('history-panel').hidden){this.toggleHistory(false);$('analysis-history').focus({preventScroll:true});}});
-    document.addEventListener('pointerdown',event=>{if(!event.target.closest('#history-panel,#analysis-history'))this.toggleHistory(false);});
+    document.addEventListener('keydown',event=>{
+      if(event.key!=='Escape')return;
+      if(!$('history-panel').hidden)this.dismissHistory();
+      else if(!wideOutputs.matches&&$('space-outputs').open&&!document.querySelector('dialog[open]')){
+        $('space-outputs').open=false;
+        $('space-outputs').querySelector('summary').focus({preventScroll:true});
+      }
+    });
+    document.addEventListener('pointerdown',event=>{
+      if(!event.target.closest('#space-select'))this.spacePicker.close();
+      if(!event.target.closest('#history-panel,#analysis-history'))this.toggleHistory(false);
+    });
     let resizeTimer;
     window.addEventListener('resize',()=>{
       clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{
         this.runs.forEach(run=>run.reflow(innerWidth<800));
         if(!this.selected||this.starting)return;
         if(this.following)this.guide(this.selected);
+        else if(this.focusedOutput?.run===this.selected)void this.move(this.target(this.selected,[this.focusedOutput.id],true));
         else this.frameSelection();
       },120);
     });
@@ -220,180 +350,202 @@ class Workspace {
         if(run.source)URL.revokeObjectURL(run.source);
       });
     });
-    window.addEventListener('storage',event=>{
-      if(['argus_user','nuance_user',null].includes(event.key)&&libraryKey()!==this.libraryKey)location.reload();
+  }
+  async signOut(){
+    const button=$('entry-signout');
+    button.disabled=true;
+    try {
+      const {csrfToken}=await consoleRequest('/api/auth/csrf');
+      const response=await fetch('/api/auth/signout',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded','X-Auth-Return-Redirect':'1'},
+        body:new URLSearchParams({csrfToken,callbackUrl:location.origin+'/'}),
+      });
+      if(!response.ok)throw new Error('Unable to sign out.');
+      const result=await response.json();
+      if(!result.url||new URL(result.url,location.origin).searchParams.has('error'))throw new Error('Unable to sign out.');
+      location.replace('/');
+    }catch(error){this.showNotice(error.message);}
+    finally{button.disabled=false;}
+  }
+  loadHistory(){
+    if(this.historyLoaded||this.historyRequest)return;
+    const status=$('history-status');
+    status.textContent='Loading history…';
+    this.historyRequest=this.restoreHistory().then(()=>{
+      status.textContent='';
+    }).catch(()=>{
+      status.textContent='Could not load history. Reopen the panel to try again.';
+    }).finally(()=>{
+      this.historyRequest=null;
     });
+  }
+  async restoreHistory(){
+    const {analyses,videos}=await consoleRequest('/api/console/analyses');
+    const jobIds=new Set(analyses.map(job=>job.id));
+    const existingEntries=new Map(this.entries.map(entry=>[entry.id,entry]));
+    const spaceIds=new Set(this.library.spaces.map(space=>space.id));
+    const activeEntries=new Set(this.runs.map(run=>run.entry));
+    for(const video of videos){
+      if(jobIds.has(video.id)||existingEntries.has(video.id))continue;
+      const date=new Date(video.createdAt).toLocaleString([], {dateStyle:'medium',timeStyle:'short'});
+      const entry=this.newEntry(video.id,'Video · '+date,'default','My videos','STORED');
+      entry.kind='s3';
+      this.entries.push(entry);
+    }
+    for(const job of analyses){
+      const existing=existingEntries.get(job.id);
+      if(existing){
+        if(!activeEntries.has(existing))Object.assign(existing,{status:job.status,code:job.code});
+        continue;
+      }
+      if(!spaceIds.has(job.spaceId)){
+        spaceIds.add(job.spaceId);
+        this.library.spaces.push({id:job.spaceId,name:job.spaceName});
+      }
+      this.entries.push(this.newEntry(job.id,job.title,job.spaceId,job.spaceName,job.status,job.code));
+    }
+    this.historyLoaded=true;
+    this.renderLibrary();
+    const selected=this.entries.find(entry=>entry.id===this.library.selected&&entry.space===this.library.active);
+    if(selected&&!this.selected&&!this.starting&&$('history-panel').hidden)await this.openEntry(selected,false);
+  }
+  showNotice(message){
+    $('notice-message').textContent=message;
+    $('flow-notice').hidden=false;
   }
   paint(){camera.classList.add('direct');camera.style.transform=transform(this.view);}
   stopMotion(){
     if(!this.motion)return;
     const matrix=new DOMMatrix(getComputedStyle(camera).transform);
-    Object.assign(this.view,{x:matrix.m41,y:matrix.m42,scale:matrix.a});this.paint();this.motion.cancel();this.motion=null;app.dataset.tracking='false';
+    Object.assign(this.view,{x:matrix.m41,y:matrix.m42,scale:matrix.a});this.paint();this.motion.cancel();this.motion=null;this.motionTarget=null;
   }
   async move(target,duration=650){
+    const destination=this.motionTarget||this.view;
+    if(Math.abs(target.x-destination.x)<1&&Math.abs(target.y-destination.y)<1&&Math.abs(target.scale-destination.scale)<.002)return;
     this.stopMotion();
-    const motion=camera.animate([{transform:transform(this.view)},{transform:transform(target)}],{duration:reduced()?1:duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
-    this.motion=motion;app.dataset.tracking='true';
-    try {await motion.finished;if(this.motion===motion){Object.assign(this.view,target);this.paint();motion.cancel();this.motion=null;app.dataset.tracking='false';}}catch{}
+    this.paint();
+    if(reduced()){Object.assign(this.view,target);this.paint();return;}
+    const motion=camera.animate([{transform:transform(this.view)},{transform:transform(target)}],{duration,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'});
+    this.motion=motion;this.motionTarget=target;
+    try {await motion.finished;if(this.motion===motion){Object.assign(this.view,target);this.paint();motion.cancel();this.motion=null;this.motionTarget=null;}}catch{}
   }
   target(run,ids,fit=false){
     const box=boundsFor(run.nodes,ids.length?ids:['storage']);
     const headerHeight=app.querySelector('.flow-header').offsetHeight;
     const availableHeight=viewport.clientHeight-headerHeight;
-    const scale=fit?Math.max(.1,Math.min(ids.length===1?1.5:1.05,(viewport.clientWidth-64)/box.width,(availableHeight-64)/box.height)):
-      Math.max(.4,Math.min(.86,viewport.clientWidth/420,(availableHeight-80)/760));
-    return {x:viewport.clientWidth/2-(box.x+box.width/2)*scale,y:headerHeight+availableHeight/2-(run.offset+box.y+box.height/2)*scale,scale};
+    const reserve=wideOutputs.matches&&$('space-outputs').open?$('space-outputs').offsetWidth+36:0;
+    const availableWidth=viewport.clientWidth-reserve;
+    const scale=fit?Math.max(.1,Math.min(ids.length===1?1.25:1.05,(availableWidth-48)/box.width,(availableHeight-64)/box.height)):
+      Math.max(.25,Math.min(.86,(availableWidth-48)/box.width,(availableHeight-64)/box.height));
+    return {x:availableWidth/2-(box.x+box.width/2)*scale,y:headerHeight+availableHeight/2-(run.offset+box.y+box.height/2)*scale,scale};
   }
-  fit(run,ids){if(!run)return;this.following=false;this.refresh();void this.move(this.target(run,ids,true));}
+  fit(run,ids){if(!run)return;this.following=false;this.focusedOutput=null;this.refresh();void this.move(this.target(run,ids,true));}
   frameSelection(){
     const run=this.selected;
     if(!run)return;
-    const ids=run.entry.kind==='video'?['result']:run.complete
-      ? (innerWidth<800?['result','transcript-output']:OUTPUT_IDS)
+    const ids=run.entry.kind!=='analysis'?['result']:run.complete
+      ? (innerWidth<800?['result','summary-output']:OUTPUT_IDS)
       : STAGES[run.stage];
     this.fit(run,ids);
   }
   pausePreview(){
     this.selected?.video?.pause();
   }
-  async start(first){
-    if(this.starting)return;this.openRequest=null;this.starting=true;$('new-analysis').disabled=true;this.toggleHistory(false);this.review.close();
-    try {
-      this.loadSample();
-      let origin;
+  chooseVideo(){
+    if(this.starting)return;
+    $('space-video-file').click();
+  }
+  async uploadVideos(files){
+    for(const file of files)await this.start(file);
+  }
+  async start(file){
+    if(this.starting)return;
+    if(!/\.mp4$/i.test(file.name)||!file.size||file.size>128*1024*1024){
+      this.showNotice('Choose an MP4 file up to 128 MiB.');
+      return;
+    }
+    const first=app.dataset.mode==='idle';
+    const space=this.library.spaces.find(item=>item.id===this.library.active);
+    this.starting=true;
+    this.openRequest=null;
+    $('new-analysis').disabled=true;
+    $('flow-notice').hidden=true;
+    this.toggleHistory(false);
+    this.review.close(false);
+    let run;
+    try{
+      const {guarded}=await consoleRequest('/api/console/config');
+      if(typeof guarded!=='boolean')throw new Error('Upload configuration is unavailable. Try again.');
       if(first){
-        const button=$('choose-file-btn').getBoundingClientRect();
-        const frame=viewport.getBoundingClientRect();
-        origin={x:button.left+button.width/2-frame.left,y:button.top+button.height/2-frame.top};
-        $('upload-entry').inert=true;
         app.dataset.mode='sinking';
-        // Let the sink finish before recovering from a failed sample request.
-        const [sample] = await Promise.allSettled([this.sample,this.upload.sink()]);
-        if(sample.status==='rejected')throw sample.reason;
-        this.sample=Promise.resolve(sample.value);
+        $('upload-entry').inert=true;
+        await this.upload.sink();
       }
-      const sample=await this.sample;
-      this.stopMotion();
-      this.pausePreview();
-      app.dataset.mode='graph';app.dataset.exploring='true';camera.inert=false;viewport.tabIndex=0;
-      $('upload-entry').hidden=true;
-      viewport.setAttribute('aria-label','Analysis canvas. Drag to pan, scroll to zoom, double click to fit the selected analysis. Arrow keys pan; plus and minus zoom.');
-      const entry=this.newEntry('sample');
-      const run=new AnalysisRun(this,entry,sample);
-      this.runs.push(run);this.selected=run;this.following=true;
+      const entry=this.newEntry(crypto.randomUUID(),file.name.slice(0,255),space.id,space.name,'UPLOADING');
+      entry.legacy=!guarded;
+      run=new AnalysisRun(this,entry);
+      this.runs.push(run);
+      this.entries.push(entry);
+      this.select(run,false);
+      this.following=true;
       this.renderLibrary();
-      const target=this.target(run,['storage']);
-      if(origin&&!reduced()){
-        Object.assign(this.view,{
-          x:target.x+origin.x-viewport.clientWidth/2,
-          y:origin.y-(run.offset+run.nodes.find(node=>node.id==='storage').y+NODE_HEIGHT/2)*target.scale,
-          scale:target.scale,
-        });
-        this.paint();
-        run.stream.ensure('storage');
-      }
-      await this.move(target,first?240:800);
-      run.stream.ensure('storage');
-      if(first)viewport.focus({preventScroll:true,focusVisible:false});
-      this.starting=false;$('new-analysis').disabled=false;
-      if(this.selected===run&&this.following)this.guide(run);
-      void run.play();
+      run.updatePhase(0,'Requesting upload permission');
+      entry.id=await uploadConsoleVideo(file,run.abort.signal,()=>run.updatePhase(1,'Uploading video to S3',['storage','access']),guarded);
+      this.entries=this.entries.filter(item=>item===entry||item.id!==entry.id);
+      entry.status='AWAITING_SUBMISSION';
+      this.library.selected=entry.id;
+      this.saveLibrary();
+      this.renderLibrary();
+      run.updatePhase(1,'Submitting uploaded video',['access']);
+      void run.poll();
     }catch(error){
-      $('notice-message').textContent=error.message;$('flow-notice').hidden=false;
-      if(!this.runs.length){app.dataset.mode='idle';$('upload-entry').hidden=false;$('upload-entry').inert=false;this.upload.reset();}
-    }finally{this.starting=false;$('new-analysis').disabled=false;}
+      if(run)run.fail(error.message);
+      else{
+        this.showNotice(error.message);
+        app.dataset.mode='idle';
+        $('upload-entry').inert=false;
+        this.upload.reset();
+      }
+    }finally{
+      this.starting=false;
+      $('new-analysis').disabled=false;
+    }
   }
   guide(run){
-    this.stopMotion();
-    if(reduced()){void this.move(this.target(run,STAGES[run.stage]),1);return;}
-    const plan=remainingGuide(run.schedule,run.clock.elapsed),elapsed=plan.duration;
-    if(elapsed<=0)return;
-    const points=[{time:0,...this.view}];
-    for(const {index,time} of plan.targets){
-      const ids=STAGES[index];points.push({time,...this.target(run,ids,ids===OUTPUT_IDS)});
-    }
-    points.push({...points.at(-1),time:elapsed});
-    const slopes=points.map((point,i)=>i===0||i===points.length-1?0:(points[i+1].x-points[i-1].x)/(points[i+1].time-points[i-1].time));
-    for(let i=0;i<points.length-1;i++){
-      const delta=(points[i+1].x-points[i].x)/(points[i+1].time-points[i].time);
-      if(Math.abs(delta)<.000001){slopes[i]=slopes[i+1]=0;continue;}
-      let a=Math.max(0,slopes[i]/delta),b=Math.max(0,slopes[i+1]/delta),magnitude=Math.hypot(a,b);
-      if(magnitude>3){a*=3/magnitude;b*=3/magnitude;}slopes[i]=a*delta;slopes[i+1]=b*delta;
-    }
-    const frames=[];let segment=0;
-    for(let time=0;time<=elapsed;time+=40){
-      while(segment<points.length-2&&time>points[segment+1].time)segment++;
-      const a=points[segment],b=points[segment+1],span=b.time-a.time,t=Math.min(1,(time-a.time)/span),t2=t*t,t3=t2*t;
-      const raw=(2*t3-3*t2+1)*a.x+(t3-2*t2+t)*span*slopes[segment]+(-2*t3+3*t2)*b.x+(t3-t2)*span*slopes[segment+1];
-      const x=Math.max(Math.min(a.x,b.x),Math.min(Math.max(a.x,b.x),raw)),ease=t2*(3-2*t);
-      frames.push({offset:time/elapsed,transform:transform({x,y:a.y+(b.y-a.y)*ease,scale:a.scale+(b.scale-a.scale)*ease})});
-    }
-    const last=points.at(-1);frames.push({offset:1,transform:transform(last)});
-    const motion=camera.animate(frames,{duration:elapsed,easing:'linear',fill:'forwards'});this.motion=motion;app.dataset.tracking='true';
-    motion.finished.then(()=>{if(this.motion===motion){Object.assign(this.view,last);this.paint();motion.cancel();this.motion=null;app.dataset.tracking='false';}}).catch(()=>{});
-  }
-  loadSample(){
-    this.sample??=fetch('/pipeline-demo.json').then(response=>{
-      if(!response.ok)throw new Error('Sample unavailable. Try again.');
-      return response.json();
-    }).catch(error=>{this.sample=null;throw error;});
-    return this.sample;
+    const active=[...run.states].filter(([,state])=>state==='active').map(([id])=>id);
+    void this.move(this.target(run,active.length&&active.length<6?active:STAGES[run.stage]),550);
   }
   saveLibrary(){
     try {
       localStorage.setItem(this.libraryKey,JSON.stringify({
-        ...this.library,entries:this.entries.filter(entry=>entry.completed),
+        ...this.library,entries:this.entries.filter(entry=>entry.kind==='video'||entry.status==='AWAITING_SUBMISSION'),
       }));
     }catch{
-      $('space-feedback').textContent='Browser storage is unavailable. This workspace will reset on refresh.';
+      $('space-feedback').textContent='Browser storage is unavailable. Space settings may reset on refresh.';
     }
   }
-  newEntry(kind,title){
-    const space=this.library.active;
-    const index=this.entries.reduce((highest,entry)=>Math.max(highest,entry.index+1),0);
-    const row=this.entries.filter(entry=>entry.space===space).length;
-    const entry={id:crypto.randomUUID(),index,row,space,kind,
-      title:title||`Analysis ${String(this.entries.filter(entry=>entry.kind==='sample').length+1).padStart(2,'0')}`,
-      seed:crypto.getRandomValues(new Uint32Array(1))[0],completed:false};
-    this.entries.push(entry);
-    return entry;
-  }
-  async addVideo(file){
-    if(!file.type.startsWith('video/')&&!/\.(mp4|webm|mov|m4v)$/i.test(file.name)){
-      $('space-feedback').textContent='Choose a video file.';
-      return;
-    }
-    const entry=this.newEntry('video',file.name);
-    const button=$('add-space-video');
-    button.disabled=true;
-    $('space-feedback').textContent='Saving video…';
-    try {
-      await localVideo(this.libraryKey,entry.id,file);
-      entry.completed=true;
-      $('space-feedback').textContent='';
-      this.saveLibrary();
-      this.renderLibrary();
-      if(entry.space===this.library.active)await this.openEntry(entry,file);
-    }catch{
-      this.entries.splice(this.entries.indexOf(entry),1);
-      this.renderLibrary();
-      $('space-feedback').textContent='Could not save this video in your browser.';
-    }finally{button.disabled=false;}
+  newEntry(id,title,space,spaceName,status,code){
+    const index=this.nextEntryIndex++;
+    const row=this.nextRowBySpace.get(space)||0;
+    this.nextRowBySpace.set(space,row+1);
+    return {id,index,row,space,spaceName,kind:'analysis',title,status,code,
+      seed:crypto.getRandomValues(new Uint32Array(1))[0]};
   }
   switchSpace(id){
-    if(this.starting){
-      $('space-select').value=this.library.active;
-      return;
-    }
+    if(this.starting)return;
     this.finishRename(false,false);
     this.openRequest=null;
+    this.focusedOutput=null;
     this.review.close(false);
     this.navigation.cancel();
     this.stopMotion();
     this.pausePreview();
+    this.selected?.stopTracking();
     this.selected=null;
     this.following=false;
     this.library.active=id;
+    this.library.selected=null;
     $('space-feedback').textContent='';
     app.dataset.mode='idle';
     app.dataset.exploring='false';
@@ -405,26 +557,34 @@ class Workspace {
     this.saveLibrary();
     this.renderLibrary();
   }
+  renderSpacePicker(){
+    this.spacePicker.render([{id:'all',name:'All videos'},...this.library.spaces],
+      this.historyView==='all'?'all':this.library.active);
+  }
   renderLibrary(){
-    const select=$('space-select');
-    select.replaceChildren(...this.library.spaces.map(space=>new Option(space.name,space.id)));
-    select.value=this.library.active;
-    $('active-space-name').textContent=select.options[select.selectedIndex]?.textContent||'My videos';
-    const list=$('analysis-list');
-    const entries=this.entries.filter(entry=>entry.space===this.library.active);
-    list.replaceChildren();
-    for(const entry of entries){
-      const button=document.createElement('button');
-      button.type='button';button.dataset.entry=entry.id;button.dataset.kind=entry.kind;
-      const title=document.createElement('span'),status=document.createElement('small');
-      title.className='library-title';title.textContent=entry.title;title.title=entry.title;
-      button.append(title,status);
-      button.onclick=()=>void this.openEntry(entry);
-      list.append(button);
+    const showAll=this.historyView==='all';
+    this.renderSpacePicker();
+    $('rename-space').hidden=showAll||!$('space-rename-form').hidden;
+    $('add-space-video').hidden=showAll;
+    if(!$('history-panel').hidden){
+      const list=$('analysis-list');
+      const history=showAll?this.entries:this.entries.filter(entry=>entry.space===this.library.active);
+      const fragment=document.createDocumentFragment();
+      for(const entry of history){
+        const button=document.createElement('button');
+        button.type='button';button.dataset.entry=entry.id;button.dataset.kind=entry.kind;
+        const title=document.createElement('span'),status=document.createElement('small');
+        title.className='library-title';title.textContent=entry.title;title.title=entry.title;
+        button.append(title,status);
+        button.onclick=()=>void this.openEntry(entry);
+        fragment.append(button);
+      }
+      list.replaceChildren(fragment);
+      $('space-empty').hidden=!this.historyLoaded||history.length!==0;
+      $('space-empty').textContent=showAll?'No videos yet.':'No videos in this space yet.';
     }
-    $('space-empty').hidden=entries.length!==0;
     for(const run of this.runs)run.root.hidden=run.entry.space!==this.library.active;
-    world.style.height=`${Math.max(1,entries.length)*RUN_SPACING}px`;
+    world.style.height=`${Math.max(1,this.nextRowBySpace.get(this.library.active)||0)*RUN_SPACING}px`;
     this.refresh();
   }
   finishRename(save,focus=true){
@@ -432,48 +592,51 @@ class Workspace {
     if(form.hidden)return;
     form.hidden=true;
     const button=$('rename-space');
+    $('space-select').hidden=false;
     button.hidden=false;
     const name=$('space-name').value.trim();
     if(save&&name){
       const space=this.library.spaces.find(item=>item.id===this.library.active);
       space.name=name;
-      $('active-space-name').textContent=name;
-      $('space-select').selectedOptions[0].textContent=name;
+      this.renderSpacePicker();
       this.saveLibrary();
     }
     if(focus)button.focus({preventScroll:true});
   }
-  async openEntry(entry,file){
+  async openEntry(entry,focus=true){
     if(this.starting)return;
     const request={};
     this.openRequest=request;
     try {
       let run=this.runs.find(item=>item.entry===entry);
+      const source=!run&&entry.kind==='video'?await localVideo(this.libraryKey,entry.id):null;
+      if(this.openRequest!==request)return;
+      if(!run&&entry.kind==='video'&&!source)throw new Error('This video is unavailable in your browser.');
+      if(entry.space!==this.library.active){
+        this.switchSpace(entry.space);
+        this.openRequest=request;
+      }
       if(!run){
-        $('space-feedback').textContent='Opening…';
-        const source=entry.kind==='video'?(file||await localVideo(this.libraryKey,entry.id)):null;
-        const sample=entry.kind==='sample'?await this.loadSample():null;
-        if(this.openRequest!==request)return;
-        if(entry.kind==='video'&&!source)throw new Error('This video is unavailable in your browser.');
-        run=new AnalysisRun(this,entry,sample,source);
+        run=new AnalysisRun(this,entry,source);
         this.runs.push(run);
-        run.showResults(true);
+        if(entry.kind!=='analysis')run.showVideo();
       }
       $('space-feedback').textContent='';
+      $('flow-notice').hidden=true;
       this.select(run,false);
-      if(run.complete||run.failed)this.frameSelection();
-      else{
-        const current=this.target(run,STAGES[run.stage]);
-        await this.move(current,480);
-        if(this.openRequest!==request||this.selected!==run)return;
-        if(run.complete)this.frameSelection();
-        else {
-          this.following=true;
-          this.guide(run);
-          this.refresh();
-        }
+      this.library.selected=entry.id;
+      this.saveLibrary();
+      if(run.complete||entry.status==='UPLOADING')this.frameSelection();
+      else if(['FAILED','BLOCKED','EXPIRED'].includes(entry.status)){
+        run.fail([terminal[entry.status],entry.code,entry.id].filter(Boolean).join(' · '));
+        this.frameSelection();
+      }else{
+        this.following=true;
+        if(!run.stream.elements.size&&phase[entry.status])run.updatePhase(...phase[entry.status]);
+        this.guide(run);
+        void run.poll();
       }
-      if(this.openRequest===request)$('analysis-history').focus({preventScroll:true});
+      if(focus)$('analysis-history').focus({preventScroll:true});
     }catch(error){
       if(this.openRequest===request)$('space-feedback').textContent=error.message||'Unable to open this video.';
     }
@@ -482,7 +645,12 @@ class Workspace {
     this.review.close(false);
     this.toggleHistory(false);
     this.stopMotion();
-    if(this.selected!==run)this.pausePreview();
+    this.focusedOutput=null;
+    if(this.selected!==run){
+      this.pausePreview();
+      this.selected?.stopTracking();
+      if(!run.complete&&!run.failed&&run.entry.status!=='SUCCEEDED')run.startTracking();
+    }
     this.selected=run;
     this.following=false;
     app.dataset.mode='graph';
@@ -499,36 +667,126 @@ class Workspace {
     $('run-context').hidden=!run;
     if(run){
       app.dataset.complete=String(run.complete);
-      $('run-stage').textContent=`${run.title} · ${run.stageText}`;
-      $('run-progress').hidden=run.complete||!!run.failed;
-      $('run-progress').textContent=`${run.stage+1}/${STAGES.length}`;
-      $('run-progress').setAttribute('aria-label',`Stage ${run.stage+1} of ${STAGES.length}`);
-      $('flow-status').textContent=$('run-stage').textContent;
-      $('follow-progress').hidden=run.complete||this.following||!!run.failed;
+      const status=`${run.title} · ${run.stageText}`;
+      if($('run-stage').textContent!==status){
+        $('run-stage').textContent=status;
+        $('flow-status').textContent=status;
+      }
     }
+    if(!$('history-panel').hidden)this.refreshHistory(run);
+    this.refreshOutputs();
+  }
+  refreshHistory(run){
+    const entriesById=new Map(this.entries.map(entry=>[entry.id,entry]));
+    const runsByEntry=new Map(this.runs.map(run=>[run.entry,run]));
     for(const button of $('analysis-list').querySelectorAll('[data-entry]')){
-      const entry=this.entries.find(item=>item.id===button.dataset.entry);
-      const item=this.runs.find(candidate=>candidate.entry===entry);
+      const entry=entriesById.get(button.dataset.entry);
+      if(!entry)continue;
+      const item=runsByEntry.get(entry);
       button.setAttribute('aria-current',String(entry===run?.entry));
-      button.dataset.complete=String(entry.completed);
-      const status=entry.kind==='video'?'Local video':entry.completed?'Sample results':
-        item?.failed?'Preview unavailable':`${(item?.stage??0)+1}/${STAGES.length} · ${item?.stageText??'Preparing'}`;
-      if(button.lastChild.textContent!==status)button.lastChild.textContent=status;
+      button.dataset.complete=String(entry.status==='SUCCEEDED'||entry.kind!=='analysis');
+      const status=entry.kind==='video'?'Local video':entry.kind==='s3'?'S3 video':entry.status==='SUCCEEDED'?'Analysis complete':
+        item?.stageText||terminal[entry.status]||phase[entry.status]?.[1]||'Waiting for AWS';
+      const space=this.historyView==='all'?this.library.spaces.find(space=>space.id===entry.space)?.name:null;
+      const description=space?`${space} · ${status}`:status;
+      if(button.lastChild.textContent!==description)button.lastChild.textContent=description;
     }
+  }
+  refreshOutputs(){
+    const run=this.selected;
+    const result=run?.outputs.result;
+    const preview=Boolean(run?.stream.elements.has('result'));
+    const status=!run?'Select a video in Spaces.':run.failed?'Analysis unavailable.':
+      result||preview?'':'Outputs appear when analysis is ready.';
+    if($('space-outputs-status').textContent!==status)$('space-outputs-status').textContent=status;
+    if(this.outputRun===run&&this.outputResult===result&&this.outputPreview===preview)return;
+    this.outputRun=run;
+    this.outputResult=result;
+    this.outputPreview=preview;
+    const values=result?{
+      'transcript-output':`${result.segments.length} ${result.segments.length===1?'segment':'segments'}`,
+      'emotion-output':result.verdicts.emotion,
+      'sentiment-output':result.verdicts.sentiment,
+    }:{};
+    const buttons=(result?OUTPUT_IDS:preview?['result']:[]).map(id=>{
+      const button=document.createElement('button');
+      button.type='button';
+      const label=document.createElement('span');
+      label.textContent=outputTitles.get(id);
+      button.append(label);
+      if(values[id]){
+        const value=document.createElement('strong');
+        value.textContent=values[id];
+        button.append(value);
+      }
+      button.onclick=()=>{
+        if(!wideOutputs.matches)$('space-outputs').open=false;
+        this.focusOutput(run,id);
+      };
+      return button;
+    });
+    $('space-output-list').replaceChildren(...buttons);
+  }
+  focusOutput(run,id){
+    const node=run.stream.elements.get(id);
+    if(!node)return;
+    this.fit(run,[id]);
+    this.focusedOutput={run,id};
+    node.tabIndex=-1;
+    node.focus({preventScroll:true});
   }
   finished(run){
     this.saveLibrary();
     if(this.selected===run){
       const guided=this.following;this.following=false;this.refresh();
-      if(guided)this.fit(run,innerWidth<800?['result','transcript-output']:OUTPUT_IDS);
-      if(guided&&!$('result-sheet').open)run.video?.play().catch(()=>{});
+      if(guided)this.fit(run,innerWidth<800?['result','summary-output']:OUTPUT_IDS);
     }else this.refresh();
   }
+  dismissHistory(){
+    this.toggleHistory(false);
+    $('analysis-history').focus({preventScroll:true});
+  }
   toggleHistory(force){
-    const open=force??$('history-panel').hidden;
-    $('history-panel').hidden=!open;$('analysis-history').setAttribute('aria-expanded',String(open));
-    if(open)($('analysis-list').querySelector('[aria-current="true"]')||$('close-history')).focus({preventScroll:true,focusVisible:false});
+    const panel=$('history-panel');
+    const open=force??panel.hidden;
+    panel.hidden=!open;
+    if(!open)this.spacePicker.close();
+    $('analysis-history').setAttribute('aria-expanded',String(open));
+    if(open){
+      this.finishRename(true,false);
+      this.renderLibrary();
+      this.loadHistory();
+      ($('analysis-list').querySelector('[aria-current="true"]')||$('close-history')).focus({preventScroll:true,focusVisible:false});
+    }
   }
 }
 
-new Workspace();
+async function initialize(){
+  const sessionStatus=$('console-session-status');
+  let user;
+  try {
+    ({user}=await getSession()||{});
+  }catch(error){
+    if(error.status===401)location.replace('/login');
+    else sessionStatus.textContent='Could not check your session. Reload to try again.';
+    return;
+  }
+  if(!user?.id){
+    location.replace('/login');
+    return;
+  }
+  for(const key of ['argus_quota','nuance_quota','argus_user','nuance_user']){
+    try{localStorage.removeItem(key);}catch{}
+  }
+  $('entry-email').textContent=user.email;
+  $('entry-email').title=user.email;
+  void updateAccountHeader({user});
+  initializeSentimentApi();
+  sessionStatus.hidden=true;
+  app.hidden=false;
+  const workspace=new Workspace(user);
+  workspace.loadHistory();
+}
+
+window.addEventListener('pageshow',event=>{if(event.persisted)location.reload();});
+void initialize();

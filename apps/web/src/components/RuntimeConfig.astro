@@ -6,4 +6,18 @@ const guarded = import.meta.env.PUBLIC_REQUIRE_MODERATION !== '0';
 <script is:inline define:vars={{ apiBaseUrl, guarded }}>
   window.nuanceConfig = { apiBaseUrl, guarded };
   window.nuanceApiUrl = (path) => apiBaseUrl + path;
+  window.argusSignIn = async ({ email, password }) => {
+    const csrf = await fetch('/api/auth/csrf', { cache: 'no-store' });
+    if (!csrf.ok) throw new Error('Could not connect to the authentication service.');
+    const { csrfToken } = await csrf.json();
+    const response = await fetch('/api/auth/callback/credentials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Auth-Return-Redirect': '1' },
+      body: new URLSearchParams({ email, password, csrfToken, callbackUrl: location.origin + '/console' }),
+    });
+    const result = await response.json();
+    const error = result.url && new URL(result.url, location.origin).searchParams.get('error');
+    if (error === 'CredentialsSignin' || error === 'AccessDenied') throw new Error('Invalid email or password.');
+    if (!response.ok || !result.url || error) throw new Error('Sign-in is temporarily unavailable.');
+  };
 </script>

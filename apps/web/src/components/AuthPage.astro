@@ -1,6 +1,5 @@
 ---
 import Analytics from '@vercel/analytics/astro';
-import RuntimeConfig from './RuntimeConfig.astro';
 interface Props { mode: 'login' | 'signup' }
 const { mode } = Astro.props;
 const signup = mode === 'signup';
@@ -20,13 +19,12 @@ const signup = mode === 'signup';
     </script>
     <meta name="robots" content="noindex" />
     <link rel="icon" href="/favicon.png" />
-    <RuntimeConfig />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700&family=Funnel+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/nuance-transitions.css" />
     <script src="/nuance-navigation.js" is:inline></script>
-    <script src="/auth-form.js" defer is:inline></script>
+    <script src="/auth-form.js" type="module" is:inline></script>
   </head>
   <body>
     <!-- Persistent Sticky Header Matching Framer Marketing Header -->
@@ -411,7 +409,7 @@ const signup = mode === 'signup';
   .nav-links a {
     font-size: 13px;
     font-weight: 500;
-    color: #4b505a;
+    color: #514741;
     transition: color 0.15s ease;
   }
   .nav-links a:hover {
@@ -458,7 +456,7 @@ const signup = mode === 'signup';
     color: #fff;
   }
   .primary:hover {
-    background: #23272e;
+    background: #27211d;
   }
   .primary.active {
     background: #111317;
@@ -664,7 +662,7 @@ const signup = mode === 'signup';
     line-height: 1.5;
   }
   .form-status:empty { display: none; }
-  .form-status[data-state='success'] { color: #13754b; }
+  .form-status[data-state='success'] { color: #3b322c; }
 
   /* Right Side Cards */
   .side-cards {
@@ -1036,7 +1034,7 @@ const signup = mode === 'signup';
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #10b981;
+    background: #b64518;
     display: inline-block;
   }
   .status-text {

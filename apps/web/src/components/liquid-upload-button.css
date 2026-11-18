@@ -50,17 +50,17 @@
 .console-liquid-upload .liquid-upload__stage { transform:scale(1); }
 .console-liquid-upload .liquid-upload__button {
   width:192px; height:48px; border-radius:24px;
-  background:#0865ce; color:#fff;
+  background:#211c18; color:#fff;
   font:500 13px/1 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   letter-spacing:-.15px;
 }
 .console-liquid-upload .liquid-upload__label { display:flex; align-items:center; justify-content:center; gap:12px; }
-.console-liquid-upload .liquid-upload__button:not(:disabled):hover { background:#0759b4; }
+.console-liquid-upload .liquid-upload__button:not(:disabled):hover { background:#3a2b21; }
 .console-liquid-upload .liquid-upload__icon { order:2; color:#ffffffd9; }
 .liquid-upload__icon { display:inline-flex; color:#c8c8c8; transition:color 180ms ease,transform 240ms ease; }
 .console-liquid-upload .liquid-upload__button:not(:disabled):hover .liquid-upload__icon,
 .console-liquid-upload .liquid-upload__button:focus-visible .liquid-upload__icon { color:#fff; transform:translateX(3px); }
-.console-liquid-upload .liquid-upload__shadow { width:140px; height:24px; background:#75849b; }
+.console-liquid-upload .liquid-upload__shadow { width:140px; height:24px; background:#7b6c62; }
 .console-liquid-upload .liquid-upload__contact { width:200px; height:54px; border-radius:27px; }
 .console-liquid-upload::before {
   background:linear-gradient(125deg, transparent 25%, #ffffffb0 47%, transparent 64%);

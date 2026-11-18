@@ -1,11 +1,5 @@
-export function libraryKey(){
-  for(const key of ['argus_user','nuance_user']){
-    try {
-      const user=JSON.parse(localStorage.getItem(key));
-      const identity=user?.id??user?.email;
-      if(identity)return `argus-library:user:${encodeURIComponent(String(identity))}`;
-    }catch{}
-  }
+export function libraryKey(user){
+  if(user?.id)return `argus-library:user:${encodeURIComponent(user.id)}`;
   return 'argus-library:guest';
 }
 

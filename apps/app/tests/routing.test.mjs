@@ -6,7 +6,7 @@ import ts from 'typescript';
 import { test } from 'node:test';
 
 const filename = new URL('../src/app/api/quota/route.ts', import.meta.url);
-function route(lookup, source = filename) {
+function route(lookup, source = filename, { method = 'GET', consoleJobs } = {}) {
   const output = ts.transpileModule(readFileSync(source, 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
@@ -14,9 +14,10 @@ function route(lookup, source = filename) {
   const require = createRequire(filename);
   vm.runInNewContext(output, { exports, Request, Response, URL, process: { env: {} }, require: name =>
     name === '~/lib/guardrails' ? { registerGuardedKey() { throw new Error('Unexpected key registration'); } } :
+    name === '~/server/console-jobs' ? consoleJobs :
     name === '~/server/db' ? { db: { apiQuota: { findUnique: lookup,
       findFirst() { throw new Error('Must never return another user quota'); } } } } : require(name) });
-  return exports.GET;
+  return exports[method];
 }
 const key = 'sa_live_' + 'a'.repeat(48);
 
@@ -59,4 +60,34 @@ test('valid quota returns only the matching record and database failure returns 
   assert.equal((await res.json()).user.id, 'owner');
   const failed = route(async () => { throw new Error('Database offline'); });
   assert.equal((await failed(request())).status, 503);
+});
+
+test('console API key disclosure requires a session and only returns the signed-in user’s key', async () => {
+  const source = new URL('../src/app/api/console/api-key/route.ts', import.meta.url);
+  let userId;
+  let lookups = 0;
+  const post = route(undefined, source, {
+    method: 'POST',
+    consoleJobs: {
+      consoleUserId: async () => userId,
+      consoleApiKey: async id => {
+        lookups++;
+        assert.equal(id, 'owner');
+        return key;
+      },
+    },
+  });
+  const request = headers => new Request('http://local/api/console/api-key?userId=other', {
+    method: 'POST', headers, body: JSON.stringify({ userId: 'other' }),
+  });
+  assert.equal((await post(request({ Authorization: 'Bearer ' + key }))).status, 403);
+  const consoleHeaders = { 'X-Argus-Console': '1' };
+  assert.equal((await post(request(consoleHeaders))).status, 401);
+  assert.equal(lookups, 0);
+  userId = 'owner';
+  const result = await post(request(consoleHeaders));
+  assert.equal(result.status, 200);
+  assert.equal(result.headers.get('cache-control'), 'no-store');
+  assert.deepEqual(await result.json(), { apiKey: key });
+  assert.equal(lookups, 1);
 });

@@ -1,4 +1,4 @@
-import {formatTimestamp} from './analysis-output.mjs';
+import {formatTimestamp,segmentVerdict} from './analysis-output.mjs';
 import {transcriptDownload,transcriptText} from './transcript-tools.mjs';
 const $=id=>document.getElementById(id);
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -28,12 +28,12 @@ export class AnalysisReview {
       const run=this.run;this.close(false);this.onSeek(run,Number(target.dataset.segment));
     };
     $('copy-transcript').onclick=async()=>{
-      try {await navigator.clipboard.writeText(transcriptText(this.run.result,true));$('result-feedback').textContent='Transcript copied.';}
+      try {await navigator.clipboard.writeText(transcriptText(this.run.result,false));$('result-feedback').textContent='Transcript copied.';}
       catch {$('result-feedback').textContent='Clipboard unavailable. Download TXT instead.';}
     };
     $('export-result').onclick=()=>{
       if(!this.run?.result)return;
-      const file=transcriptDownload(this.run.result,$('result-format').value,true);
+      const file=transcriptDownload(this.run.result,$('result-format').value,false);
       const url=URL.createObjectURL(new Blob([file.text],{type:file.type}));
       const a=document.createElement('a');a.href=url;a.download=`analysis-${this.run.index+1}-${file.name}`;a.click();
       setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -57,9 +57,9 @@ export class AnalysisReview {
     run.video?.pause();
     this.onOpen();
     $('result-title').textContent=run.title;
-    $('result-source').textContent='Sample results';
+    $('result-source').textContent='AWS analysis';
     const result=run.outputs.result;
-    $('result-summary').innerHTML=`<div><span>Segments</span><strong>${result.segments.length}</strong></div>${result.duration==null?'':`<div><span>Analyzed span</span><strong>${result.duration.toFixed(1)}s</strong></div>`}`;
+    $('result-summary').innerHTML=`<div><span>Overall emotion</span><strong>${escape(result.verdicts.emotion)}</strong></div><div><span>Overall sentiment</span><strong>${escape(result.verdicts.sentiment)}</strong></div><div><span>Segments</span><strong>${result.segments.length}</strong></div>${result.duration==null?'':`<div><span>${result.durationLabel}</span><strong>${result.duration.toFixed(1)}s</strong></div>`}`;
     $('transcript-search').value='';$('result-feedback').textContent='';$('result-format').value='json';
     $('transcript-search').disabled=$('copy-transcript').disabled=!result.segments.length;
     for(const option of $('result-format').options)option.disabled=option.value!=='json'&&!result.segments.length;
@@ -87,11 +87,12 @@ export class AnalysisReview {
     const s=match.segment;
     const scores=(title,values,kind)=>{
       if(!values.length)return '';
+      const verdict=segmentVerdict(values);
       const rows=values.map(value=>{
         const percent=Math.round(value.confidence*100);
         return `<li class="result-score"><span>${escape(value.label)}</span><span>${percent}%</span><span class="review-score-track" aria-hidden="true"><i style="width:${percent}%"></i></span></li>`;
       }).join('');
-      return `<section class="review-score-group" data-kind="${kind}"><h3>${title}</h3><ul>${rows}</ul></section>`;
+      return `<section class="review-score-group" data-kind="${kind}"><h3>${title}</h3><p class="output-verdict">${escape(verdict.label)}</p><p class="output-verdict-detail">${escape(verdict.detail)}</p><ul>${rows}</ul></section>`;
     };
     $('result-content').innerHTML=`
       <div class="review-segment">

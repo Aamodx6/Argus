@@ -5,6 +5,36 @@ const scores=values=>(Array.isArray(values)?values:[])
   .map(item=>({label:item.label,confidence:item.confidence}))
   .sort((a,b)=>b.confidence-a.confidence);
 
+const scoreText=value=>`${(value.confidence*100).toFixed(1)}%`;
+
+export function segmentVerdict(values) {
+  const [first,second]=values;
+  if(!first)return {label:'No verdict',detail:'The model returned no scores.'};
+  const label=humanize(first.label);
+  if(second&&first.confidence===second.confidence){
+    return {label:'No clear leader',detail:`${label} and ${second.label} tied at ${scoreText(first)}.`};
+  }
+  if(second&&first.confidence-second.confidence<.05){
+    return {label,detail:`${scoreText(first)} vs ${scoreText(second)} ${second.label}.`};
+  }
+  return {label,detail:`Top model score ${scoreText(first)}.`};
+}
+
+function clipVerdict(segments,kind,status){
+  if(status==='low_confidence'||status==='out_of_domain')return 'No verdict';
+  const scored=segments.map(segment=>segment[kind]).filter(values=>values.length);
+  if(scored.length<=1)return segmentVerdict(scored[0]??[]).label;
+  const votes=new Map();
+  for(const [first,second] of scored){
+    if(first.confidence===second?.confidence)continue;
+    votes.set(first.label,(votes.get(first.label)??0)+1);
+  }
+  for(const [label,count] of votes){
+    if(count>scored.length/2)return humanize(label);
+  }
+  return votes.size?'Mixed':'No clear leader';
+}
+
 // The deployed handler returns top-k scores for each Whisper segment. Missing
 // categories are not zeroes, and top-k confidence arrays are not normalized.
 export function describeAnalysis(payload) {
@@ -15,11 +45,13 @@ export function describeAnalysis(payload) {
       emotions:scores(item.emotions),sentiments:scores(item.sentiments)}));
   const duration=analysis.overall?.durationSeconds;
   const validDuration=number(duration)&&duration>=0;
+  const status=analysis.status||(segments.length?'complete':'no_speech');
   return {
     segments,
+    verdicts:{emotion:clipVerdict(segments,'emotions',status),sentiment:clipVerdict(segments,'sentiments',status)},
     duration:validDuration?duration:segments.length?Math.max(...segments.map(segment=>segment.end)):null,
     durationLabel:validDuration?'Video duration':'Analyzed span',
-    status:analysis.status|| (segments.length?'complete':'no_speech'),
+    status,
     reason:analysis.reason_code?humanize(analysis.reason_code):'',
     version:typeof analysis.model_version==='string'?analysis.model_version:'',
     frames:Number.isInteger(analysis.overall?.framesProcessed)&&analysis.overall.framesProcessed>=0?analysis.overall.framesProcessed:null,
@@ -101,10 +133,12 @@ export class AnalysisOutputs {
     if(kind==='emotions'||kind==='sentiments'){
       body.append(el('div','output-segment-time',segment?`Segment ${this.index+1} · ${formatTimestamp(segment.start)} — ${formatTimestamp(segment.end)}`:'No spoken segments'));
       const values=segment?.[kind]||[];
-      if(!values.length){body.append(el('p','output-empty',`No ${kind} returned`));return;}
+      const verdict=segmentVerdict(values);
+      body.append(el('p','output-verdict',verdict.label),el('p','output-verdict-detail',verdict.detail));
+      if(!values.length)return;
       const limit=3,list=el('div','output-score-list');
       values.slice(0,limit).forEach(value=>{
-        const row=el('div','output-score-row'),label=el('span','output-score-name',humanize(value.label)),confidence=el('span','output-score-value',percent(value.confidence));
+        const row=el('div','output-score-row'),label=el('span','output-score-name',humanize(value.label)),confidence=el('span','output-score-value',scoreText(value));
         const meter=el('span','output-score-meter'),fill=el('i');fill.style.width=percent(value.confidence);meter.append(fill);
         row.append(label,confidence,meter);list.append(row);
       });
@@ -116,6 +150,11 @@ export class AnalysisOutputs {
     const status=this.demo?(result.status==='complete'?'Sample analysis':`Sample · ${outcome}`):outcome;
     const statusText=result.reason?`${status} · ${result.reason}`:status;
     body.append(el('p','output-analysis-status',statusText));
+    const verdicts=el('dl','output-clip-verdicts');
+    for(const [label,key] of [['Overall emotion','emotion'],['Overall sentiment','sentiment']]){
+      const row=el('div');row.append(el('dt','',label),el('dd','',result.verdicts[key]));verdicts.append(row);
+    }
+    body.append(verdicts);
     const rows=[['Analyzed segments',String(result.segments.length)]];
     if(result.duration!==null)rows.push([result.durationLabel,clock(result.duration)]);
     if(result.version)rows.push(['Model',result.version]);

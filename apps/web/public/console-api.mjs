@@ -1,7 +1,78 @@
 async function read(response) {
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.code || payload.error || 'Video analysis is unavailable.');
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw Object.assign(new Error(payload.code || payload.error || 'Video analysis is unavailable.'), {
+      status: response.status, payload,
+    });
+  }
   return payload;
+}
+
+async function sendToS3(signed, file, signal, fetchImpl) {
+  if (!signed.url || !signed.upload_id || (!signed.fields && !signed.headers)) {
+    throw new Error('Invalid upload response.');
+  }
+  let body = file;
+  if (signed.fields) {
+    body = new FormData();
+    for (const [name, value] of Object.entries(signed.fields)) body.append(name, value);
+    body.append('file', file);
+  }
+  const upload = await fetchImpl(signed.url, {
+    method: signed.fields ? 'POST' : 'PUT', body, signal, headers: signed.fields ? undefined : signed.headers,
+  });
+  if (!upload.ok) throw new Error('Video upload to S3 failed.');
+}
+
+export async function consoleRequest(path, { body, signal } = {}) {
+  const response = await fetch(path, {
+    method: body === undefined ? 'GET' : 'POST',
+    body: body === undefined ? undefined : JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json', 'X-Argus-Console': '1' },
+    cache: 'no-store', signal,
+  });
+  return read(response);
+}
+
+const jobs = '/api/async-inference/jobs';
+const legacyId = /^c[a-z0-9]{24}$/;
+export const legacyJob = id => legacyId.test(id);
+
+export async function uploadConsoleVideo(file, signal, onUpload, guarded) {
+  if (!guarded) {
+    const meta = await consoleRequest('/api/upload-url', {
+      body: { fileType: '.mp4', size: file.size }, signal,
+    });
+    if (!meta.url || !legacyJob(meta.analysisId)) throw new Error('Invalid upload response.');
+    onUpload();
+    const uploaded = await fetch(meta.url, {
+      method: 'PUT', headers: { 'Content-Type': meta.contentType }, body: file, signal,
+    });
+    if (!uploaded.ok) throw new Error('Video upload to S3 failed.');
+    return meta.analysisId;
+  }
+  const signed = await consoleRequest('/api/async-inference/uploads', { body: {}, signal });
+  if (!/^[a-f0-9]{32}$/.test(signed.upload_id)) throw new Error('Invalid upload identifier.');
+  onUpload();
+  await sendToS3(signed, file, signal, fetch);
+  return signed.upload_id;
+}
+
+export async function submitConsoleJob(entry, signal) {
+  const legacy = legacyJob(entry.id);
+  const result = await consoleRequest(legacy ? '/api/sentiment-inference' : jobs, {
+    body: { upload_id: entry.id, title: entry.title, spaceId: entry.space, spaceName: entry.spaceName }, signal,
+  });
+  if (!legacy && result.job_id !== entry.id) throw new Error('Invalid job response.');
+  return result;
+}
+
+export function getConsoleJob(id, signal) {
+  const path = legacyJob(id) ? '/api/console/analyses/' : jobs + '/';
+  return consoleRequest(path + id, { signal }).catch(error => {
+    if (error.status === 422 && error.payload?.status === 'BLOCKED') return error.payload;
+    throw error;
+  });
 }
 
 export async function analyzeVideo(file, apiKey, { baseUrl = '', guarded = true, signal,
@@ -26,13 +97,8 @@ export async function analyzeVideo(file, apiKey, { baseUrl = '', guarded = true,
     return read(await api('/api/sentiment-inference', { method: 'POST', body: JSON.stringify({ key: meta.key }) }));
   }
   const signed = await read(await api('/api/async-inference/uploads', { method: 'POST', body: '{}' }));
-  if (!signed.url || !signed.fields || !signed.upload_id) throw new Error('Invalid upload response.');
-  const form = new FormData();
-  for (const [name, value] of Object.entries(signed.fields)) form.append(name, value);
-  form.append('file', file);
   onProgress('Uploading video...', 40);
-  const upload = await fetchImpl(signed.url, { method: 'POST', body: form, signal });
-  if (!upload.ok) throw new Error('Video upload failed.');
+  await sendToS3(signed, file, signal, fetchImpl);
   const submitted = await read(await api('/api/async-inference/jobs', {
     method: 'POST', body: JSON.stringify({ upload_id: signed.upload_id }),
   }));

@@ -1,5 +1,63 @@
 /* Nuance Universal Page Transitions */
 
+:root {
+  --argus-accent: #b64518;
+  --argus-accent-wash: #faeee6;
+  --argus-scroll-thumb: #d7642d;
+  accent-color: var(--argus-accent);
+}
+
+::selection { background: #f6d2be; color: #241e19; }
+
+.argus-plan-badge {
+  display: inline-block;
+  margin-inline-start: .4em;
+  color: #873810;
+  font-size: .62em;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@supports (appearance: base-select) {
+  .argus-flow select, .argus-flow select::picker(select) { appearance: base-select; }
+  .argus-flow select::picker(select) {
+    border: 0;
+    border-radius: 8px;
+    color: #241e19;
+    background: #fff;
+    box-shadow: 0 6px 22px #211c1829;
+  }
+  .argus-flow select::picker-icon { color: var(--argus-accent); }
+  .argus-flow option { padding: 8px 10px; }
+  .argus-flow option:is(:hover, :focus, :checked) { background: var(--argus-accent-wash); }
+}
+
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: var(--argus-scroll-thumb) padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background-color: var(--argus-accent); }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--argus-scroll-thumb) transparent; }
+}
+
+@media (forced-colors: active) {
+  * { scrollbar-color: auto; }
+  ::-webkit-scrollbar-thumb { background-color: ButtonText; }
+}
+
+html:is([data-account-state="checking"], [data-account-state="signed-in"]) :is([data-framer-name="Button · Sign in"], .nuance-nav-signin) {
+  display: none !important;
+}
+
 [data-pricing-cta],
 [data-pricing-cta] :is(p, span) {
   color: #fff !important;
@@ -236,7 +294,7 @@ header.site-header .pill.primary.active {
 nav[name="Navigation"] [data-framer-name="Button · Connect"]:hover,
 nav[name="Navigation"] a[href="/contact"]:hover,
 header.site-header .pill.primary:hover {
-  background-color: #23272e !important;
+  background-color: #27211d !important;
 }
 
 nav[name="Navigation"] [data-framer-name="Button · Connect"] *,

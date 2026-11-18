@@ -13,12 +13,14 @@ const headHtml = headMatch ? headMatch[1] : '';
 const bodyHtml = bodyMatch ? bodyMatch[1] : '';
 ---
 <!doctype html>
-<html data-valorsic-studio="true">
+<html data-valorsic-studio="true" data-account-state="checking">
   <head>
     <Fragment set:html={headHtml} />
   </head>
   <body>
     <Fragment set:html={bodyHtml} />
+    <slot />
+    <script type="module" src="/account-header.mjs" is:inline></script>
     <Analytics />
   </body>
 </html>

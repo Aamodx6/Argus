@@ -1,6 +1,5 @@
 ---
 import Analytics from "@vercel/analytics/astro";
-import RuntimeConfig from '../components/RuntimeConfig.astro';
 import ArgusPipeline from '../components/ArgusPipeline.astro';
 ---
 <!doctype html>
@@ -10,7 +9,6 @@ import ArgusPipeline from '../components/ArgusPipeline.astro';
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Console · Argus</title>
     <link rel="icon" href="/favicon.png" />
-    <RuntimeConfig />
     <link rel="stylesheet" href="/nuance-transitions.css" />
     <script src="/nuance-navigation.js" is:inline></script>
     <link rel="stylesheet" href="/argus-pipeline.css" />
@@ -18,6 +16,8 @@ import ArgusPipeline from '../components/ArgusPipeline.astro';
     <link rel="preload" href="/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
+    <p id="console-session-status" role="status">Checking your session…</p>
+    <noscript>JavaScript is required to open the console.</noscript>
     <ArgusPipeline />
     <script type="module" src="/console-workspace.mjs" is:inline></script>
     <Analytics />

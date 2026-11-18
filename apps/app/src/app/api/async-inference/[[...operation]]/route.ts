@@ -18,27 +18,56 @@ async function proxy(request: Request, context: Context) {
   if (!submit && !status && !quota) {
     return NextResponse.json({ error: "Unknown inference operation" }, { status: 404 });
   }
-  const token = request.headers.get("authorization")?.match(/^Bearer ([A-Za-z0-9_-]{32,128})$/i)?.[1];
-  if (!token) {
-    return NextResponse.json({ error: "API key required" }, { status: 401 });
-  }
-  if (!root) {
-    return NextResponse.json({ error: "Async inference is not configured" }, { status: 503 });
-  }
-  const url = new URL(operation.join("/"), root.replace(/\/?$/, "/"));
-  const body = submit ? await request.text() : undefined;
-  if (body && body.length > 4096) {
-    return NextResponse.json({ error: "Request too large" }, { status: 413 });
-  }
-  const signer = new SignatureV4({
-    credentials: defaultProvider(),
-    region: process.env.AWS_REGION ?? "ap-southeast-2",
-    service: "execute-api",
-    sha256: Hash.bind(null, "sha256"),
-  });
+  const consoleRequest = request.headers.get("x-argus-console") === "1";
+  const workspace = consoleRequest ? await import("~/server/console-jobs") : null;
   try {
+    const userId = await workspace?.consoleUserId();
+    if (workspace && !userId) {
+      return NextResponse.json({ error: "Sign in to access video analysis." }, { status: 401 });
+    }
+    if (workspace && userId && status) {
+      const job = await workspace.findJob(userId, id);
+      if (!job) return NextResponse.json({ error: "Job not found" }, { status: 404 });
+      if (job.status === "SUCCEEDED" && job.analysis) {
+        return NextResponse.json({ status: job.status, analysis: job.analysis }, {
+          headers: { "Cache-Control": "no-store" },
+        });
+      }
+    }
+    const token = workspace && userId
+      ? await workspace.consoleApiKey(userId)
+      : request.headers.get("authorization")?.match(/^Bearer ([A-Za-z0-9_-]{32,128})$/i)?.[1];
+    if (!token) {
+      return NextResponse.json({ error: workspace ? "This account has no analysis quota." : "API key required" }, {
+        status: workspace ? 403 : 401,
+      });
+    }
+    if (!root || (workspace && !process.env.AWS_API_KEYS_TABLE)) {
+      return NextResponse.json({ error: "Async inference is not configured" }, { status: 503 });
+    }
+    const url = new URL(operation.join("/"), root.replace(/\/?$/, "/"));
+    let body = submit ? await request.text() : undefined;
+    if (body && body.length > 4096) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    const signer = new SignatureV4({
+      credentials: defaultProvider(),
+      region: process.env.AWS_REGION ?? "ap-southeast-2",
+      service: "execute-api",
+      sha256: Hash.bind(null, "sha256"),
+    });
     if (!(await registerGuardedKey(token))) {
       return NextResponse.json({ error: "Invalid API key", code: "INVALID_API_KEY" }, { status: 401 });
+    }
+    let consoleJobId = status ? id : undefined;
+    if (workspace && userId && submit && name === "jobs") {
+      let input: unknown;
+      try { input = JSON.parse(body ?? ""); } catch {}
+      const job = await workspace.prepareJob(userId, input);
+      if (!job) return NextResponse.json({ error: "Invalid upload details" }, { status: 400 });
+      consoleJobId = job.id;
+      if (job.status !== "AWAITING_SUBMISSION") return NextResponse.json({ job_id: job.id }, { status: 202 });
+      body = JSON.stringify({ upload_id: job.id });
     }
     const signed = await signer.sign({
       method: request.method,
@@ -52,11 +81,15 @@ async function proxy(request: Request, context: Context) {
       method: request.method, headers: signed.headers, body, cache: "no-store",
       signal: AbortSignal.timeout(20_000),
     });
+    if (workspace && userId && consoleJobId) {
+      await workspace.recordJobResponse(userId, consoleJobId, status, response.clone());
+    }
     return new Response(response.body, {
       status: response.status,
       headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
     });
-  } catch {
+  } catch (error) {
+    console.error("Async inference request failed", error instanceof Error ? error.name : "unknown");
     return NextResponse.json({ error: "Async inference service unavailable" }, { status: 503 });
   }
 }

@@ -10,16 +10,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Use guarded uploads", code: "MODERATED_UPLOAD_REQUIRED" }, { status: 403 });
   }
   try {
-    // Get API key from the header
+    const workspace = req.headers.get("x-argus-console") === "1" ? await import("~/server/console-jobs") : null;
+    const userId = await workspace?.consoleUserId();
     const apiKey = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!apiKey) {
+    if (workspace ? !userId : !apiKey) {
       return NextResponse.json({ error: "API key required" }, { status: 401 });
     }
 
     // Find the user by API key
     const quota = await db.apiQuota.findUnique({
       where: {
-        secretKey: apiKey,
+        ...(userId ? { userId } : { secretKey: apiKey! }),
       },
       select: {
         userId: true,
@@ -30,13 +31,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
     }
 
-    const { fileType } = (await req.json()) as { fileType?: unknown };
+    const { fileType, size } = (await req.json()) as { fileType?: unknown; size?: unknown };
 
     if (typeof fileType !== "string" || !/^\.(mp4|mov|avi)$/i.test(fileType)) {
       return NextResponse.json(
         { error: "Invalid file type. Only .mp4, .mov, .avi are supported" },
         { status: 400 },
       );
+    }
+    if (workspace && (typeof size !== "number" || !Number.isInteger(size) || size < 1 || size > 128 * 1024 * 1024)) {
+      return NextResponse.json({ error: "Choose a video up to 128 MiB." }, { status: 400 });
     }
 
     // Generate upload url
@@ -57,11 +61,12 @@ export async function POST(req: Request) {
       Bucket: env.AWS_INFERENCE_BUCKET,
       Key: key,
       ContentType: contentType,
+      ...(workspace && { ContentLength: size as number }),
     });
 
     const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 
-    await db.videoFile.create({
+    const video = await db.videoFile.create({
       data: {
         key: key,
         userId: quota.userId,
@@ -75,6 +80,7 @@ export async function POST(req: Request) {
       fileType,
       contentType,
       key,
+      ...(workspace && { analysisId: video.id }),
     });
   } catch (error) {
     console.error("Video upload URL creation failed:", error);

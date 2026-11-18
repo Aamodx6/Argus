@@ -10,14 +10,14 @@ export const nodes = [
     200,
     "input",
     [
-      ["Authentication", "API key"],
+      ["Authentication", "Account session"],
       ["Allowance", "Monthly quota"],
     ],
   ],
   [
     "storage",
     "Video input",
-    "Local video source",
+    "Amazon S3 upload",
     80,
     440,
     "input",
@@ -287,10 +287,10 @@ export const OUTPUT_IDS=['result','summary-output','transcript-output','emotion-
 const preview=nodes.find(node=>node.id==='result');
 Object.assign(preview,{title:'Video preview',output:'preview',rows:[],width:392,height:304});
 for(const [id,title,output] of [
-  ['summary-output','Analysis summary','summary'],
+  ['summary-output','Final result','summary'],
   ['transcript-output','Transcript','transcript'],
-  ['emotion-output','Emotion scores','emotions'],
-  ['sentiment-output','Sentiment scores','sentiments'],
+  ['emotion-output','Emotion verdict','emotions'],
+  ['sentiment-output','Sentiment verdict','sentiments'],
 ])nodes.push({id,title,output,subtitle:'',kind:'output',rows:[],index:nodes.length+1});
 export function layoutOutputs(compact=false){
   const origin=5680;
